@@ -1,22 +1,28 @@
-import React, { useState } from "react";
-import ReactDOM from "react-dom/client";
 import {
-  MessageCircle,
+  BookOpen,
   CheckCircle,
   Heart,
-  BookOpen,
-  Shield,
-  Zap,
   HelpCircle,
+  MessageCircle,
+  Shield,
   Users,
+  Zap,
 } from "lucide-react";
+import React, { useState } from "react";
+import ReactDOM from "react-dom/client";
+import { BrowserRouter, Link, Navigate, Route, Routes } from "react-router-dom";
+import { AuthPage } from "./components/AuthPage";
+import { ChatsPage } from "./components/ChatsPage";
 import { Button } from "./components/ui/button";
 import { Input } from "./components/ui/input";
+import { AuthProvider, useAuth } from "./contexts/AuthContext";
 import "./index.css";
 
 function LandingPage() {
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const { user } = useAuth();
+  const isDev = import.meta.env.DEV;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -26,88 +32,115 @@ function LandingPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
-      {/* Header */}
-      <header className="container mx-auto px-4 py-6">
-        <nav className="flex justify-between items-center">
-          <h1 className="text-2xl font-bold text-blue-600">ChristianAI</h1>
-          <div className="space-x-4">
-            <Button variant="ghost">Login</Button>
-            <Button>Join Waitlist</Button>
-          </div>
-        </nav>
-      </header>
-
       {/* Hero Section */}
-      <main className="container mx-auto px-4 py-16">
-        <div className="text-center max-w-4xl mx-auto">
-          <h2 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
-            Chat with Biblical Figures
-            <span className="block text-blue-600">Through AI</span>
-          </h2>
-          <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-            Experience meaningful conversations with Christian figures like
-            Moses, Joshua, and Jesus. Gain spiritual wisdom and biblical
-            insights through advanced AI technology.
-          </p>
+      <section className="relative w-full">
+        <div
+          className="relative w-full bg-center bg-cover bg-no-repeat px-4 py-6 pb-24"
+          style={{ backgroundImage: "url(/images/moses.png)" }}
+        >
+          {/* Fade gradient overlay at bottom */}
+          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-transparent-30" />
 
-          {/* CTA Form */}
-          <div className="max-w-md mx-auto">
-            {!submitted ? (
-              <form onSubmit={handleSubmit} className="flex gap-4">
-                <Input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Enter your email"
-                  className="flex-1"
-                  required
-                />
-                <Button type="submit" size="lg">
-                  Join Waitlist
-                </Button>
-              </form>
-            ) : (
-              <div className="bg-green-50 border border-green-200 rounded-lg p-4">
-                <p className="text-green-800 font-medium">
-                  Thank you for joining our waitlist!
-                </p>
-                <p className="text-green-600 text-sm">
-                  We'll notify you when we launch.
-                </p>
+          {/* Header */}
+          <header className="container relative mx-auto">
+            <nav className="flex items-center justify-between">
+              <h1 className="font-bold text-2xl text-white drop-shadow-lg">
+                ChristianAI
+              </h1>
+              <div className="space-x-4">
+                {user ? (
+                  <Link to="/chats">
+                    <Button>Go to Chats</Button>
+                  </Link>
+                ) : isDev ? (
+                  <Link to="/auth">
+                    <Button
+                      className="text-white hover:bg-white/20"
+                      variant="ghost"
+                    >
+                      Login
+                    </Button>
+                  </Link>
+                ) : null}
+                <Button>Join Waitlist</Button>
               </div>
-            )}
+            </nav>
+          </header>
+
+          {/* Content */}
+          <div className="relative mx-auto mt-32 max-w-4xl text-center">
+            <h2 className="mb-6 font-bold text-5xl text-white md:text-6xl">
+              Chat with <span className="text-white">Biblical Figures</span>
+            </h2>
+            <div className="mx-auto mb-8 max-w-2xl bg-gradient-radial from-black/15 via-black/10 to-transparent p-4 backdrop-blur-[2px]">
+              <p className="text-white text-xl drop-shadow-lg">
+                Experience meaningful conversations with Christian figures like
+                Moses, Joshua, and Jesus. Gain spiritual wisdom and biblical
+                insights through advanced AI technology.
+              </p>
+            </div>
+
+            {/* CTA Form */}
+            <div className="mx-auto max-w-md">
+              {submitted ? (
+                <div className="rounded-lg border border-green-200 bg-green-50 p-4">
+                  <p className="font-medium text-green-800">
+                    Thank you for joining our waitlist!
+                  </p>
+                  <p className="text-green-600 text-sm">
+                    We'll notify you when we launch.
+                  </p>
+                </div>
+              ) : (
+                <form className="flex gap-4" onSubmit={handleSubmit}>
+                  <Input
+                    className="flex-1"
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="Enter your email"
+                    required
+                    type="email"
+                    value={email}
+                  />
+                  <Button size="lg" type="submit">
+                    Join Waitlist
+                  </Button>
+                </form>
+              )}
+            </div>
           </div>
         </div>
+      </section>
 
+      <main className="container mx-auto px-4 py-16">
         {/* Features Section */}
-        <section className="mt-20 grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          <article className="text-center p-6">
-            <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <MessageCircle className="w-8 h-8 text-blue-600" />
+        <section className="mx-auto mt-20 grid max-w-6xl gap-8 md:grid-cols-3">
+          <article className="p-6 text-center">
+            <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-blue-100">
+              <MessageCircle className="h-8 w-8 text-blue-600" />
             </div>
-            <h3 className="text-xl font-semibold text-gray-900 mb-2">Moses</h3>
+            <h3 className="mb-2 font-semibold text-gray-900 text-xl">Moses</h3>
             <p className="text-gray-600">
               Receive guidance inspired by the wisdom of Moses, the great leader
               and lawgiver who led Israel from Egypt.
             </p>
           </article>
 
-          <article className="text-center p-6">
-            <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <CheckCircle className="w-8 h-8 text-blue-600" />
+          <article className="p-6 text-center">
+            <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-blue-100">
+              <CheckCircle className="h-8 w-8 text-blue-600" />
             </div>
-            <h3 className="text-xl font-semibold text-gray-900 mb-2">Joshua</h3>
+            <h3 className="mb-2 font-semibold text-gray-900 text-xl">Joshua</h3>
             <p className="text-gray-600">
               Connect with the courage and faith of Joshua, conqueror of Jericho
               and faithful successor to Moses.
             </p>
           </article>
 
-          <article className="text-center p-6">
-            <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Heart className="w-8 h-8 text-blue-600" />
+          <article className="p-6 text-center">
+            <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-blue-100">
+              <Heart className="h-8 w-8 text-blue-600" />
             </div>
-            <h3 className="text-xl font-semibold text-gray-900 mb-2">Jesus</h3>
+            <h3 className="mb-2 font-semibold text-gray-900 text-xl">Jesus</h3>
             <p className="text-gray-600">
               Experience the love, teachings, and wisdom of Jesus Christ through
               meaningful dialogue rooted in the Gospels.
@@ -116,19 +149,19 @@ function LandingPage() {
         </section>
 
         {/* How It Works Section */}
-        <section className="mt-32 max-w-5xl mx-auto">
-          <h2 className="text-4xl font-bold text-gray-900 mb-4 text-center">
+        <section className="mx-auto mt-32 max-w-5xl">
+          <h2 className="mb-4 text-center font-bold text-4xl text-gray-900">
             How It Works
           </h2>
-          <p className="text-lg text-gray-600 mb-12 text-center max-w-2xl mx-auto">
+          <p className="mx-auto mb-12 max-w-2xl text-center text-gray-600 text-lg">
             Start your spiritual journey in three simple steps
           </p>
-          <div className="grid md:grid-cols-3 gap-12">
+          <div className="grid gap-12 md:grid-cols-3">
             <article className="text-center">
-              <div className="w-16 h-16 bg-blue-600 text-white rounded-full flex items-center justify-center mx-auto mb-4 text-2xl font-bold">
+              <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-blue-600 font-bold text-2xl text-white">
                 1
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-3">
+              <h3 className="mb-3 font-semibold text-gray-900 text-xl">
                 Choose Your Guide
               </h3>
               <p className="text-gray-600">
@@ -137,10 +170,10 @@ function LandingPage() {
               </p>
             </article>
             <article className="text-center">
-              <div className="w-16 h-16 bg-blue-600 text-white rounded-full flex items-center justify-center mx-auto mb-4 text-2xl font-bold">
+              <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-blue-600 font-bold text-2xl text-white">
                 2
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-3">
+              <h3 className="mb-3 font-semibold text-gray-900 text-xl">
                 Ask Questions
               </h3>
               <p className="text-gray-600">
@@ -149,10 +182,10 @@ function LandingPage() {
               </p>
             </article>
             <article className="text-center">
-              <div className="w-16 h-16 bg-blue-600 text-white rounded-full flex items-center justify-center mx-auto mb-4 text-2xl font-bold">
+              <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-blue-600 font-bold text-2xl text-white">
                 3
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-3">
+              <h3 className="mb-3 font-semibold text-gray-900 text-xl">
                 Grow Spiritually
               </h3>
               <p className="text-gray-600">
@@ -164,17 +197,17 @@ function LandingPage() {
         </section>
 
         {/* Benefits Section */}
-        <section className="mt-32 bg-white rounded-2xl shadow-lg p-12 max-w-6xl mx-auto">
-          <h2 className="text-4xl font-bold text-gray-900 mb-12 text-center">
+        <section className="mx-auto mt-32 max-w-6xl rounded-2xl bg-white p-12 shadow-lg">
+          <h2 className="mb-12 text-center font-bold text-4xl text-gray-900">
             Why Choose ChristianAI?
           </h2>
-          <div className="grid md:grid-cols-2 gap-8">
+          <div className="grid gap-8 md:grid-cols-2">
             <article className="flex gap-4">
               <div className="flex-shrink-0">
-                <BookOpen className="w-8 h-8 text-blue-600" />
+                <BookOpen className="h-8 w-8 text-blue-600" />
               </div>
               <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                <h3 className="mb-2 font-semibold text-gray-900 text-xl">
                   Biblically Grounded
                 </h3>
                 <p className="text-gray-600">
@@ -185,10 +218,10 @@ function LandingPage() {
             </article>
             <article className="flex gap-4">
               <div className="flex-shrink-0">
-                <Shield className="w-8 h-8 text-blue-600" />
+                <Shield className="h-8 w-8 text-blue-600" />
               </div>
               <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                <h3 className="mb-2 font-semibold text-gray-900 text-xl">
                   Safe & Private
                 </h3>
                 <p className="text-gray-600">
@@ -199,10 +232,10 @@ function LandingPage() {
             </article>
             <article className="flex gap-4">
               <div className="flex-shrink-0">
-                <Zap className="w-8 h-8 text-blue-600" />
+                <Zap className="h-8 w-8 text-blue-600" />
               </div>
               <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                <h3 className="mb-2 font-semibold text-gray-900 text-xl">
                   Available 24/7
                 </h3>
                 <p className="text-gray-600">
@@ -213,10 +246,10 @@ function LandingPage() {
             </article>
             <article className="flex gap-4">
               <div className="flex-shrink-0">
-                <Users className="w-8 h-8 text-blue-600" />
+                <Users className="h-8 w-8 text-blue-600" />
               </div>
               <div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                <h3 className="mb-2 font-semibold text-gray-900 text-xl">
                   Growing Community
                 </h3>
                 <p className="text-gray-600">
@@ -229,19 +262,19 @@ function LandingPage() {
         </section>
 
         {/* FAQ Section */}
-        <section className="mt-32 max-w-4xl mx-auto">
-          <h2 className="text-4xl font-bold text-gray-900 mb-4 text-center">
+        <section className="mx-auto mt-32 max-w-4xl">
+          <h2 className="mb-4 text-center font-bold text-4xl text-gray-900">
             Frequently Asked Questions
           </h2>
-          <p className="text-lg text-gray-600 mb-12 text-center">
+          <p className="mb-12 text-center text-gray-600 text-lg">
             Common questions about ChristianAI
           </p>
           <div className="space-y-6">
-            <article className="bg-white rounded-lg shadow p-6">
+            <article className="rounded-lg bg-white p-6 shadow">
               <div className="flex items-start gap-4">
-                <HelpCircle className="w-6 h-6 text-blue-600 flex-shrink-0 mt-1" />
+                <HelpCircle className="mt-1 h-6 w-6 flex-shrink-0 text-blue-600" />
                 <div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                  <h3 className="mb-2 font-semibold text-gray-900 text-xl">
                     Is this theologically accurate?
                   </h3>
                   <p className="text-gray-600">
@@ -253,11 +286,11 @@ function LandingPage() {
                 </div>
               </div>
             </article>
-            <article className="bg-white rounded-lg shadow p-6">
+            <article className="rounded-lg bg-white p-6 shadow">
               <div className="flex items-start gap-4">
-                <HelpCircle className="w-6 h-6 text-blue-600 flex-shrink-0 mt-1" />
+                <HelpCircle className="mt-1 h-6 w-6 flex-shrink-0 text-blue-600" />
                 <div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                  <h3 className="mb-2 font-semibold text-gray-900 text-xl">
                     Can this replace my church or pastor?
                   </h3>
                   <p className="text-gray-600">
@@ -268,11 +301,11 @@ function LandingPage() {
                 </div>
               </div>
             </article>
-            <article className="bg-white rounded-lg shadow p-6">
+            <article className="rounded-lg bg-white p-6 shadow">
               <div className="flex items-start gap-4">
-                <HelpCircle className="w-6 h-6 text-blue-600 flex-shrink-0 mt-1" />
+                <HelpCircle className="mt-1 h-6 w-6 flex-shrink-0 text-blue-600" />
                 <div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                  <h3 className="mb-2 font-semibold text-gray-900 text-xl">
                     Which biblical figures will be available?
                   </h3>
                   <p className="text-gray-600">
@@ -283,11 +316,11 @@ function LandingPage() {
                 </div>
               </div>
             </article>
-            <article className="bg-white rounded-lg shadow p-6">
+            <article className="rounded-lg bg-white p-6 shadow">
               <div className="flex items-start gap-4">
-                <HelpCircle className="w-6 h-6 text-blue-600 flex-shrink-0 mt-1" />
+                <HelpCircle className="mt-1 h-6 w-6 flex-shrink-0 text-blue-600" />
                 <div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                  <h3 className="mb-2 font-semibold text-gray-900 text-xl">
                     How much does it cost?
                   </h3>
                   <p className="text-gray-600">
@@ -302,16 +335,16 @@ function LandingPage() {
         </section>
 
         {/* Technology Section */}
-        <section className="mt-32 text-center max-w-3xl mx-auto">
-          <h2 className="text-3xl font-bold text-gray-900 mb-6">
+        <section className="mx-auto mt-32 max-w-3xl text-center">
+          <h2 className="mb-6 font-bold text-3xl text-gray-900">
             Powered by Advanced AI
           </h2>
-          <p className="text-lg text-gray-600 mb-8">
+          <p className="mb-8 text-gray-600 text-lg">
             Our conversations are powered by state-of-the-art large language
             models trained on biblical texts and Christian teachings, ensuring
             authentic and spiritually enriching experiences.
           </p>
-          <div className="flex flex-wrap justify-center gap-6 text-sm text-gray-500">
+          <div className="flex flex-wrap justify-center gap-6 text-gray-500 text-sm">
             <span className="flex items-center gap-2">
               ✨ Authentic Biblical Wisdom
             </span>
@@ -323,30 +356,16 @@ function LandingPage() {
         </section>
 
         {/* Final CTA */}
-        <section className="mt-32 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl shadow-xl p-12 text-center max-w-4xl mx-auto text-white">
-          <h2 className="text-4xl font-bold mb-4">
+        <section className="mx-auto mt-32 max-w-4xl rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 p-12 text-center text-white shadow-xl">
+          <h2 className="mb-4 font-bold text-4xl">
             Ready to Begin Your Journey?
           </h2>
-          <p className="text-xl mb-8 opacity-90">
+          <p className="mb-8 text-xl opacity-90">
             Join thousands on the waitlist for early access to ChristianAI
           </p>
-          <div className="max-w-md mx-auto">
-            {!submitted ? (
-              <form onSubmit={handleSubmit} className="flex gap-4">
-                <Input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Enter your email"
-                  className="flex-1 bg-white text-gray-900"
-                  required
-                />
-                <Button type="submit" size="lg" variant="secondary">
-                  Join Waitlist
-                </Button>
-              </form>
-            ) : (
-              <div className="bg-white/10 border border-white/20 rounded-lg p-4 backdrop-blur">
+          <div className="mx-auto max-w-md">
+            {submitted ? (
+              <div className="rounded-lg border border-white/20 bg-white/10 p-4 backdrop-blur">
                 <p className="font-medium">
                   Thank you for joining our waitlist!
                 </p>
@@ -354,13 +373,27 @@ function LandingPage() {
                   We'll notify you when we launch.
                 </p>
               </div>
+            ) : (
+              <form className="flex gap-4" onSubmit={handleSubmit}>
+                <Input
+                  className="flex-1 bg-white text-gray-900"
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Enter your email"
+                  required
+                  type="email"
+                  value={email}
+                />
+                <Button size="lg" type="submit" variant="secondary">
+                  Join Waitlist
+                </Button>
+              </form>
             )}
           </div>
         </section>
       </main>
 
       {/* Footer */}
-      <footer className="bg-gray-50 border-t border-gray-200 mt-20">
+      <footer className="mt-20 border-gray-200 border-t bg-gray-50">
         <div className="container mx-auto px-4 py-8">
           <div className="text-center text-gray-600">
             <p>
@@ -373,11 +406,45 @@ function LandingPage() {
   );
 }
 
+function App() {
+  const { user, loading } = useAuth();
+
+  // Show loading spinner while checking auth
+  if (loading) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100">
+        <div className="text-center">
+          <div className="mx-auto mb-4 h-12 w-12 animate-spin rounded-full border-blue-600 border-b-2" />
+          <p className="text-gray-600">Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route element={<LandingPage />} path="/" />
+        <Route
+          element={user ? <Navigate replace to="/chats" /> : <AuthPage />}
+          path="/auth"
+        />
+        <Route
+          element={user ? <ChatsPage /> : <Navigate replace to="/" />}
+          path="/chats"
+        />
+      </Routes>
+    </BrowserRouter>
+  );
+}
+
 const rootElement = document.getElementById("root");
 if (rootElement) {
   ReactDOM.createRoot(rootElement).render(
     <React.StrictMode>
-      <LandingPage />
+      <AuthProvider>
+        <App />
+      </AuthProvider>
     </React.StrictMode>
   );
 }
