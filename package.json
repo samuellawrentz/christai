@@ -12,10 +12,21 @@
     "build": "bun run --filter web build",
     "lint": "ultracite check .",
     "lint:fix": "ultracite fix .",
-    "format": "ultracite format ."
+    "format": "ultracite format .",
+    "typecheck": "bun run --filter web typecheck && bun run --filter api typecheck",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx}": [
+      "ultracite check",
+      "bun run --filter web typecheck",
+      "bun run --filter api typecheck"
+    ]
   },
   "devDependencies": {
     "@biomejs/biome": "2.3.8",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.7",
     "ultracite": "6.4.0"
   }
 }
