@@ -39,7 +39,7 @@ function LandingPage() {
           style={{ backgroundImage: "url(/images/moses.png)" }}
         >
           {/* Fade gradient overlay at bottom */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-blue-50" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-transparent-30" />
 
           {/* Header */}
           <header className="container relative mx-auto">
@@ -68,10 +68,9 @@ function LandingPage() {
           </header>
 
           {/* Content */}
-          <div className="relative mx-auto mt-16 max-w-4xl text-center">
-            <h2 className="mb-6 font-bold text-5xl text-gray-900 md:text-6xl">
-              Chat with Biblical Figures
-              <span className="block text-blue-600">Through AI</span>
+          <div className="relative mx-auto mt-32 max-w-4xl text-center">
+            <h2 className="mb-6 font-bold text-5xl text-white md:text-6xl">
+              Chat with <span className="text-white">Biblical Figures</span>
             </h2>
             <div className="mx-auto mb-8 max-w-2xl bg-gradient-radial from-black/15 via-black/10 to-transparent p-4 backdrop-blur-[2px]">
               <p className="text-white text-xl drop-shadow-lg">
