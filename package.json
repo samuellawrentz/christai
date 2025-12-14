@@ -19,8 +19,7 @@
   "lint-staged": {
     "*.{ts,tsx,js,jsx}": [
       "ultracite check",
-      "bun run --filter web typecheck",
-      "bun run --filter api typecheck"
+      "bun run typecheck"
     ]
   },
   "devDependencies": {
