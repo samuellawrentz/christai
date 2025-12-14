@@ -10,9 +10,9 @@
     "dev:web": "bun run --filter web dev",
     "dev:api": "bun run --filter api dev",
     "build": "bun run --filter web build",
-    "lint": "biome check .",
-    "lint:fix": "biome check --write .",
-    "format": "biome format --write ."
+    "lint": "ultracite check .",
+    "lint:fix": "ultracite fix .",
+    "format": "ultracite format ."
   },
   "devDependencies": {
     "@biomejs/biome": "2.3.8",
