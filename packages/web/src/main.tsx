@@ -8,13 +8,13 @@ import {
   Users,
   Zap,
 } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import ReactDOM from "react-dom/client";
-import { BrowserRouter, Routes, Route, Navigate, Link } from "react-router-dom";
+import { BrowserRouter, Link, Navigate, Route, Routes } from "react-router-dom";
+import { AuthPage } from "./components/AuthPage";
 import { ChatsPage } from "./components/ChatsPage";
 import { Button } from "./components/ui/button";
 import { Input } from "./components/ui/input";
-import { AuthPage } from "./components/AuthPage";
 import { AuthProvider, useAuth } from "./contexts/AuthContext";
 import "./index.css";
 
@@ -22,6 +22,7 @@ function LandingPage() {
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const { user } = useAuth();
+  const isDev = import.meta.env.DEV;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -31,67 +32,87 @@ function LandingPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
-      {/* Header */}
-      <header className="container mx-auto px-4 py-6">
-        <nav className="flex items-center justify-between">
-          <h1 className="font-bold text-2xl text-blue-600">ChristianAI</h1>
-          <div className="space-x-4">
-            {user ? (
-              <Link to="/chats">
-                <Button>Go to Chats</Button>
-              </Link>
-            ) : (
-              <Link to="/auth">
-                <Button variant="ghost">Login</Button>
-              </Link>
-            )}
-            <Button>Join Waitlist</Button>
-          </div>
-        </nav>
-      </header>
-
       {/* Hero Section */}
-      <main className="container mx-auto px-4 py-16">
-        <div className="mx-auto max-w-4xl text-center">
-          <h2 className="mb-6 font-bold text-5xl text-gray-900 md:text-6xl">
-            Chat with Biblical Figures
-            <span className="block text-blue-600">Through AI</span>
-          </h2>
-          <p className="mx-auto mb-8 max-w-2xl text-gray-600 text-xl">
-            Experience meaningful conversations with Christian figures like
-            Moses, Joshua, and Jesus. Gain spiritual wisdom and biblical
-            insights through advanced AI technology.
-          </p>
+      <section className="relative w-full">
+        <div
+          className="relative w-full bg-center bg-cover bg-no-repeat px-4 py-6 pb-24"
+          style={{ backgroundImage: "url(/images/moses.png)" }}
+        >
+          {/* Fade gradient overlay at bottom */}
+          <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-blue-50" />
 
-          {/* CTA Form */}
-          <div className="mx-auto max-w-md">
-            {submitted ? (
-              <div className="rounded-lg border border-green-200 bg-green-50 p-4">
-                <p className="font-medium text-green-800">
-                  Thank you for joining our waitlist!
-                </p>
-                <p className="text-green-600 text-sm">
-                  We'll notify you when we launch.
-                </p>
+          {/* Header */}
+          <header className="container relative mx-auto">
+            <nav className="flex items-center justify-between">
+              <h1 className="font-bold text-2xl text-white drop-shadow-lg">
+                ChristianAI
+              </h1>
+              <div className="space-x-4">
+                {user ? (
+                  <Link to="/chats">
+                    <Button>Go to Chats</Button>
+                  </Link>
+                ) : isDev ? (
+                  <Link to="/auth">
+                    <Button
+                      className="text-white hover:bg-white/20"
+                      variant="ghost"
+                    >
+                      Login
+                    </Button>
+                  </Link>
+                ) : null}
+                <Button>Join Waitlist</Button>
               </div>
-            ) : (
-              <form className="flex gap-4" onSubmit={handleSubmit}>
-                <Input
-                  className="flex-1"
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Enter your email"
-                  required
-                  type="email"
-                  value={email}
-                />
-                <Button size="lg" type="submit">
-                  Join Waitlist
-                </Button>
-              </form>
-            )}
+            </nav>
+          </header>
+
+          {/* Content */}
+          <div className="relative mx-auto mt-16 max-w-4xl text-center">
+            <h2 className="mb-6 font-bold text-5xl text-gray-900 md:text-6xl">
+              Chat with Biblical Figures
+              <span className="block text-blue-600">Through AI</span>
+            </h2>
+            <div className="mx-auto mb-8 max-w-2xl bg-gradient-radial from-black/15 via-black/10 to-transparent p-4 backdrop-blur-[2px]">
+              <p className="text-white text-xl drop-shadow-lg">
+                Experience meaningful conversations with Christian figures like
+                Moses, Joshua, and Jesus. Gain spiritual wisdom and biblical
+                insights through advanced AI technology.
+              </p>
+            </div>
+
+            {/* CTA Form */}
+            <div className="mx-auto max-w-md">
+              {submitted ? (
+                <div className="rounded-lg border border-green-200 bg-green-50 p-4">
+                  <p className="font-medium text-green-800">
+                    Thank you for joining our waitlist!
+                  </p>
+                  <p className="text-green-600 text-sm">
+                    We'll notify you when we launch.
+                  </p>
+                </div>
+              ) : (
+                <form className="flex gap-4" onSubmit={handleSubmit}>
+                  <Input
+                    className="flex-1"
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="Enter your email"
+                    required
+                    type="email"
+                    value={email}
+                  />
+                  <Button size="lg" type="submit">
+                    Join Waitlist
+                  </Button>
+                </form>
+              )}
+            </div>
           </div>
         </div>
+      </section>
 
+      <main className="container mx-auto px-4 py-16">
         {/* Features Section */}
         <section className="mx-auto mt-20 grid max-w-6xl gap-8 md:grid-cols-3">
           <article className="p-6 text-center">
@@ -404,14 +425,14 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<LandingPage />} />
+        <Route element={<LandingPage />} path="/" />
         <Route
+          element={user ? <Navigate replace to="/chats" /> : <AuthPage />}
           path="/auth"
-          element={user ? <Navigate to="/chats" replace /> : <AuthPage />}
         />
         <Route
+          element={user ? <ChatsPage /> : <Navigate replace to="/" />}
           path="/chats"
-          element={user ? <ChatsPage /> : <Navigate to="/" replace />}
         />
       </Routes>
     </BrowserRouter>
