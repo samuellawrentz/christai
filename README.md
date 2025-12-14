@@ -1,10 +1,19 @@
-# christianai
+# ChristianAI
 
-A React application built with Vite, using Ultracite for linting and formatting.
+A monorepo project with React frontend and Bun backend, using Ultracite for linting and Tailwind + Shadcn/ui for styling.
+
+## Project Structure
+
+```
+christianai/
+├── packages/
+│   ├── web/          # React + Vite frontend
+│   └── api/          # Bun backend API
+```
 
 ## Setup
 
-To install dependencies:
+Install dependencies:
 
 ```bash
 bun install
@@ -12,38 +21,48 @@ bun install
 
 ## Development
 
-To start the development server:
+Start both frontend and backend:
 
 ```bash
 bun run dev
 ```
 
-To run the application directly:
+Or start them individually:
 
 ```bash
-bun run index.ts
+# Frontend only (http://localhost:5173)
+bun run dev:web
+
+# Backend only (http://localhost:3001)
+bun run dev:api
+```
+
+## Build
+
+Build the frontend for production:
+
+```bash
+bun run build
 ```
 
 ## Code Quality
 
 This project uses [Ultracite](https://www.ultracite.ai/) for linting and formatting, built on top of [Biome](https://biomejs.dev/).
 
-To check for linting issues:
-
 ```bash
+# Check for issues
 bun run lint
-```
 
-To automatically fix linting issues:
-
-```bash
+# Auto-fix issues
 bun run lint:fix
-```
 
-To format code:
-
-```bash
+# Format code
 bun run format
 ```
 
-This project was created using `bun init` in bun v1.2.19. [Bun](https://bun.com) is a fast all-in-one JavaScript runtime.
+## Tech Stack
+
+- **Frontend**: React 19, Vite, Tailwind CSS, Shadcn/ui
+- **Backend**: Bun, TypeScript
+- **Tooling**: Ultracite (Biome), TypeScript
+- **Package Manager**: Bun workspaces
