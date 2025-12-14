@@ -20,6 +20,9 @@
     "*.{ts,tsx,js,jsx}": [
       "ultracite check",
       "bun run typecheck"
+    ],
+    "package.json": [
+      "ultracite check"
     ]
   },
   "devDependencies": {
