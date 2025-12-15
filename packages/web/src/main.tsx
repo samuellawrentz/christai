@@ -85,7 +85,9 @@ function LandingPage() {
               <div className="space-x-4">
                 {user ? (
                   <Link to="/chats">
-                    <Button>Go to Chats</Button>
+                    <Button variant={"ghost"} className="text-background">
+                      Go to Chats
+                    </Button>
                   </Link>
                 ) : isDev ? (
                   <Link to="/auth">
@@ -94,7 +96,9 @@ function LandingPage() {
                     </Button>
                   </Link>
                 ) : null}
-                <Button>Join Waitlist</Button>
+                <Button variant={"ghost"} className="text-background">
+                  Join Waitlist
+                </Button>
               </div>
             </nav>
           </header>
@@ -125,7 +129,7 @@ function LandingPage() {
                       <p className="text-red-600 text-sm">{error}</p>
                     </div>
                   )}
-                  <ButtonGroup>
+                  <ButtonGroup className="mx-auto">
                     <Input
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="Enter your email"
@@ -133,8 +137,9 @@ function LandingPage() {
                       type="email"
                       value={email}
                       disabled={isSubmitting}
+                      className="text-background"
                     />
-                    <Button size="lg" type="submit" disabled={isSubmitting}>
+                    <Button type="submit" disabled={isSubmitting} variant={"secondary"}>
                       {isSubmitting ? "Joining..." : "Join Waitlist"}
                     </Button>
                   </ButtonGroup>
@@ -380,7 +385,7 @@ function LandingPage() {
                     <p className="text-sm">{error}</p>
                   </div>
                 )}
-                <ButtonGroup>
+                <ButtonGroup className="mx-auto">
                   <Input
                     className="bg-white text-gray-900"
                     onChange={(e) => setEmail(e.target.value)}
@@ -390,7 +395,7 @@ function LandingPage() {
                     value={email}
                     disabled={isSubmitting}
                   />
-                  <Button size="lg" type="submit" variant="secondary" disabled={isSubmitting}>
+                  <Button type="submit" variant="secondary" disabled={isSubmitting}>
                     {isSubmitting ? "Joining..." : "Join Waitlist"}
                   </Button>
                 </ButtonGroup>
