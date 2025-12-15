@@ -1,4 +1,4 @@
-import { useAuth } from "../contexts/AuthContext";
+import { useAuth } from "../contexts/auth-context";
 import { api } from "../lib/api";
 import { Button } from "./ui/button";
 
@@ -40,17 +40,15 @@ export function ChatsPage() {
       {/* Main Content */}
       <main className="container mx-auto px-4 py-8">
         <div className="rounded-lg bg-white p-8 text-center shadow-lg">
-          <h2 className="mb-4 font-bold text-3xl text-gray-900">
-            Welcome to ChristianAI
-          </h2>
+          <h2 className="mb-4 font-bold text-3xl text-gray-900">Welcome to ChristianAI</h2>
           <p className="mb-8 text-gray-600 text-xl">
-            Your spiritual journey begins here. Chat with biblical figures and
-            gain wisdom from Scripture.
+            Your spiritual journey begins here. Chat with biblical figures and gain wisdom from
+            Scripture.
           </p>
           <div className="mx-auto max-w-2xl rounded-lg border border-blue-200 bg-blue-50 p-6">
             <p className="text-blue-800">
-              🚧 <strong>Chats feature coming soon!</strong> This is a
-              placeholder page for the authenticated user experience.
+              🚧 <strong>Chats feature coming soon!</strong> This is a placeholder page for the
+              authenticated user experience.
             </p>
           </div>
         </div>

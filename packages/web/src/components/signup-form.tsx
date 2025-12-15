@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useAuth } from "../contexts/AuthContext";
+import { useAuth } from "../contexts/auth-context";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 
@@ -47,8 +47,10 @@ export function SignupForm() {
           <div className="mb-6">
             <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-green-100">
               <svg
+                aria-label="Check mark icon"
                 className="h-8 w-8 text-green-600"
                 fill="none"
+                role="img"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
               >
@@ -60,16 +62,16 @@ export function SignupForm() {
                 />
               </svg>
             </div>
-            <h1 className="mb-2 font-bold text-2xl text-gray-900">
-              Check Your Email
-            </h1>
+            <h1 className="mb-2 font-bold text-2xl text-gray-900">Check Your Email</h1>
             <p className="text-gray-600">
               We've sent a confirmation link to <strong>{email}</strong>
             </p>
           </div>
           <Button
             className="w-full"
-            onClick={() => (window.location.hash = "#login")}
+            onClick={() => {
+              window.location.hash = "#login";
+            }}
             variant="outline"
           >
             Back to Sign In
@@ -83,20 +85,13 @@ export function SignupForm() {
     <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
       <div className="w-full max-w-md rounded-lg bg-white p-8 shadow-lg">
         <div className="mb-8 text-center">
-          <h1 className="mb-2 font-bold text-3xl text-gray-900">
-            Create Account
-          </h1>
-          <p className="text-gray-600">
-            Join ChristianAI to start your spiritual journey
-          </p>
+          <h1 className="mb-2 font-bold text-3xl text-gray-900">Create Account</h1>
+          <p className="text-gray-600">Join ChristianAI to start your spiritual journey</p>
         </div>
 
         <form className="space-y-6" onSubmit={handleSubmit}>
           <div>
-            <label
-              className="mb-2 block font-medium text-gray-700 text-sm"
-              htmlFor="email"
-            >
+            <label className="mb-2 block font-medium text-gray-700 text-sm" htmlFor="email">
               Email
             </label>
             <Input
@@ -111,10 +106,7 @@ export function SignupForm() {
           </div>
 
           <div>
-            <label
-              className="mb-2 block font-medium text-gray-700 text-sm"
-              htmlFor="password"
-            >
+            <label className="mb-2 block font-medium text-gray-700 text-sm" htmlFor="password">
               Password
             </label>
             <Input
@@ -162,7 +154,10 @@ export function SignupForm() {
             Already have an account?{" "}
             <button
               className="font-medium text-blue-600 hover:text-blue-500"
-              onClick={() => (window.location.hash = "#login")}
+              onClick={() => {
+                window.location.hash = "#login";
+              }}
+              type="button"
             >
               Sign in
             </button>

@@ -23,7 +23,7 @@ export const api = {
     return this.request(endpoint);
   },
 
-  async post(endpoint: string, data: any) {
+  async post(endpoint: string, data: unknown) {
     return this.request(endpoint, {
       method: "POST",
       body: JSON.stringify(data),

@@ -10,21 +10,20 @@
     "dev:web": "bun run --filter web dev",
     "dev:api": "bun run --filter api dev",
     "build": "bun run --filter web build",
-    "lint": "ultracite check .",
-    "lint:fix": "ultracite fix .",
-    "format": "ultracite format .",
+    "lint": "biome check packages/",
+    "lint:fix": "biome check --write packages/",
+    "format": "biome format --write packages/",
     "typecheck": "bun run --filter web typecheck && bun run --filter api typecheck",
     "prepare": "husky"
   },
   "lint-staged": {
     "*.{ts,tsx,js,jsx}": [
-      "ultracite fix"
+      "biome check --write --no-errors-on-unmatched"
     ]
   },
   "devDependencies": {
     "@biomejs/biome": "2.3.8",
     "husky": "^9.1.7",
-    "lint-staged": "^16.2.7",
-    "ultracite": "6.4.0"
+    "lint-staged": "^16.2.7"
   }
 }

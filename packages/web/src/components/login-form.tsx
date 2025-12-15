@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useAuth } from "../contexts/AuthContext";
+import { useAuth } from "../contexts/auth-context";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 
@@ -28,18 +28,13 @@ export function LoginForm() {
     <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
       <div className="w-full max-w-md rounded-lg bg-white p-8 shadow-lg">
         <div className="mb-8 text-center">
-          <h1 className="mb-2 font-bold text-3xl text-gray-900">
-            Welcome Back
-          </h1>
+          <h1 className="mb-2 font-bold text-3xl text-gray-900">Welcome Back</h1>
           <p className="text-gray-600">Sign in to your ChristianAI account</p>
         </div>
 
         <form className="space-y-6" onSubmit={handleSubmit}>
           <div>
-            <label
-              className="mb-2 block font-medium text-gray-700 text-sm"
-              htmlFor="email"
-            >
+            <label className="mb-2 block font-medium text-gray-700 text-sm" htmlFor="email">
               Email
             </label>
             <Input
@@ -54,10 +49,7 @@ export function LoginForm() {
           </div>
 
           <div>
-            <label
-              className="mb-2 block font-medium text-gray-700 text-sm"
-              htmlFor="password"
-            >
+            <label className="mb-2 block font-medium text-gray-700 text-sm" htmlFor="password">
               Password
             </label>
             <Input
@@ -87,7 +79,10 @@ export function LoginForm() {
             Don't have an account?{" "}
             <button
               className="font-medium text-blue-600 hover:text-blue-500"
-              onClick={() => (window.location.hash = "#signup")}
+              onClick={() => {
+                window.location.hash = "#signup";
+              }}
+              type="button"
             >
               Sign up
             </button>

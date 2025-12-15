@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useAuth } from "../contexts/AuthContext";
+import { useAuth } from "../contexts/auth-context";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 
@@ -44,7 +44,7 @@ export function AuthPage() {
           setError(error.message);
         }
       }
-    } catch (err) {
+    } catch (_err) {
       setError("An unexpected error occurred");
     } finally {
       setLoading(false);
@@ -58,8 +58,10 @@ export function AuthPage() {
           <div className="mb-6">
             <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-green-100">
               <svg
+                aria-label="Check mark icon"
                 className="h-8 w-8 text-green-600"
                 fill="none"
+                role="img"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
               >
@@ -71,18 +73,12 @@ export function AuthPage() {
                 />
               </svg>
             </div>
-            <h1 className="mb-2 font-bold text-2xl text-gray-900">
-              Check Your Email
-            </h1>
+            <h1 className="mb-2 font-bold text-2xl text-gray-900">Check Your Email</h1>
             <p className="text-gray-600">
               We've sent a confirmation link to <strong>{email}</strong>
             </p>
           </div>
-          <Button
-            onClick={() => setIsSignUp(false)}
-            variant="outline"
-            className="w-full"
-          >
+          <Button onClick={() => setIsSignUp(false)} variant="outline" className="w-full">
             Back to Sign In
           </Button>
         </div>
@@ -106,10 +102,7 @@ export function AuthPage() {
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label
-              htmlFor="email"
-              className="block font-medium text-gray-700 text-sm mb-2"
-            >
+            <label htmlFor="email" className="block font-medium text-gray-700 text-sm mb-2">
               Email
             </label>
             <Input
@@ -124,10 +117,7 @@ export function AuthPage() {
           </div>
 
           <div>
-            <label
-              htmlFor="password"
-              className="block font-medium text-gray-700 text-sm mb-2"
-            >
+            <label htmlFor="password" className="block font-medium text-gray-700 text-sm mb-2">
               Password
             </label>
             <Input
@@ -136,9 +126,7 @@ export function AuthPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder={
-                isSignUp
-                  ? "Create a password (min 6 characters)"
-                  : "Enter your password"
+                isSignUp ? "Create a password (min 6 characters)" : "Enter your password"
               }
               required
               className="w-full"

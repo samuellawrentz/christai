@@ -1,14 +1,42 @@
 {
   "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
-  "extends": ["ultracite/core", "ultracite/react"],
+  "files": {
+    "includes": [
+      "**/packages/**/*.ts",
+      "**/packages/**/*.tsx",
+      "**/packages/**/*.js",
+      "**/packages/**/*.jsx",
+      "!**/node_modules",
+      "!**/dist",
+      "!**/.next",
+      "!**/build"
+    ]
+  },
   "javascript": {
     "globals": ["Bun"]
   },
   "linter": {
+    "enabled": true,
     "rules": {
+      "recommended": true,
       "suspicious": {
         "noUnknownAtRules": "off"
+      },
+      "style": {
+        "noNonNullAssertion": "off"
+      },
+      "a11y": {
+        "useSemanticElements": "off"
       }
     }
+  },
+  "formatter": {
+    "enabled": true,
+    "formatWithErrors": false,
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineEnding": "lf",
+    "lineWidth": 100,
+    "attributePosition": "auto"
   }
 }
