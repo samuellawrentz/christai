@@ -1,8 +1,6 @@
-# API utility
-for making requests to your
-backend;
+// API utility for making requests to your backend
 export const api = {
-  baseUrl: import.meta.env.VITE_API_URL || "http://localhost:3001",
+  baseUrl: import.meta.env.VITE_API_URL || "https://api.christianai.world",
 
   async request(endpoint: string, options: RequestInit = {}) {
     const url = `${this.baseUrl}${endpoint}`;
