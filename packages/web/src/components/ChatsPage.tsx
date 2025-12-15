@@ -1,4 +1,5 @@
 import { useAuth } from "../contexts/AuthContext";
+import { api } from "../lib/api";
 import { Button } from "./ui/button";
 
 export function ChatsPage() {
@@ -6,6 +7,16 @@ export function ChatsPage() {
 
   const handleSignOut = async () => {
     await signOut();
+  };
+
+  // Example: Test API connection
+  const testApi = async () => {
+    try {
+      const health = await api.health();
+      console.log("API is healthy:", health);
+    } catch (error) {
+      console.error("API connection failed:", error);
+    }
   };
 
   return (
@@ -16,6 +27,9 @@ export function ChatsPage() {
           <h1 className="font-bold text-2xl text-blue-600">ChristianAI</h1>
           <div className="flex items-center gap-4">
             <span className="text-gray-700">Welcome, {user?.email}</span>
+            <Button onClick={testApi} variant="ghost">
+              Test API
+            </Button>
             <Button onClick={handleSignOut} variant="outline">
               Sign Out
             </Button>
