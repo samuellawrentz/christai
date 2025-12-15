@@ -81,7 +81,13 @@ function LandingPage() {
           {/* Header */}
           <header className="container relative mx-auto">
             <nav className="flex items-center justify-between">
-              <h1 className="font-bold text-2xl text-white drop-shadow-lg">ChristianAI</h1>
+              <div className="">
+                <img
+                  src="/images/logo.svg"
+                  alt="ChristianAI Logo"
+                  className="size-[300px] invert absolute -top-[100px] left-0"
+                />
+              </div>
               <div className="space-x-4">
                 {user ? (
                   <Link to="/chats">
