@@ -8,15 +8,46 @@ import {
   Users,
   Zap,
 } from "lucide-react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom/client";
-import { BrowserRouter, Link, Navigate, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter,
+  Link,
+  Navigate,
+  Route,
+  Routes,
+  useLocation,
+} from "react-router-dom";
 import { AuthPage } from "./components/AuthPage";
 import { ChatsPage } from "./components/ChatsPage";
 import { Button } from "./components/ui/button";
+import { ButtonGroup } from "./components/ui/button-group";
 import { Input } from "./components/ui/input";
 import { AuthProvider, useAuth } from "./contexts/AuthContext";
 import "./index.css";
+
+// Type declaration for gtag
+declare global {
+  interface Window {
+    gtag: (command: string, targetId: string, config?: any) => void;
+  }
+}
+
+// Component to track page views on route changes (required for SPA routing)
+function RouteTracker() {
+  const location = useLocation();
+
+  useEffect(() => {
+    // Track route changes as page views for GA
+    if (window.gtag) {
+      window.gtag("config", "G-F2FVEHRW7E", {
+        page_path: location.pathname + location.search,
+      });
+    }
+  }, [location]);
+
+  return null;
+}
 
 function LandingPage() {
   const [email, setEmail] = useState("");
@@ -92,18 +123,19 @@ function LandingPage() {
                   </p>
                 </div>
               ) : (
-                <form className="flex gap-4" onSubmit={handleSubmit}>
-                  <Input
-                    className="flex-1"
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="Enter your email"
-                    required
-                    type="email"
-                    value={email}
-                  />
-                  <Button size="lg" type="submit">
-                    Join Waitlist
-                  </Button>
+                <form onSubmit={handleSubmit}>
+                  <ButtonGroup>
+                    <Input
+                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder="Enter your email"
+                      required
+                      type="email"
+                      value={email}
+                    />
+                    <Button size="lg" type="submit">
+                      Join Waitlist
+                    </Button>
+                  </ButtonGroup>
                 </form>
               )}
             </div>
@@ -374,18 +406,20 @@ function LandingPage() {
                 </p>
               </div>
             ) : (
-              <form className="flex gap-4" onSubmit={handleSubmit}>
-                <Input
-                  className="flex-1 bg-white text-gray-900"
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Enter your email"
-                  required
-                  type="email"
-                  value={email}
-                />
-                <Button size="lg" type="submit" variant="secondary">
-                  Join Waitlist
-                </Button>
+              <form onSubmit={handleSubmit}>
+                <ButtonGroup>
+                  <Input
+                    className="bg-white text-gray-900"
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="Enter your email"
+                    required
+                    type="email"
+                    value={email}
+                  />
+                  <Button size="lg" type="submit" variant="secondary">
+                    Join Waitlist
+                  </Button>
+                </ButtonGroup>
               </form>
             )}
           </div>
@@ -423,6 +457,7 @@ function App() {
 
   return (
     <BrowserRouter>
+      <RouteTracker />
       <Routes>
         <Route element={<LandingPage />} path="/" />
         <Route
