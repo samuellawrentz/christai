@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: christianai-api
+    runtime: node
+    buildCommand: bun install
+    startCommand: bun run start
+    rootDir: packages/api
