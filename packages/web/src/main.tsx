@@ -17,6 +17,7 @@ import { Button } from "./components/ui/button";
 import { ButtonGroup } from "./components/ui/button-group";
 import { Input } from "./components/ui/input";
 import { AuthProvider, useAuth } from "./contexts/auth-context";
+import { api } from "./lib/api";
 import "./index.css";
 
 // Type declaration for gtag
@@ -45,13 +46,25 @@ function RouteTracker() {
 function LandingPage() {
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState("");
   const { user } = useAuth();
   const isDev = import.meta.env.DEV;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent, source?: string) => {
     e.preventDefault();
-    // TODO: Implement waitlist signup
-    setSubmitted(true);
+    setIsSubmitting(true);
+    setError("");
+
+    try {
+      await api.post("/api/waitlist", { email, source });
+      setSubmitted(true);
+      setEmail("");
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to join waitlist. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -106,7 +119,12 @@ function LandingPage() {
                   <p className="text-green-600 text-sm">We'll notify you when we launch.</p>
                 </div>
               ) : (
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={(e) => handleSubmit(e, "hero")}>
+                  {error && (
+                    <div className="mb-4 rounded-lg border border-red-200 bg-red-50 p-3">
+                      <p className="text-red-600 text-sm">{error}</p>
+                    </div>
+                  )}
                   <ButtonGroup>
                     <Input
                       onChange={(e) => setEmail(e.target.value)}
@@ -114,9 +132,10 @@ function LandingPage() {
                       required
                       type="email"
                       value={email}
+                      disabled={isSubmitting}
                     />
-                    <Button size="lg" type="submit">
-                      Join Waitlist
+                    <Button size="lg" type="submit" disabled={isSubmitting}>
+                      {isSubmitting ? "Joining..." : "Join Waitlist"}
                     </Button>
                   </ButtonGroup>
                 </form>
@@ -355,7 +374,12 @@ function LandingPage() {
                 <p className="text-sm opacity-90">We'll notify you when we launch.</p>
               </div>
             ) : (
-              <form onSubmit={handleSubmit}>
+              <form onSubmit={(e) => handleSubmit(e, "final_cta")}>
+                {error && (
+                  <div className="mb-4 rounded-lg border border-white/20 bg-white/10 p-3 backdrop-blur">
+                    <p className="text-sm">{error}</p>
+                  </div>
+                )}
                 <ButtonGroup>
                   <Input
                     className="bg-white text-gray-900"
@@ -364,9 +388,10 @@ function LandingPage() {
                     required
                     type="email"
                     value={email}
+                    disabled={isSubmitting}
                   />
-                  <Button size="lg" type="submit" variant="secondary">
-                    Join Waitlist
+                  <Button size="lg" type="submit" variant="secondary" disabled={isSubmitting}>
+                    {isSubmitting ? "Joining..." : "Join Waitlist"}
                   </Button>
                 </ButtonGroup>
               </form>
