@@ -1,7 +1,50 @@
 import { Button, Input } from "@christianai/ui";
+import { Book, Heart, Zap } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { AuthLayout } from "../../layouts/auth-layout";
 import { useAuth } from "../../shared/hooks/use-auth";
+import { AuthFeatureCard } from "./components/auth-feature-card";
+
+function SignupContent() {
+  return (
+    <div className="bg-gradient-to-br from-indigo-600 to-purple-700 p-12 flex flex-col justify-center text-white">
+      <div className="max-w-md">
+        <h1 className="font-bold text-4xl mb-6 leading-tight">
+          Begin Your Spiritual Journey
+          <span className="block text-indigo-200 text-2xl mt-2">
+            Create Your ChristianAI Account
+          </span>
+        </h1>
+
+        <div className="space-y-4 text-indigo-50">
+          <p className="text-lg">
+            Join thousands of believers deepening their faith through AI-powered biblical
+            conversations.
+          </p>
+
+          <div className="space-y-3 pt-4">
+            <AuthFeatureCard
+              icon={<Heart className="h-6 w-6 flex-shrink-0 mt-0.5" />}
+              title="Divine Conversations"
+              description="Experience meaningful dialogue with Moses, Joshua, Jesus, and more"
+            />
+            <AuthFeatureCard
+              icon={<Zap className="h-6 w-6 flex-shrink-0 mt-0.5" />}
+              title="Always Available"
+              description="Access spiritual wisdom and guidance anytime, anywhere"
+            />
+            <AuthFeatureCard
+              icon={<Book className="h-6 w-6 flex-shrink-0 mt-0.5" />}
+              title="Biblically Grounded"
+              description="Every conversation rooted in Scripture and authentic Christian teachings"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export function SignupPage() {
   const [email, setEmail] = useState("");
@@ -42,44 +85,48 @@ export function SignupPage() {
 
   if (success) {
     return (
-      <div className="text-center">
-        <div className="mb-6">
-          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-green-100">
-            <svg
-              aria-label="Check mark icon"
-              className="h-8 w-8 text-green-600"
-              fill="none"
-              role="img"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M5 13l4 4L19 7"
-              />
-            </svg>
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
+        <div className="bg-white rounded-lg shadow-xl p-12 max-w-md w-full">
+          <div className="text-center">
+            <div className="mb-6">
+              <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-green-100">
+                <svg
+                  aria-label="Check mark icon"
+                  className="h-8 w-8 text-green-600"
+                  fill="none"
+                  role="img"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M5 13l4 4L19 7"
+                  />
+                </svg>
+              </div>
+              <h1 className="mb-2 font-bold text-2xl text-gray-900">Check Your Email</h1>
+              <p className="text-gray-600">
+                We've sent a confirmation link to <strong>{email}</strong>
+              </p>
+            </div>
+            <Link to="/">
+              <Button variant="outline" className="w-full">
+                Back to Sign In
+              </Button>
+            </Link>
           </div>
-          <h1 className="mb-2 font-bold text-2xl text-gray-900">Check Your Email</h1>
-          <p className="text-gray-600">
-            We've sent a confirmation link to <strong>{email}</strong>
-          </p>
         </div>
-        <Link to="/">
-          <Button variant="outline" className="w-full">
-            Back to Sign In
-          </Button>
-        </Link>
       </div>
     );
   }
 
   return (
-    <>
-      <div className="text-center mb-8">
-        <h1 className="font-bold text-3xl text-gray-900 mb-2">Create Account</h1>
-        <p className="text-gray-600">Join ChristianAI to start your spiritual journey</p>
+    <AuthLayout content={<SignupContent />}>
+      <div className="mb-8">
+        <h2 className="font-bold text-2xl text-gray-900 mb-2">Create Account</h2>
+        <p className="text-gray-600">Start your spiritual journey today</p>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-6">
@@ -147,6 +194,6 @@ export function SignupPage() {
           </Link>
         </p>
       </div>
-    </>
+    </AuthLayout>
   );
 }

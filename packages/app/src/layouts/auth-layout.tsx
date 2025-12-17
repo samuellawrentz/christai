@@ -1,10 +1,23 @@
-import { Outlet } from "react-router-dom";
+import type React from "react";
 
-export function AuthLayout() {
+interface AuthLayoutProps {
+  content: React.ReactNode;
+  children: React.ReactNode;
+}
+
+export function AuthLayout({ content, children }: AuthLayoutProps) {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
-      <div className="bg-white rounded-lg shadow-lg p-8 w-full max-w-md">
-        <Outlet />
+      <div className="bg-white rounded-lg shadow-xl w-full max-w-6xl overflow-hidden">
+        <div className="grid md:grid-cols-2 min-h-[600px]">
+          {/* Left Column - SEO Content */}
+          {content}
+
+          {/* Right Column - Form */}
+          <div className="p-12 flex flex-col justify-center">
+            <div className="max-w-md mx-auto w-full">{children}</div>
+          </div>
+        </div>
       </div>
     </div>
   );

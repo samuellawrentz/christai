@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { ChatsPage } from "./components/chats-page";
-import { AuthLayout } from "./layouts/auth-layout";
 import { LoginPage } from "./pages/auth/login";
 import { ProtectedRoute } from "./pages/auth/protected-route";
 import { SignupPage } from "./pages/auth/signup";
@@ -39,10 +38,14 @@ function App() {
     <BrowserRouter>
       <RouteTracker />
       <Routes>
-        <Route element={userAuthenticated ? <Navigate replace to="/chats" /> : <AuthLayout />}>
-          <Route element={<LoginPage />} path="/" />
-          <Route element={<SignupPage />} path="/signup" />
-        </Route>
+        <Route
+          path="/"
+          element={userAuthenticated ? <Navigate replace to="/chats" /> : <LoginPage />}
+        />
+        <Route
+          path="/signup"
+          element={userAuthenticated ? <Navigate replace to="/chats" /> : <SignupPage />}
+        />
         <Route
           element={
             <ProtectedRoute>
