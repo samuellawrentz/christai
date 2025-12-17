@@ -7,6 +7,7 @@ export {
   buttonGroupVariants,
 } from "./components/button-group";
 export { Input } from "./components/input";
+export { Loader, type LoaderProps } from "./components/loader";
 export { Separator } from "./components/separator";
 
 // Utils

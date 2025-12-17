@@ -16,7 +16,7 @@
     "lint": "biome check packages/",
     "lint:fix": "biome check --write packages/",
     "format": "biome format --write packages/",
-    "typecheck": "bun run --filter website typecheck && bun run --filter app typecheck && bun run --filter api typecheck",
+    "typecheck": "bun run --filter website typecheck && bun run --filter app typecheck && bun run --filter api typecheck && bun run --filter ui typecheck",
     "prepare": "husky"
   },
   "lint-staged": {

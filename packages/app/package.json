@@ -5,8 +5,11 @@
   "private": true,
   "scripts": {
     "dev": "vite",
-    "build": "bun --bun x vite build",
+    "build": "bun run typecheck && bun --bun x vite build",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "zustand": "^5.0.9"
   }
 }

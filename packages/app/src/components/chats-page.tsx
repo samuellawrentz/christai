@@ -1,12 +1,15 @@
 import { Button } from "@christianai/ui";
-import { useAuth } from "../contexts/auth-context";
+import { useNavigate } from "react-router-dom";
 import { api } from "../lib/api";
+import { useAuth } from "../shared/hooks/use-auth";
 
 export function ChatsPage() {
   const { user, signOut } = useAuth();
+  const navigate = useNavigate();
 
   const handleSignOut = async () => {
     await signOut();
+    navigate("/", { replace: true });
   };
 
   // Example: Test API connection
