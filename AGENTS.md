@@ -71,25 +71,6 @@ Automatically runs on commit:
 - Radix UI primitives
 - Tailwind styles
 
-## Environment Variables
-
-**Website:**
-```
-VITE_API_URL=https://api.christianai.world
-```
-
-**App:**
-```
-VITE_SUPABASE_URL=your_supabase_url
-VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
-VITE_API_URL=https://api.christianai.world
-```
-
-**API:**
-```
-PORT=3001
-```
-
 ## Tech Stack
 
 - Runtime: Bun
@@ -99,9 +80,3 @@ PORT=3001
 - Auth: Supabase Auth
 - Hosting: GitHub Pages, Vercel, Render
 
-## Workflow
-
-1. Make changes
-2. Pre-commit runs automatically (lint + typecheck)
-3. Push to trigger auto-deploy
-4. Services deploy to respective platforms

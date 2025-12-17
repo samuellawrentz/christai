@@ -1,71 +1,43 @@
-# ChristianAI Website
+# Astro Starter Kit: Minimal
 
-Marketing website for ChristianAI - landing page, waitlist, and information.
-
-## 🚀 Quick Start
-
-### Local Development
-```bash
-# Install dependencies
-bun install
-
-# Start development server
-bun run dev
-
-# Build for production
-bun run build
-
-# Preview production build
-bun run preview
+```sh
+bun create astro@latest -- --template minimal
 ```
 
-### Environment Variables
-Create a `.env.local` file with:
-```
-VITE_API_URL=https://api.christianai.world
-```
+> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
 
-## 🚀 Deployment
+## 🚀 Project Structure
 
-### GitHub Pages (Automatic)
-The website automatically deploys to GitHub Pages when changes are pushed to `main` branch in the `packages/website` folder.
+Inside of your Astro project, you'll see the following folders and files:
 
-**Workflow**: `.github/workflows/deploy-website.yml`
-
-**DNS Configuration**:
-```
-Type: CNAME
-Name: @
-Value: [your-username].github.io
-```
-
-**GitHub Settings**:
-1. Go to repository Settings → Pages
-2. Source: GitHub Actions
-3. Custom domain: `christianai.world`
-
-## 📁 Project Structure
-
-```
-packages/website/
+```text
+/
+├── public/
 ├── src/
-│   ├── main.ts         # TypeScript logic (forms, API calls)
-│   └── style.css       # Tailwind imports
-├── public/             # Static assets
-├── index.html          # Landing page HTML
-└── package.json        # Dependencies
+│   └── pages/
+│       └── index.astro
+└── package.json
 ```
 
-## 🎨 Features
+Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
 
-- **Static Site**: Pure HTML/CSS/TypeScript compiled by Vite
-- **Waitlist Forms**: Email collection with API integration
-- **Tailwind CSS**: Utility-first styling
-- **SEO Optimized**: Meta tags, Open Graph, structured data
-- **Analytics**: Google Analytics tracking
+There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
 
-## 📊 Monitoring
+Any static assets, like images, can be placed in the `public/` directory.
 
-- **Analytics**: Google Analytics (G-F2FVEHRW7E)
-- **Deployment**: GitHub Actions logs
-- **Uptime**: GitHub Pages SLA
+## 🧞 Commands
+
+All commands are run from the root of the project, from a terminal:
+
+| Command                   | Action                                           |
+| :------------------------ | :----------------------------------------------- |
+| `bun install`             | Installs dependencies                            |
+| `bun dev`             | Starts local dev server at `localhost:4321`      |
+| `bun build`           | Build your production site to `./dist/`          |
+| `bun preview`         | Preview your build locally, before deploying     |
+| `bun astro ...`       | Run CLI commands like `astro add`, `astro check` |
+| `bun astro -- --help` | Get help using the Astro CLI                     |
+
+## 👀 Want to learn more?
+
+Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).

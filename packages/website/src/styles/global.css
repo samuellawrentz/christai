@@ -1,0 +1,6 @@
+@import "@christianai/ui/styles.css";
+
+/* Additional website-specific styles */
+.gradient-radial {
+  background: radial-gradient(ellipse at center, rgba(255,255,255,0.15) 0%, rgba(0,0,0,0.1) 100%);
+}

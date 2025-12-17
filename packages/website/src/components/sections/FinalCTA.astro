@@ -1,0 +1,15 @@
+---
+// Import UI components
+import WaitlistForm from "../forms/WaitlistForm.tsx";
+---
+
+<section
+  id="final-cta"
+  class="mx-auto mt-32 max-w-4xl rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 p-12 text-center text-white shadow-xl"
+>
+  <h2 class="mb-4 font-bold text-4xl">Ready to Begin Your Journey?</h2>
+  <p class="mb-8 text-xl opacity-90">
+    Join thousands on the waitlist for early access to ChristianAI
+  </p>
+  <WaitlistForm source="final_cta" className="mx-auto max-w-md" client:load />
+</section>

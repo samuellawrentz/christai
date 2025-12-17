@@ -1,12 +1,19 @@
 {
   "name": "website",
   "version": "0.0.1",
-  "type": "module",
+  "dependencies": {
+    "@astrojs/mdx": "^4.3.13",
+    "@astrojs/react": "^4.2.1",
+    "@christianai/ui": "workspace:*",
+    "astro": "^5.16.6"
+  },
   "private": true,
   "scripts": {
-    "dev": "vite",
-    "build": "bun run typecheck && bun --bun x vite build",
-    "preview": "vite preview",
-    "typecheck": "tsc --noEmit"
-  }
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "typecheck": "astro check",
+    "astro": "astro"
+  },
+  "type": "module"
 }

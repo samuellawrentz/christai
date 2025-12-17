@@ -1,0 +1,97 @@
+---
+import "../styles/global.css";
+
+export interface Props {
+  title: string;
+  description?: string;
+  image?: string;
+  url?: string;
+}
+
+const { title, description, image, url } = Astro.props;
+const canonicalUrl = url || new URL(Astro.request.url).origin + Astro.url.pathname;
+const defaultDescription = "Experience meaningful conversations with Christian figures like Moses, Joshua, and Jesus through advanced AI technology. Join our waitlist for spiritual guidance and biblical wisdom.";
+const defaultImage = "/images/moses.png";
+---
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{title}</title>
+  <meta name="description" content={description || defaultDescription}>
+  <meta name="keywords" content="Christian AI chat, biblical figures AI, Moses AI conversation, Joshua AI chat, Jesus AI dialogue, spiritual conversations, Christian technology, faith AI, biblical wisdom, AI chatbot Christian, religious AI, Christian guidance, Bible study AI, faith journey, spiritual mentor AI" />
+  <meta name="author" content="ChristianAI">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href={canonicalUrl} />
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content={canonicalUrl}>
+  <meta property="og:title" content={title}>
+  <meta property="og:description" content={description || defaultDescription}>
+  <meta property="og:image" content={image || defaultImage}>
+  <meta property="og:site_name" content="ChristianAI">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content={canonicalUrl}>
+  <meta property="twitter:title" content={title}>
+  <meta property="twitter:description" content={description || defaultDescription}>
+  <meta property="twitter:image" content={image || defaultImage}>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Baskervville:ital,wght@0,400..700;1,400..700&family=Esteban&display=swap"
+    rel="stylesheet"
+  >
+
+  <!-- Favicons -->
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="manifest" href="/images/site.webmanifest">
+
+  <!-- Structured Data -->
+  <script type="application/ld+json" is:inline set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "ChristianAI",
+    "description": "Chat with Biblical Figures using advanced AI technology for spiritual guidance and biblical wisdom",
+    "url": canonicalUrl,
+    "applicationCategory": "LifestyleApplication",
+    "operatingSystem": "Web Browser",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "audience": {
+      "@type": "Audience",
+      "audienceType": "Christians seeking spiritual guidance and biblical wisdom"
+    },
+    "featureList": [
+      "AI conversations with Moses",
+      "AI conversations with Joshua",
+      "AI conversations with Jesus Christ",
+      "24/7 spiritual guidance",
+      "Biblically grounded responses",
+      "Private and secure conversations"
+    ]
+  })} />
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-F2FVEHRW7E"></script>
+  <script is:inline>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { window.dataLayer.push(arguments); }
+    gtag("js", new Date());
+    gtag("config", "G-F2FVEHRW7E");
+  </script>
+</head>
+<body>
+  <slot />
+</body>
+</html>
