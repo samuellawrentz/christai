@@ -6,14 +6,17 @@
     "packages/*"
   ],
   "scripts": {
-    "dev": "bun run --filter web dev & bun run --filter api dev",
-    "dev:web": "bun run --filter web dev",
+    "dev": "bun run --filter website dev & bun run --filter app dev & bun run --filter api dev",
+    "dev:website": "bun run --filter website dev",
+    "dev:app": "bun run --filter app dev",
     "dev:api": "bun run --filter api dev",
-    "build": "bun run --filter web build",
+    "build": "bun run --filter website build && bun run --filter app build",
+    "build:website": "bun run --filter website build",
+    "build:app": "bun run --filter app build",
     "lint": "biome check packages/",
     "lint:fix": "biome check --write packages/",
     "format": "biome format --write packages/",
-    "typecheck": "bun run --filter web typecheck && bun run --filter api typecheck",
+    "typecheck": "bun run --filter website typecheck && bun run --filter app typecheck && bun run --filter api typecheck",
     "prepare": "husky"
   },
   "lint-staged": {

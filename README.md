@@ -1,149 +1,151 @@
 # ChristianAI
 
-A full-stack web application for spiritual guidance and biblical conversations, built with React frontend and Bun backend.
-
-## 🌟 Live Demo
-
-- **Frontend**: [https://christianai.world](https://christianai.world)
-- **API**: [https://api.christianai.world](https://api.christianai.world)
-
-## 📋 Overview
-
-ChristianAI provides an interactive platform where users can engage in meaningful conversations with biblical figures like Moses, Joshua, and Jesus, powered by advanced AI technology.
+A platform for meaningful conversations with biblical figures using advanced AI technology.
 
 ## 🏗️ Project Structure
 
 ```
 christianai/
 ├── packages/
-│   ├── web/          # React + Vite frontend (deployed to GitHub Pages)
-│   └── api/          # Bun backend API (deployed to Render)
-├── .github/workflows/ # CI/CD pipelines
-├── render.yaml       # Backend deployment configuration
-└── AGENTS.md         # Agent development instructions
+│   ├── website/        # Marketing website (GitHub Pages)
+│   ├── app/           # Main application (Vercel)
+│   └── api/           # Backend API (Render)
+├── .github/
+│   └── workflows/
+│       └── deploy-website.yml  # Auto-deploy website to GitHub Pages
+└── package.json       # Workspace root
 ```
 
 ## 🚀 Quick Start
 
-### Prerequisites
-- [Bun](https://bun.sh/) installed
-- [Node.js](https://nodejs.org/) (for some tooling)
-
-### Installation
+### Install Dependencies
 ```bash
 bun install
 ```
 
 ### Development
 ```bash
-# Start both frontend and backend
+# Run all services
 bun run dev
 
-# Or start individually:
-bun run dev:web    # Frontend at http://localhost:5173
-bun run dev:api    # Backend at http://localhost:3001
+# Run individually
+bun run dev:website   # http://localhost:5173
+bun run dev:app      # http://localhost:5174
+bun run dev:api      # http://localhost:3001
 ```
 
-## 🚀 Deployment
+### Build
+```bash
+# Build all
+bun run build
 
-### Frontend (GitHub Pages)
-- **Domain**: `christianai.world`
-- **Auto-deploys** when `packages/web/**` files change
-- **Workflow**: `.github/workflows/deploy.yml`
+# Build individually
+bun run build:website
+bun run build:app
+```
 
-### Backend (Render)
-- **Domain**: `api.christianai.world`
-- **Auto-deploys** when `packages/api/**` files change
-- **Config**: `render.yaml`
+## 🌍 Deployment
 
-## 🔧 Environment Setup
+### Architecture
+| Service | Hosting | Domain | Auto-Deploy |
+|---------|---------|--------|-------------|
+| **Website** | GitHub Pages | `christianai.world` | ✅ On push to `packages/website` |
+| **App** | Vercel | `app.christianai.world` | ✅ On push to `packages/app` |
+| **API** | Render | `api.christianai.world` | ✅ On push to `packages/api` |
 
-### Frontend
-Create `packages/web/.env`:
+### Setup Guide
+
+#### 1. Website (GitHub Pages)
+Already configured. Deploys automatically via GitHub Actions when `packages/website` changes.
+
+**DNS**: CNAME `@` → `[username].github.io`
+
+#### 2. App (Vercel)
+1. Connect GitHub repo to Vercel
+2. Configure:
+   - Root Directory: `packages/app`
+   - Framework: Vite
+   - Build Command: `bun run build`
+3. Add environment variables (Supabase credentials)
+4. Set custom domain: `app.christianai.world`
+
+**DNS**: CNAME `app` → `cname.vercel-dns.com`
+
+#### 3. API (Render)
+Already deployed at `api.christianai.world`.
+
+## 📦 Packages
+
+### [Website](./packages/website)
+Static marketing site built with Vite + Tailwind CSS.
+- Landing page
+- Waitlist forms
+- SEO optimized
+
+### [App](./packages/app)
+React SPA with authentication and chat features.
+- Supabase authentication
+- Chat with biblical figures
+- Protected routes
+
+### [API](./packages/api)
+Bun-based backend API.
+- Waitlist management
+- Future: Chat API endpoints
+
+## 🛠️ Development
+
+### Code Quality
+```bash
+# Lint
+bun run lint
+
+# Format
+bun run format
+
+# Type check
+bun run typecheck
+```
+
+### Pre-commit Hooks
+Husky + lint-staged automatically format and lint staged files before commit.
+
+## 🔧 Environment Variables
+
+### Website
 ```env
-VITE_SUPABASE_URL=your_supabase_url
-VITE_SUPABASE_ANON_KEY=your_supabase_key
 VITE_API_URL=https://api.christianai.world
 ```
 
-### Backend
-Environment variables set in Render dashboard:
+### App
 ```env
-NODE_ENV=production
-PORT=10000  # Auto-assigned by Render
+VITE_SUPABASE_URL=your_supabase_url
+VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+VITE_API_URL=https://api.christianai.world
 ```
 
-## 🛠️ Tech Stack
-
-### Frontend
-- **React 18** with TypeScript
-- **Vite** for build tooling
-- **Tailwind CSS** + **shadcn/ui** for styling
-- **React Router** for navigation
-- **Supabase** for authentication
-- **Google Analytics** for tracking
-
-### Backend
-- **Bun** runtime with TypeScript
-- **Native Bun.serve()** for HTTP server
-- RESTful API design
-- CORS configured for frontend domain
-
-### DevOps & Tooling
-- **Ultracite** (Biome-based) for linting/formatting
-- **GitHub Actions** for CI/CD
-- **Render** for backend hosting
-- **GitHub Pages** for frontend hosting
-- **Supabase** for database and auth
-
-## 📡 API Endpoints
-
-- `GET /api/health` - Health check endpoint
-- Returns: `{"status": "ok"}`
-
-## 🔧 Development Commands
-
-```bash
-# Root level
-bun run dev              # Start all services
-bun run dev:web          # Frontend only
-bun run dev:api          # Backend only
-bun run build            # Build frontend
-bun run lint             # Check code quality
-bun run lint:fix         # Auto-fix issues
-bun run format           # Format code
-bun run typecheck        # Type check all packages
+### API
+```env
+PORT=3001
 ```
+
+## 📚 Tech Stack
+
+- **Frontend**: React 19, Vite, Tailwind CSS 4
+- **Backend**: Bun
+- **Database**: Supabase (PostgreSQL)
+- **Auth**: Supabase Auth
+- **Hosting**: GitHub Pages, Vercel, Render
+- **CI/CD**: GitHub Actions
+- **Package Manager**: Bun
 
 ## 🤝 Contributing
 
-### For AI Agents
-See `AGENTS.md` for comprehensive development guidelines, project structure, and agent-specific instructions.
-
-### Code Quality
-- Uses Ultracite for consistent code formatting
-- TypeScript for type safety
-- ESLint rules enforced
-- Pre-commit hooks for quality checks
-
-## 📚 Documentation
-
-- **Frontend**: See `packages/web/README.md`
-- **Backend**: See `packages/api/README.md`
-- **Agents**: See `AGENTS.md`
-
-## 🐛 Troubleshooting
-
-### Common Issues
-- **API calls failing**: Check `VITE_API_URL` in frontend `.env`
-- **Auth not working**: Verify Supabase credentials
-- **Build failing**: Ensure all dependencies installed with `bun install`
-- **DNS issues**: Custom domain propagation takes 5-30 minutes
-
-### Health Checks
-- **API Health**: `https://api.christianai.world/api/health`
-- **Frontend**: `https://christianai.world`
+1. Create a feature branch
+2. Make changes
+3. Run `bun run lint` and `bun run typecheck`
+4. Submit a pull request
 
 ## 📄 License
 
-This project is private and proprietary.
+Copyright © 2024 ChristianAI

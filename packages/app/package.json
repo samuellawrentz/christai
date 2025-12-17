@@ -1,11 +1,11 @@
 {
-  "name": "web",
+  "name": "app",
   "version": "0.0.1",
   "type": "module",
   "private": true,
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "bun --bun x vite build",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit"
   },

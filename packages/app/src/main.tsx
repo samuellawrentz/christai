@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { AuthPage } from "./components/auth-page";
@@ -15,7 +15,7 @@ declare global {
 function RouteTracker() {
   const location = useLocation();
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (window.gtag) {
       window.gtag("config", "G-F2FVEHRW7E", {
         page_path: location.pathname + location.search,
@@ -44,22 +44,21 @@ function App() {
     <BrowserRouter>
       <RouteTracker />
       <Routes>
+        <Route element={<Navigate replace to="/chats" />} path="/" />
         <Route element={user ? <Navigate replace to="/chats" /> : <AuthPage />} path="/auth" />
-        <Route element={user ? <ChatsPage /> : <Navigate replace to="/" />} path="/chats" />
+        <Route element={user ? <ChatsPage /> : <Navigate replace to="/auth" />} path="/chats" />
       </Routes>
     </BrowserRouter>
   );
 }
 
 const rootElement = document.getElementById("root");
-if (!rootElement) {
-  throw new Error("Root element not found");
+if (rootElement) {
+  ReactDOM.createRoot(rootElement).render(
+    <React.StrictMode>
+      <AuthProvider>
+        <App />
+      </AuthProvider>
+    </React.StrictMode>,
+  );
 }
-
-ReactDOM.createRoot(rootElement).render(
-  <React.StrictMode>
-    <AuthProvider>
-      <App />
-    </AuthProvider>
-  </React.StrictMode>,
-);

@@ -1,0 +1,13 @@
+{
+  "buildCommand": "bun --bun run build",
+  "outputDirectory": "dist",
+  "framework": "vite",
+  "installCommand": "bun install",
+  "ignoreCommand": "git diff --quiet HEAD^ HEAD -- ./",
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}

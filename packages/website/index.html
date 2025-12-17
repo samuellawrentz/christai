@@ -34,11 +34,11 @@
     >
     <meta name="author" content="ChristianAI">
     <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://christianai.live/">
+    <link rel="canonical" href="https://christianai.world/">
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://christianai.live/">
+    <meta property="og:url" content="https://christianai.world/">
     <meta
       property="og:title"
       content="ChristianAI - Chat with Biblical Figures Using AI"
@@ -47,12 +47,12 @@
       property="og:description"
       content="Experience meaningful conversations with Christian figures like Moses, Joshua, and Jesus through advanced AI technology."
     >
-    <meta property="og:image" content="https://christianai.live/og-image.jpg">
+    <meta property="og:image" content="https://christianai.world/og-image.jpg">
     <meta property="og:site_name" content="ChristianAI">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://christianai.live/">
+    <meta property="twitter:url" content="https://christianai.world/">
     <meta
       property="twitter:title"
       content="ChristianAI - Chat with Biblical Figures Using AI"
@@ -63,7 +63,7 @@
     >
     <meta
       property="twitter:image"
-      content="https://christianai.live/og-image.jpg"
+      content="https://christianai.world/og-image.jpg"
     >
 
     <!-- Structured Data -->
@@ -73,7 +73,7 @@
       "@type": "WebApplication",
       "name": "ChristianAI",
       "description": "Chat with Biblical Figures using advanced AI technology for spiritual guidance and biblical wisdom",
-      "url": "https://christianai.live/",
+      "url": "https://christianai.world/",
       "applicationCategory": "LifestyleApplication",
       "offers": {
         "@type": "Offer",
@@ -100,12 +100,9 @@
     gtag("js", new Date());
     gtag("config", "G-F2FVEHRW7E");
     </script>
-
-    <link rel="stylesheet" href="/src/index.css">
   </head>
   <body>
-    <div id="root" style="display: none;"></div>
-    <div id="landing-page" class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+    <div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
       <!-- Hero Section -->
       <section class="relative w-full">
         <div
@@ -126,8 +123,8 @@
                 >
               </div>
               <div class="space-x-4">
-                <a href="/auth" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring hover:bg-accent hover:text-accent-foreground text-white hover:bg-white/20 px-4 py-2">
-                  Login
+                <a href="https://app.christianai.world" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring hover:bg-accent hover:text-accent-foreground text-white hover:bg-white/20 px-4 py-2">
+                  Launch App
                 </a>
                 <button id="join-waitlist-btn" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring hover:bg-accent hover:text-accent-foreground text-white hover:bg-white/20 px-4 py-2">
                   Join Waitlist
@@ -458,79 +455,6 @@
       </footer>
     </div>
 
-    <script type="module">
-      // Hide landing page and show root for React routes
-      if (window.location.pathname === '/auth' || window.location.pathname === '/chats') {
-        document.getElementById('landing-page').style.display = 'none';
-        document.getElementById('root').style.display = 'block';
-      }
-      const API_URL = import.meta.env.VITE_API_URL || 'https://api.christianai.world';
-
-      async function submitWaitlist(email, source) {
-        try {
-          const response = await fetch(`${API_URL}/api/waitlist`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ email, source }),
-          });
-
-          if (!response.ok) {
-            throw new Error(`Failed to join waitlist: ${response.statusText}`);
-          }
-
-          return await response.json();
-        } catch (error) {
-          throw new Error(error.message || 'Failed to join waitlist. Please try again.');
-        }
-      }
-
-      function handleFormSubmit(formId, emailId, successId, errorId, submitTextId, source) {
-        const form = document.getElementById(formId);
-        const emailInput = document.getElementById(emailId);
-        const successDiv = document.getElementById(successId);
-        const errorDiv = document.getElementById(errorId);
-        const submitText = document.getElementById(submitTextId);
-        const submitBtn = form.querySelector('button[type="submit"]');
-
-        form.addEventListener('submit', async (e) => {
-          e.preventDefault();
-          const email = emailInput.value.trim();
-
-          if (!email) return;
-
-          submitBtn.disabled = true;
-          submitText.textContent = 'Joining...';
-          errorDiv.classList.add('hidden');
-          successDiv.classList.add('hidden');
-
-          try {
-            await submitWaitlist(email, source);
-            successDiv.classList.remove('hidden');
-            form.classList.add('hidden');
-            emailInput.value = '';
-          } catch (error) {
-            errorDiv.querySelector('p').textContent = error.message;
-            errorDiv.classList.remove('hidden');
-          } finally {
-            submitBtn.disabled = false;
-            submitText.textContent = 'Join Waitlist';
-          }
-        });
-      }
-
-      handleFormSubmit('hero-form', 'hero-email', 'hero-form-success', 'hero-form-error', 'hero-submit-text', 'hero');
-      handleFormSubmit('final-form', 'final-email', 'final-form-success', 'final-form-error', 'final-submit-text', 'final_cta');
-
-      document.getElementById('join-waitlist-btn')?.addEventListener('click', () => {
-        document.getElementById('final-form')?.scrollIntoView({ behavior: 'smooth' });
-      });
-
-      // Only load React app for authenticated routes
-      if (window.location.pathname === '/auth' || window.location.pathname === '/chats') {
-        import('/src/app.tsx');
-      }
-    </script>
+    <script type="module" src="/src/main.ts"></script>
   </body>
 </html>
