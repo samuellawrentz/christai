@@ -1,1 +1,3 @@
 @import "@christianai/ui/styles.css";
+
+@source "../../ui/src/**/*.{js,ts,jsx,tsx}";
