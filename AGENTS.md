@@ -42,6 +42,10 @@ Monorepo with 4 packages:
 - Use absolute imports with `@/` for app code
 - Import types separately when needed
 
+### Package Management
+- Always install dependencies in the root package.json. Bun stores dependencies in a common place unless versions differ, so keep versions consistent and install only in the root.
+- Always use `bun` and `bunx` instead of npm.
+
 ### Pre-commit Checks
 Automatically runs on commit:
 1. Biome formats and lints staged files
