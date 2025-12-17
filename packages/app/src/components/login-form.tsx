@@ -1,7 +1,6 @@
+import { Button, Input } from "@christianai/ui";
 import { useState } from "react";
 import { useAuth } from "../contexts/auth-context";
-import { Button } from "./ui/button";
-import { Input } from "./ui/input";
 
 export function LoginForm() {
   const [email, setEmail] = useState("");

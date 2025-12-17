@@ -1,6 +1,6 @@
+import { Button } from "@christianai/ui";
 import { useAuth } from "../contexts/auth-context";
 import { api } from "../lib/api";
-import { Button } from "./ui/button";
 
 export function ChatsPage() {
   const { user, signOut } = useAuth();

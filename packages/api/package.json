@@ -1,18 +1,11 @@
 {
   "name": "api",
   "version": "0.0.1",
-  "devDependencies": {
-    "@types/bun": "latest",
-    "typescript": "^5"
-  },
+  "type": "module",
   "private": true,
   "scripts": {
     "dev": "bun --hot src/index.ts",
     "start": "bun src/index.ts",
     "typecheck": "tsc --noEmit"
-  },
-  "type": "module",
-  "dependencies": {
-    "@supabase/supabase-js": "^2.87.2"
   }
 }
