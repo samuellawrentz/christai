@@ -11,7 +11,7 @@ export interface Props {
 const { title, description, image, url } = Astro.props;
 const canonicalUrl = url || new URL(Astro.request.url).origin + Astro.url.pathname;
 const defaultDescription = "Experience meaningful conversations with Christian figures like Moses, Joshua, and Jesus through advanced AI technology. Join our waitlist for spiritual guidance and biblical wisdom.";
-const defaultImage = "/images/moses.png";
+const defaultImage = "/og_image.png";
 ---
 
 <html lang="en">
