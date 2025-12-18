@@ -4,6 +4,7 @@
   "dependencies": {
     "@astrojs/mdx": "^4.3.13",
     "@astrojs/react": "^4.2.1",
+    "@astrojs/sitemap": "^3.6.0",
     "@christianai/ui": "workspace:*",
     "@lucide/astro": "^0.561.0",
     "astro": "^5.16.6"
