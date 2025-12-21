@@ -1,4 +1,5 @@
 @import "@christianai/ui/styles.css";
+@import "./markdown.css";
 
 /* Additional website-specific styles */
 .gradient-radial {

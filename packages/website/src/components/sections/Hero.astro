@@ -3,41 +3,14 @@
 import WaitlistForm from "../forms/WaitlistForm.tsx";
 ---
 
-<section class="relative w-full">
+<section class="relative w-full -top-20 -mb-20">
   <div
-    class="relative w-full bg-center bg-cover bg-no-repeat px-4 py-6 pb-24"
+    class="relative w-full bg-center bg-cover bg-no-repeat px-4 py-24"
     style="background-image: url(/images/moses.png)"
   >
     <div class="absolute inset-0 bg-gradient-to-b from-black/70 via-transparent-30" />
 
-    <header class="container relative mx-auto">
-      <nav class="flex items-center justify-between">
-        <div>
-          <img
-            src="/images/logo.svg"
-            alt="ChristianAI Logo - AI-Powered Biblical Conversations"
-            class="size-[300px] invert absolute -top-[100px] left-0"
-            loading="eager"
-          />
-        </div>
-        <div class="space-x-4">
-          <a
-            href="https://app.christianai.world"
-            class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2 text-white hover:bg-white/20"
-          >
-            Launch App
-          </a>
-          <button
-            class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2 text-white hover:bg-white/20"
-            onclick="document.getElementById('final-cta')?.scrollIntoView({ behavior: 'smooth' })"
-          >
-            Join Waitlist
-          </button>
-        </div>
-      </nav>
-    </header>
-
-    <div class="relative mx-auto mt-32 max-w-4xl text-center">
+    <div class="relative mx-auto mt-16 max-w-4xl text-center">
       <h1 class="mb-6 font-bold text-5xl text-white md:text-6xl">
         Chat with <span class="text-white">Biblical Figures</span> Using AI
       </h1>
@@ -48,7 +21,15 @@ import WaitlistForm from "../forms/WaitlistForm.tsx";
           guidance through advanced AI technology trained on Scripture.
         </p>
       </div>
-      <WaitlistForm source="hero" className="mx-auto max-w-md" client:load />
+      <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+        <WaitlistForm source="hero" className="max-w-md" client:load />
+        <a
+          href="https://app.christianai.world"
+          class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-white text-slate-900 hover:bg-slate-100 h-11 px-6 py-2"
+        >
+          Launch App
+        </a>
+      </div>
     </div>
   </div>
 </section>

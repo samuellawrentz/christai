@@ -1,0 +1,190 @@
+/* Markdown Styles using Tailwind @apply */
+
+/* Base prose styling */
+.prose {
+  @apply text-slate-700 leading-relaxed max-w-none;
+}
+
+/* Headings */
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4,
+.prose h5,
+.prose h6 {
+  @apply text-slate-900 font-semibold;
+  line-height: 1.25;
+  @apply mt-8 mb-4;
+}
+
+.prose h1 {
+  @apply text-4xl font-bold mt-0;
+}
+
+.prose h2 {
+  @apply text-3xl;
+}
+
+.prose h3 {
+  @apply text-2xl;
+}
+
+.prose h4 {
+  @apply text-xl;
+}
+
+.prose h5 {
+  @apply text-lg;
+}
+
+.prose h6 {
+  @apply text-base;
+}
+
+/* Paragraphs */
+.prose p {
+  @apply mb-5 text-slate-600;
+}
+
+/* Lists */
+.prose ul,
+.prose ol {
+  @apply mt-5 mb-5 pl-6 text-slate-600;
+}
+
+.prose li {
+  @apply mb-2 mt-2;
+}
+
+.prose li > :first-child {
+  @apply mt-0;
+}
+
+.prose li > :last-child {
+  @apply mb-0;
+}
+
+.prose ul > li {
+  @apply list-disc;
+}
+
+.prose ol > li {
+  @apply list-decimal;
+}
+
+.prose ul > li::marker {
+  @apply text-blue-500;
+}
+
+.prose ol > li::marker {
+  @apply text-blue-500 font-semibold;
+}
+
+/* Blockquotes */
+.prose blockquote {
+  @apply font-medium italic text-slate-500 border-l-4 border-blue-500 py-2 px-4 my-6 bg-slate-50 rounded-r-lg;
+}
+
+.prose blockquote p {
+  @apply mb-0;
+}
+
+/* Horizontal Rule */
+.prose hr {
+  @apply border-slate-200 border-t my-12;
+}
+
+/* Inline Code */
+.prose code {
+  @apply text-slate-900 font-semibold text-sm bg-slate-100 py-0.5 px-1.5 rounded;
+}
+
+/* Code Blocks */
+.prose pre {
+  @apply bg-slate-900 text-slate-100 font-mono text-sm leading-relaxed my-6 p-4 rounded-lg overflow-x-auto;
+}
+
+.prose pre code {
+  @apply bg-transparent text-inherit font-normal p-0;
+}
+
+/* Tables */
+.prose table {
+  @apply w-full border-collapse my-6;
+}
+
+.prose th {
+  @apply bg-slate-50 border border-slate-200 py-2 px-3 text-left font-semibold text-slate-900;
+}
+
+.prose td {
+  @apply border border-slate-200 py-2 px-3 text-slate-600;
+}
+
+/* Links */
+.prose a {
+  @apply text-blue-500 no-underline font-medium border-b border-transparent transition-all duration-200;
+}
+
+.prose a:hover {
+  @apply text-blue-700 border-b-blue-500;
+}
+
+.prose a:focus {
+  @apply outline-none ring-2 ring-blue-500 ring-offset-2 rounded;
+}
+
+/* Text formatting */
+.prose strong {
+  @apply text-slate-900 font-semibold;
+}
+
+.prose em {
+  @apply italic text-slate-600;
+}
+
+/* Images */
+.prose img {
+  @apply rounded-lg shadow-md my-6 max-w-full h-auto;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .prose h1 {
+    @apply text-3xl;
+  }
+  
+  .prose h2 {
+    @apply text-2xl;
+  }
+  
+  .prose h3 {
+    @apply text-xl;
+  }
+}
+
+/* Figures and captions */
+.prose figure {
+  @apply my-6;
+}
+
+.prose figcaption {
+  @apply text-slate-500 text-sm text-center mt-2 italic;
+}
+
+/* Nested lists */
+.prose ul ul,
+.prose ul ol,
+.prose ol ul,
+.prose ol ol {
+  @apply mt-3 mb-3;
+}
+
+/* Footnotes */
+.prose .footnote-ref {
+  @apply text-xs align-super text-blue-500 no-underline font-semibold;
+}
+
+.prose .footnote-ref:hover {
+  @apply text-blue-700 underline;
+}

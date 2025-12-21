@@ -1,0 +1,39 @@
+---
+import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from '@christianai/ui';
+
+export interface Props {
+  items: Array<{
+    label: string;
+    href?: string;
+  }>;
+}
+
+const { items } = Astro.props;
+
+---
+
+<nav aria-label="Breadcrumb" class="flex justify-center">
+  <Breadcrumb>
+    <BreadcrumbList>
+      <BreadcrumbItem>
+        <BreadcrumbLink href="/">Home</BreadcrumbLink>
+      </BreadcrumbItem>
+      <BreadcrumbSeparator>/</BreadcrumbSeparator>
+      
+      {items.map((item, index) => (
+        <>
+          <BreadcrumbItem>
+            {item.href ? (
+              <BreadcrumbLink href={item.href}>{item.label}</BreadcrumbLink>
+            ) : (
+              <BreadcrumbPage>{item.label}</BreadcrumbPage>
+            )}
+          </BreadcrumbItem>
+          {index < items.length - 1 && (
+            <BreadcrumbSeparator>/</BreadcrumbSeparator>
+          )}
+        </>
+      ))}
+    </BreadcrumbList>
+  </Breadcrumb>
+</nav>

@@ -1,0 +1,110 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Footer from '../../components/sections/Footer.astro';
+import { getCollection } from 'astro:content';
+
+const blogPosts = await getCollection('blog', ({ data }) => !data.draft);
+const sortedPosts = blogPosts.sort((a, b) => 
+  new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime()
+);
+---
+
+<BaseLayout 
+  title="Blog - ChristianAI" 
+  description="Explore the intersection of artificial intelligence and Christian faith through our insightful articles and spiritual guidance."
+>
+  <main class="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+    <div class="container mx-auto px-4 py-16">
+      <!-- Header -->
+      <div class="text-center mb-16">
+        <h1 class="text-4xl md:text-5xl font-serif text-slate-900 mb-4">
+          ChristianAI Blog
+        </h1>
+        <p class="text-lg text-slate-600 max-w-2xl mx-auto">
+          Exploring the intersection of artificial intelligence and Christian faith. 
+          Discover insights, guidance, and perspectives for your spiritual journey.
+        </p>
+      </div>
+
+      <!-- Blog Posts Grid -->
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {sortedPosts.map((post) => (
+          <article class="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden">
+            {post.data.image && (
+              <div class="aspect-video bg-gradient-to-br from-blue-100 to-purple-100">
+                <img 
+                  src={post.data.image} 
+                  alt={post.data.title}
+                  class="w-full h-full object-cover"
+                  loading="lazy"
+                />
+              </div>
+            )}
+            
+            <div class="p-6">
+              <div class="flex items-center gap-2 text-sm text-slate-500 mb-3">
+                <time datetime={post.data.pubDate.toISOString()}>
+                  {post.data.pubDate.toLocaleDateString('en-US', { 
+                    year: 'numeric', 
+                    month: 'long', 
+                    day: 'numeric' 
+                  })}
+                </time>
+                <span>•</span>
+                <span>{post.data.author}</span>
+              </div>
+
+              <h2 class="text-xl font-serif text-slate-900 mb-3 line-clamp-2">
+                <a 
+                  href={`/blog/${post.slug}/`}
+                  class="hover:text-blue-600 transition-colors duration-200"
+                >
+                  {post.data.title}
+                </a>
+              </h2>
+
+              <p class="text-slate-600 mb-4 line-clamp-3">
+                {post.data.description}
+              </p>
+
+              {post.data.tags && post.data.tags.length > 0 && (
+                <div class="flex flex-wrap gap-2 mb-4">
+                  {post.data.tags.map((tag) => (
+                    <span class="px-3 py-1 bg-blue-50 text-blue-600 text-xs rounded-full">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              )}
+
+              <a 
+                href={`/blog/${post.slug}/`}
+                class="inline-flex items-center text-blue-600 hover:text-blue-700 font-medium transition-colors duration-200"
+              >
+                Read More
+                <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+              </a>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <!-- Empty State -->
+      {sortedPosts.length === 0 && (
+        <div class="text-center py-16">
+          <div class="text-6xl mb-4">📝</div>
+          <h2 class="text-2xl font-serif text-slate-900 mb-4">
+            Coming Soon
+          </h2>
+          <p class="text-slate-600 max-w-md mx-auto">
+            We're working on insightful articles about faith and AI. 
+            Check back soon for our latest posts!
+          </p>
+        </div>
+      )}
+    </div>
+  </main>
+  <Footer />
+</BaseLayout>

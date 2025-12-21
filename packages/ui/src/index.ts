@@ -9,6 +9,14 @@ export {
 export { Input } from "./components/input";
 export { Loader, type LoaderProps } from "./components/loader";
 export { Separator } from "./components/separator";
+export {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "./components/ui/breadcrumb";
 
 // Utils
 export { cn } from "./lib/utils";
