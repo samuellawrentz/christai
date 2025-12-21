@@ -1,6 +1,8 @@
 ---
 // Import React components
 import WaitlistForm from "../forms/WaitlistForm.tsx";
+import { buttonVariants } from "@christianai/ui";
+
 ---
 
 <section class="relative w-full -top-20 -mb-20">
@@ -23,12 +25,6 @@ import WaitlistForm from "../forms/WaitlistForm.tsx";
       </div>
       <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
         <WaitlistForm source="hero" className="max-w-md" client:load />
-        <a
-          href="https://app.christianai.world"
-          class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-white text-slate-900 hover:bg-slate-100 h-11 px-6 py-2"
-        >
-          Launch App
-        </a>
       </div>
     </div>
   </div>
