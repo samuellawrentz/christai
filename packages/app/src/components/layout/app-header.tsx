@@ -24,40 +24,47 @@ export function AppHeader() {
   };
 
   return (
-    <header className="bg-white border-b border-gray-200 shadow-sm">
+    <header className="!bg-transparent backdrop-blur-md border-b border-gray-900 sticky top-0 z-50 shadow-sm transition-all duration-300 mix-blend-difference">
       <div className="container mx-auto flex items-center justify-between px-4 py-4">
-        <div className="flex items-center gap-3">
-          <h1 className="font-serif text-2xl text-blue-600">ChristianAI</h1>
+        <div className="flex w-[180px] items-center gap-3 invert">
+          <img
+            src="/images/logo.svg"
+            alt="ChristianAI Logo"
+            className="h-[180px] absolute w-auto transition-all duration-300 hover:scale-105 hover:drop-shadow-md"
+            loading="eager"
+          />
         </div>
 
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <button
-              type="button"
-              className="flex items-center gap-2 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
-            >
-              <Avatar className="w-8 h-8">
-                <AvatarFallback className="bg-blue-100 text-blue-600">
-                  {user?.email?.[0]?.toUpperCase() || "U"}
-                </AvatarFallback>
-              </Avatar>
-            </button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-48">
-            <DropdownMenuItem onClick={handleProfile}>
-              <User className="w-4 h-4 mr-2" />
-              Profile
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={handleProfile}>
-              <Settings className="w-4 h-4 mr-2" />
-              Settings
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={handleSignOut}>
-              <LogOut className="w-4 h-4 mr-2" />
-              Sign Out
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <div className="invert">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button
+                type="button"
+                className="flex items-center gap-2 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                <Avatar className="w-8 h-8">
+                  <AvatarFallback className="bg-blue-100 text-blue-600">
+                    {user?.email?.[0]?.toUpperCase() || "U"}
+                  </AvatarFallback>
+                </Avatar>
+              </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-48">
+              <DropdownMenuItem onClick={handleProfile}>
+                <User className="w-4 h-4 mr-2" />
+                Profile
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={handleProfile}>
+                <Settings className="w-4 h-4 mr-2" />
+                Settings
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={handleSignOut}>
+                <LogOut className="w-4 h-4 mr-2" />
+                Sign Out
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
       </div>
     </header>
   );

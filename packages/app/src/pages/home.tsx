@@ -34,7 +34,7 @@ export function HomePage() {
       <div className="min-h-screen bg-[#F5F0E6]">
         <AppHeader />
         <main className="container mx-auto px-4 py-8 pb-24 lg:pb-8">
-          <h1 className="text-3xl font-serif mb-6">Who would you like to talk to today?</h1>
+          <h1 className="text-3xl mb-6 text-center">Who would you like to talk to today?</h1>
           <div className="text-center text-red-600">Failed to load figures. Please try again.</div>
         </main>
         <BottomNav />
@@ -46,7 +46,7 @@ export function HomePage() {
     <div className="min-h-screen bg-[#F5F0E6]">
       <AppHeader />
       <main className="container mx-auto px-4 py-8 pb-24 lg:pb-8">
-        <h1 className="text-3xl font-serif mb-6">Who would you like to talk to today?</h1>
+        <h1 className="text-3xl mb-6 text-center">Who would you like to talk to today?</h1>
         <FigureGrid figures={figures} userHasPro={userHasPro} />
       </main>
       <BottomNav />
