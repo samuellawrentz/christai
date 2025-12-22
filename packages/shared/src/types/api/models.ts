@@ -55,6 +55,11 @@ export type Conversation = {
   last_message_at?: string;
   message_count: number;
   is_deleted: boolean;
+  figures?: {
+    id: number;
+    display_name: string;
+    avatar_url?: string;
+  };
 };
 
 export type Message = {
