@@ -1,8 +1,8 @@
-import { useConversations } from "@/hooks/use-conversations";
+import type { Conversation } from "@christianai/shared/types/api/models";
 import { Skeleton } from "@christianai/ui";
 import { AppHeader } from "@/components/layout/app-header";
 import { BottomNav } from "@/components/layout/bottom-nav";
-import type { Conversation } from "@christianai/shared/types/api/models";
+import { useConversations } from "@/hooks/use-conversations";
 
 export function ChatsListPage() {
   const { data: conversationsResponse, isLoading, error } = useConversations();

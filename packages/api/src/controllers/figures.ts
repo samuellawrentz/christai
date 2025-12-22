@@ -1,5 +1,5 @@
-import type { AppType } from "../app";
 import type { FiguresResponse } from "../../../shared/src/types/api/models";
+import type { AppType } from "../app";
 
 export const figures = (app: AppType) => {
   return app.get("/figures", async ({ supabase }): Promise<FiguresResponse> => {

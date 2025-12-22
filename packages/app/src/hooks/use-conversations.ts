@@ -1,7 +1,7 @@
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { conversationsApi } from "@/lib/api";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import { conversationsApi } from "@/lib/api";
 
 export function useConversations() {
   return useQuery({

@@ -1,5 +1,5 @@
-import type { AppType } from "../app";
 import type { UserResponse } from "../../../shared/src/types/api/models";
+import type { AppType } from "../app";
 
 export const users = (app: AppType) => {
   return app

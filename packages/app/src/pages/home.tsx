@@ -1,10 +1,9 @@
-import { useFigures } from "@/hooks/use-figures";
-import { useSubscription } from "@/hooks/use-subscription";
 import { Skeleton } from "@christianai/ui";
+import { FigureGrid } from "@/components/figures/figure-grid";
 import { AppHeader } from "@/components/layout/app-header";
 import { BottomNav } from "@/components/layout/bottom-nav";
-import { FigureGrid } from "@/components/figures/figure-grid";
-import type { Figure } from "@christianai/shared/types/api/models";
+import { useFigures } from "@/hooks/use-figures";
+import { useSubscription } from "@/hooks/use-subscription";
 
 export function HomePage() {
   const { data: figuresResponse, isLoading, error } = useFigures();

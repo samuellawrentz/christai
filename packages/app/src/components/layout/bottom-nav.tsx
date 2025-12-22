@@ -1,6 +1,6 @@
-import { useLocation, useNavigate } from "react-router-dom";
-import { Home, MessageCircle, User } from "lucide-react";
 import { cn } from "@christianai/ui";
+import { Home, MessageCircle, User } from "lucide-react";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const navItems = [
   { path: "/home", label: "Home", icon: Home },
@@ -25,6 +25,7 @@ export function BottomNav() {
           return (
             <button
               key={path}
+              type="button"
               onClick={() => navigate(path)}
               className={cn(
                 "flex flex-col items-center gap-1 px-3 py-2 rounded-lg transition-colors",

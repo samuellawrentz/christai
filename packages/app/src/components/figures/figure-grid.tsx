@@ -1,5 +1,5 @@
-import { FigureCard } from "./figure-card";
 import type { Figure } from "@christianai/shared/types/api/models";
+import { FigureCard } from "./figure-card";
 
 type Props = {
   figures: Figure[];

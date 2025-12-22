@@ -1,5 +1,3 @@
-import { useAuth } from "@/shared/hooks/use-auth";
-import { useNavigate } from "react-router-dom";
 import {
   Avatar,
   AvatarFallback,
@@ -9,6 +7,8 @@ import {
   DropdownMenuTrigger,
 } from "@christianai/ui";
 import { LogOut, Settings, User } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "@/shared/hooks/use-auth";
 
 export function AppHeader() {
   const { user, signOut } = useAuth();
@@ -32,7 +32,10 @@ export function AppHeader() {
 
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <button className="flex items-center gap-2 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <button
+              type="button"
+              className="flex items-center gap-2 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
               <Avatar className="w-8 h-8">
                 <AvatarFallback className="bg-blue-100 text-blue-600">
                   {user?.email?.[0]?.toUpperCase() || "U"}

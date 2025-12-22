@@ -1,16 +1,16 @@
+import { QueryClientProvider } from "@tanstack/react-query";
 import React, { useEffect } from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Navigate, Route, Routes, useLocation } from "react-router-dom";
-import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "sonner";
+import { queryClient } from "./lib/query-client";
 import { LoginPage } from "./pages/auth/login";
 import { ProtectedRoute } from "./pages/auth/protected-route";
 import { SignupPage } from "./pages/auth/signup";
-import { HomePage } from "./pages/home";
 import { ChatsListPage } from "./pages/chats/index";
+import { HomePage } from "./pages/home";
 import { ProfilePage } from "./pages/profile";
 import { useAuth, useInitAuth } from "./shared/hooks/use-auth";
-import { queryClient } from "./lib/query-client";
 import "./index.css";
 
 declare global {

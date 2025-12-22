@@ -2,10 +2,10 @@ import type { APIResponse } from "@christianai/shared/types/api/response";
 import { cors } from "@elysiajs/cors";
 import { logger } from "@tqman/nice-logger";
 import { Elysia, ElysiaCustomStatusResponse } from "elysia";
-import { root } from "./controllers/root";
-import { figures } from "./controllers/figures";
-import { users } from "./controllers/users";
 import { conversations } from "./controllers/conversations";
+import { figures } from "./controllers/figures";
+import { root } from "./controllers/root";
+import { users } from "./controllers/users";
 import { supabasePlugin } from "./libs/supabase";
 
 export type AppType = ReturnType<typeof createApp>;

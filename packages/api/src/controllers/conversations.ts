@@ -1,9 +1,9 @@
-import type { AppType } from "../app";
 import type {
-  ConversationsResponse,
   ConversationResponse,
+  ConversationsResponse,
   MessagesResponse,
 } from "../../../shared/src/types/api/models";
+import type { AppType } from "../app";
 
 export const conversations = (app: AppType) => {
   return app

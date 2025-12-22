@@ -1,8 +1,8 @@
-import { useCreateConversation } from "@/hooks/use-conversations";
+import type { Figure } from "@christianai/shared/types/api/models";
 import { Card } from "@christianai/ui";
 import { Lock, User } from "lucide-react";
 import { toast } from "sonner";
-import type { Figure } from "@christianai/shared/types/api/models";
+import { useCreateConversation } from "@/hooks/use-conversations";
 
 type Props = {
   figure: Figure;
@@ -22,7 +22,7 @@ export function FigureCard({ figure, userHasPro }: Props) {
 
     try {
       await createConversation.mutateAsync(figure.id);
-    } catch (error) {
+    } catch (_error) {
       toast.error("Failed to start conversation. Please try again.");
     }
   };
