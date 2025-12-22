@@ -3,6 +3,9 @@ import { cors } from "@elysiajs/cors";
 import { logger } from "@tqman/nice-logger";
 import { Elysia, ElysiaCustomStatusResponse } from "elysia";
 import { root } from "./controllers/root";
+import { figures } from "./controllers/figures";
+import { users } from "./controllers/users";
+import { conversations } from "./controllers/conversations";
 import { supabasePlugin } from "./libs/supabase";
 
 export type AppType = ReturnType<typeof createApp>;
@@ -20,6 +23,7 @@ const createApp = () => {
           "http://localhost:5173",
           "https://christianai.world",
           "https://www.christianai.world",
+          "https://app.christianai.world",
         ],
         methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
         allowedHeaders: ["Content-Type", "Authorization"],
@@ -35,6 +39,9 @@ const createApp = () => {
 
 export const app = createApp()
   .use(root)
+  .use(figures)
+  .use(users)
+  .use(conversations)
   .onAfterHandle(({ responseValue, status }) => {
     if (responseValue instanceof ElysiaCustomStatusResponse && responseValue.code >= 400)
       return status(401);

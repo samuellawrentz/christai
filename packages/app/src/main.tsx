@@ -1,11 +1,16 @@
 import React, { useEffect } from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Navigate, Route, Routes, useLocation } from "react-router-dom";
-import { ChatsPage } from "./components/chats-page";
+import { QueryClientProvider } from "@tanstack/react-query";
+import { Toaster } from "sonner";
 import { LoginPage } from "./pages/auth/login";
 import { ProtectedRoute } from "./pages/auth/protected-route";
 import { SignupPage } from "./pages/auth/signup";
+import { HomePage } from "./pages/home";
+import { ChatsListPage } from "./pages/chats/index";
+import { ProfilePage } from "./pages/profile";
 import { useAuth, useInitAuth } from "./shared/hooks/use-auth";
+import { queryClient } from "./lib/query-client";
 import "./index.css";
 
 declare global {
@@ -35,27 +40,46 @@ function App() {
   useInitAuth();
 
   return (
-    <BrowserRouter>
-      <RouteTracker />
-      <Routes>
-        <Route
-          path="/"
-          element={userAuthenticated ? <Navigate replace to="/chats" /> : <LoginPage />}
-        />
-        <Route
-          path="/signup"
-          element={userAuthenticated ? <Navigate replace to="/chats" /> : <SignupPage />}
-        />
-        <Route
-          element={
-            <ProtectedRoute>
-              <ChatsPage />
-            </ProtectedRoute>
-          }
-          path="/chats"
-        />
-      </Routes>
-    </BrowserRouter>
+    <QueryClientProvider client={queryClient}>
+      <BrowserRouter>
+        <RouteTracker />
+        <Toaster position="top-right" />
+        <Routes>
+          <Route
+            path="/"
+            element={userAuthenticated ? <Navigate replace to="/home" /> : <LoginPage />}
+          />
+          <Route
+            path="/signup"
+            element={userAuthenticated ? <Navigate replace to="/home" /> : <SignupPage />}
+          />
+          <Route
+            element={
+              <ProtectedRoute>
+                <HomePage />
+              </ProtectedRoute>
+            }
+            path="/home"
+          />
+          <Route
+            element={
+              <ProtectedRoute>
+                <ChatsListPage />
+              </ProtectedRoute>
+            }
+            path="/chats"
+          />
+          <Route
+            element={
+              <ProtectedRoute>
+                <ProfilePage />
+              </ProtectedRoute>
+            }
+            path="/profile"
+          />
+        </Routes>
+      </BrowserRouter>
+    </QueryClientProvider>
   );
 }
 
