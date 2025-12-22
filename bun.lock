@@ -39,19 +39,26 @@
       "name": "api",
       "version": "0.0.1",
       "dependencies": {
+        "@christianai/shared": "workspace:*",
         "@elysiajs/cors": "^1.4.0",
         "@tqman/nice-logger": "^1.1.1",
         "elysia": "^1.4.19",
+        "zod": "^3.23.8",
       },
     },
     "packages/app": {
       "name": "app",
       "version": "0.0.1",
       "dependencies": {
+        "@christianai/shared": "workspace:*",
         "@christianai/ui": "workspace:*",
         "lucide-react": "^0.561.0",
         "zustand": "^5.0.9",
       },
+    },
+    "packages/shared": {
+      "name": "@christianai/shared",
+      "version": "0.0.1",
     },
     "packages/ui": {
       "name": "@christianai/ui",
@@ -151,6 +158,8 @@
     "@borewit/text-codec": ["@borewit/text-codec@0.1.1", "", {}, "sha512-5L/uBxmjaCIX5h8Z+uu+kA9BQLkc/Wl06UGR5ajNRxu+/XjonB5i8JpgFMrPj3LXTCPA0pv8yxUvbUi+QthGGA=="],
 
     "@capsizecss/unpack": ["@capsizecss/unpack@3.0.1", "", { "dependencies": { "fontkit": "^2.0.2" } }, "sha512-8XqW8xGn++Eqqbz3e9wKuK7mxryeRjs4LOHLxbh2lwKeSbuNR4NFifDZT4KzvjU6HMOPbiNTsWpniK5EJfTWkg=="],
+
+    "@christianai/shared": ["@christianai/shared@workspace:packages/shared"],
 
     "@christianai/ui": ["@christianai/ui@workspace:packages/ui"],
 

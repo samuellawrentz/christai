@@ -17,13 +17,11 @@
     "noImplicitOverride": true,
     "noUnusedLocals": false,
     "noUnusedParameters": false,
-    "noPropertyAccessFromIndexSignature": false,
     "strictNullChecks": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"],
-      "@christianai/shared/types/*": ["../shared/src/types/*"],
-      "@christianai/shared/utils/*": ["../shared/src/utils/*"]
+      "@/*": ["./src/*"]
     }
-  }
+  },
+  "include": ["src/**/*"]
 }

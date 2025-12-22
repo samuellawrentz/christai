@@ -35,12 +35,12 @@ SUPABASE_ANON_KEY=your-anon-key
 ## 📡 API Endpoints
 
 ### Health Check
-- **GET** `/api/health`
+- **GET** `/health`
 - Returns: `{"status": "ok"}`
 - Used to verify API is running
 
 ### Waitlist
-- **POST** `/api/waitlist`
+- **POST** `/waitlist`
 - Body: `{"email": "user@example.com", "source": "hero"}`
 - Returns: `{"success": true}`
 - Adds email to waitlist in Supabase
@@ -82,7 +82,7 @@ packages/api/
 1. Add route handlers in `src/index.ts`
 2. Follow the existing pattern:
 ```typescript
-if (url.pathname === "/api/your-endpoint") {
+if (url.pathname === "/your-endpoint") {
   // Handle request
   return Response.json({ data: "response" });
 }
@@ -98,7 +98,7 @@ The server automatically detects the origin and allows requests from these domai
 
 ## 📊 Monitoring
 
-- **Health Check**: Visit `https://api.christianai.world/api/health`
+- **Health Check**: Visit `https://api.christianai.world/health`
 - **Logs**: Available in Render dashboard
 - **Uptime**: Monitored by Render's free tier monitoring
 

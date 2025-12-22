@@ -1,0 +1,13 @@
+{
+  "name": "@christianai/shared",
+  "version": "0.0.1",
+  "type": "module",
+  "private": true,
+  "exports": {
+    "./types/*": "./src/types/*",
+    "./utils/*": "./src/utils/*"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  }
+}

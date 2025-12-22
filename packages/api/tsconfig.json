@@ -18,6 +18,11 @@
     "noUnusedParameters": false,
     "noPropertyAccessFromIndexSignature": false,
     "strictNullChecks": true,
-    "types": ["bun"]
+    "types": ["bun"],
+    "baseUrl": ".",
+    "paths": {
+      "@christianai/shared/types/*": ["../shared/src/types/*"],
+      "@christianai/shared/utils/*": ["../shared/src/utils/*"]
+    }
   }
 }

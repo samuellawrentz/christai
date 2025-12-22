@@ -4,7 +4,7 @@ import { useState } from "react";
 const API_URL = import.meta.env.VITE_API_URL || "https://api.christianai.world";
 
 async function submitWaitlist(email: string, source: string) {
-  const response = await fetch(`${API_URL}/api/waitlist`, {
+  const response = await fetch(`${API_URL}/waitlist`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email, source }),

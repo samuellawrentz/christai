@@ -31,6 +31,6 @@ export const api = {
   },
 
   async health() {
-    return this.get("/api/health");
+    return this.get("/health");
   },
 };
