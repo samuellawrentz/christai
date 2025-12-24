@@ -2,11 +2,12 @@ import type { APIResponse } from "@christianai/shared/types/api/response";
 import { cors } from "@elysiajs/cors";
 import { logger } from "@tqman/nice-logger";
 import { Elysia, ElysiaCustomStatusResponse } from "elysia";
+import { chats } from "./controllers/chats";
 import { conversations } from "./controllers/conversations";
 import { figures } from "./controllers/figures";
-import { root } from "./controllers/root";
+import { root as openRoutes } from "./controllers/root";
 import { users } from "./controllers/users";
-import { supabasePlugin } from "./libs/supabase";
+import { authPlugin } from "./libs/auth";
 
 export type AppType = ReturnType<typeof createApp>;
 
@@ -34,14 +35,15 @@ const createApp = () => {
       set.headers["x-request-id"] = crypto.randomUUID();
     })
     .get("/health", () => ({ status: "ok" }))
-    .use(supabasePlugin);
+    .use(authPlugin);
 };
 
 export const app = createApp()
-  .use(root)
+  .use(openRoutes)
   .use(figures)
   .use(users)
   .use(conversations)
+  .use(chats)
   .onAfterHandle(({ responseValue, status }) => {
     if (responseValue instanceof ElysiaCustomStatusResponse && responseValue.code >= 400)
       return status(401);

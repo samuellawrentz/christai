@@ -4,24 +4,13 @@ import type {
   MessagesResponse,
 } from "../../../shared/src/types/api/models";
 import type { AppType } from "../app";
+import { authPlugin } from "../libs/auth";
 
 export const conversations = (app: AppType) => {
   return app
-    .get("/conversations", async ({ supabase, headers }): Promise<ConversationsResponse> => {
-      const authHeader = headers.authorization;
-      if (!authHeader) {
-        throw new Error("Authorization header required");
-      }
-
-      // Get user from auth
-      const { data: authUser, error: authError } = await supabase.auth.getUser(
-        authHeader.replace("Bearer ", ""),
-      );
-
-      if (authError || !authUser.user) {
-        throw new Error("Invalid authentication");
-      }
-
+    .use(authPlugin)
+    .get("/conversations", async ({ supabase }): Promise<ConversationsResponse> => {
+      // RLS automatically filters by auth.uid()
       const { data, error } = await supabase
         .from("conversations")
         .select(`
@@ -32,7 +21,6 @@ export const conversations = (app: AppType) => {
             avatar_url
           )
         `)
-        .eq("user_id", authUser.user.id)
         .eq("is_deleted", false)
         .order("last_message_at", { ascending: false });
 
@@ -46,28 +34,14 @@ export const conversations = (app: AppType) => {
         timestamp: new Date().toISOString(),
       };
     })
-    .post("/conversations", async ({ supabase, headers, body }): Promise<ConversationResponse> => {
-      const authHeader = headers.authorization;
-      if (!authHeader) {
-        throw new Error("Authorization header required");
-      }
-
-      // Get user from auth
-      const { data: authUser, error: authError } = await supabase.auth.getUser(
-        authHeader.replace("Bearer ", ""),
-      );
-
-      if (authError || !authUser.user) {
-        throw new Error("Invalid authentication");
-      }
-
+    .post("/conversations", async ({ supabase, userId, body }): Promise<ConversationResponse> => {
       const { figure_id } = body as { figure_id: number };
 
-      // Create conversation
+      // Create conversation (RLS ensures user_id matches auth.uid())
       const { data: conversation, error: convError } = await supabase
         .from("conversations")
         .insert({
-          user_id: authUser.user.id,
+          user_id: userId, // Still need to set this on insert
           figure_id,
           created_at: new Date().toISOString(),
         })
@@ -84,49 +58,22 @@ export const conversations = (app: AppType) => {
         timestamp: new Date().toISOString(),
       };
     })
-    .get(
-      "/conversations/:id/messages",
-      async ({ supabase, headers, params }): Promise<MessagesResponse> => {
-        const authHeader = headers.authorization;
-        if (!authHeader) {
-          throw new Error("Authorization header required");
-        }
+    .get("/conversations/:id/messages", async ({ supabase, params }): Promise<MessagesResponse> => {
+      // RLS automatically filters messages by user's conversations
+      const { data, error } = await supabase
+        .from("messages")
+        .select("*")
+        .eq("conversation_id", params.id)
+        .order("timestamp", { ascending: true });
 
-        // Get user from auth
-        const { data: authUser, error: authError } = await supabase.auth.getUser(
-          authHeader.replace("Bearer ", ""),
-        );
+      if (error) throw new Error(`Failed to fetch messages: ${error.message}`);
 
-        if (authError || !authUser.user) {
-          throw new Error("Invalid authentication");
-        }
-
-        // Verify user owns this conversation
-        const { data: conv } = await supabase
-          .from("conversations")
-          .select("user_id")
-          .eq("id", params.id)
-          .single();
-
-        if (conv?.user_id !== authUser.user.id) {
-          throw new Error("Forbidden: You don't have access to this conversation");
-        }
-
-        const { data, error } = await supabase
-          .from("messages")
-          .select("*")
-          .eq("conversation_id", params.id)
-          .order("timestamp", { ascending: true });
-
-        if (error) throw new Error(`Failed to fetch messages: ${error.message}`);
-
-        return {
-          success: true,
-          data,
-          error: null,
-          message: "Messages retrieved successfully",
-          timestamp: new Date().toISOString(),
-        };
-      },
-    );
+      return {
+        success: true,
+        data,
+        error: null,
+        message: "Messages retrieved successfully",
+        timestamp: new Date().toISOString(),
+      };
+    });
 };

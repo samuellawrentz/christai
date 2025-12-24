@@ -1,5 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
-import { Elysia } from "elysia";
+import type Elysia from "elysia";
 
 const supabaseUrl = process.env.SUPABASE_URL || "";
 const supabaseAnonKey = process.env.SUPABASE_ANON_KEY || "";
@@ -10,31 +10,42 @@ if (!supabaseUrl || !supabaseAnonKey) {
   );
 }
 
-// Create supabase client for auth validation
-const supabase = createClient(supabaseUrl, supabaseAnonKey, {
-  auth: {
-    autoRefreshToken: false,
-    persistSession: false,
-  },
-});
+export const authPlugin = (app: Elysia) => {
+  return app.derive(async ({ request, set }) => {
+    const authHeader = request.headers.get("Authorization");
 
-export const authPlugin = new Elysia().derive(async ({ request, set }) => {
-  const authHeader = request.headers.get("Authorization");
-  if (!authHeader?.startsWith("Bearer ")) {
-    set.status = 401;
-    throw new Error("Unauthorized: Missing or invalid authorization header");
-  }
+    if (!authHeader?.startsWith("Bearer ")) {
+      set.status = 401;
+      throw new Error("Unauthorized: Missing or invalid authorization header");
+    }
 
-  const token = authHeader.replace("Bearer ", "");
-  const {
-    data: { user },
-    error,
-  } = await supabase.auth.getUser(token);
+    const token = authHeader.replace("Bearer ", "");
 
-  if (error || !user) {
-    set.status = 401;
-    throw new Error("Unauthorized: Invalid token");
-  }
+    // Create user-specific Supabase client with auth token
+    // This enables RLS policies to work with auth.uid()
+    const supabase = createClient(supabaseUrl, supabaseAnonKey, {
+      auth: {
+        autoRefreshToken: false,
+        persistSession: false,
+      },
+      global: {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    });
 
-  return { userId: user.id };
-});
+    // Verify token is valid
+    const {
+      data: { user },
+      error,
+    } = await supabase.auth.getUser(token);
+
+    if (error || !user) {
+      set.status = 401;
+      throw new Error("Unauthorized: Invalid token");
+    }
+
+    return { supabase, userId: user.id };
+  });
+};
