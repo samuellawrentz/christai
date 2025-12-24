@@ -157,10 +157,10 @@ export function HomePage() {
         </div>
 
         {/* Figures Grid */}
-        <section className="space-y-4">
-          <div className="flex items-center gap-2">
+        <section className="space-y-8">
+          <div className="flex items-center gap-2 pt-8">
             <Sparkles className="w-5 h-5 text-blue-600" />
-            <h2 className="text-2xl font-serif text-gray-900">
+            <h2 className="text-2xl text-gray-900">
               {searchQuery ? "Search Results" : "Start a New Conversation"}
             </h2>
             {searchQuery && <Badge variant="secondary">{filteredFigures.length} found</Badge>}

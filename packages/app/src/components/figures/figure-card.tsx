@@ -29,30 +29,49 @@ export function FigureCard({ figure, userHasPro }: Props) {
 
   return (
     <Card
-      className={`cursor-pointer transition-all hover:shadow-lg ${
+      className={`group relative cursor-pointer transition-all hover:shadow-lg min-h-64 overflow-hidden py-4 ${
         isLocked ? "opacity-60 grayscale" : ""
       }`}
       onClick={handleClick}
     >
-      <div className="relative">
+      {figure.avatar_url && (
+        <div
+          className="absolute top-0 w-full h-[120%] bg-cover bg-center transition-transform ease-in-out duration-500 group-hover:scale-110"
+          style={{ backgroundImage: `url(${figure.avatar_url})` }}
+        />
+      )}
+      {figure.avatar_url && <div className="absolute inset-0 bg-black/40" />}
+      <div className="relative z-10 px-4 h-full flex flex-col justify-end">
         {isLocked && (
           <div className="absolute top-2 right-2 bg-gray-800/80 rounded-full p-2">
             <Lock className="w-4 h-4 text-white" />
           </div>
         )}
-        <div className="w-full h-32 bg-gray-100 rounded-t-lg flex items-center justify-center">
-          <User className="w-12 h-12 text-gray-400" />
-        </div>
-      </div>
-      <div className="p-4">
-        <h3 className="font-serif text-lg text-center mb-2">{figure.display_name}</h3>
+        {!figure.avatar_url && (
+          <div className="w-full h-32 bg-gray-100 rounded-t-lg flex items-center justify-center mb-4">
+            <User className="w-12 h-12 text-gray-400" />
+          </div>
+        )}
+        <h3 className={`text-lg mb-2 font-bold ${figure.avatar_url ? "text-white" : ""}`}>
+          {figure.display_name}
+        </h3>
         {figure.description && (
-          <p className="text-sm text-gray-600 text-center line-clamp-2 mb-2">
+          <p
+            className={`text-sm line-clamp-2 mb-2 ${
+              figure.avatar_url ? "text-gray-200" : "text-gray-600"
+            }`}
+          >
             {figure.description}
           </p>
         )}
         {figure.requires_pro && (
-          <div className="text-xs text-orange-600 text-center font-medium">Pro</div>
+          <div
+            className={`text-xs text-center font-medium ${
+              figure.avatar_url ? "text-orange-300" : "text-orange-600"
+            }`}
+          >
+            Pro
+          </div>
         )}
       </div>
     </Card>
