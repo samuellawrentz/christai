@@ -4,11 +4,9 @@ import type {
   MessagesResponse,
 } from "../../../shared/src/types/api/models";
 import type { AppType } from "../app";
-import { authPlugin } from "../libs/auth";
 
 export const conversations = (app: AppType) => {
   return app
-    .use(authPlugin)
     .get("/conversations", async ({ supabase }): Promise<ConversationsResponse> => {
       // RLS automatically filters by auth.uid()
       const { data, error } = await supabase

@@ -4,7 +4,6 @@ import { createOpenRouter } from "@openrouter/ai-sdk-provider";
 import { streamText } from "ai";
 import { t } from "elysia";
 import type { AppType } from "../app";
-import { authPlugin } from "../libs/auth";
 
 const openrouter = createOpenRouter({
   apiKey: process.env.OPENROUTER_API_KEY!,
