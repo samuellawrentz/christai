@@ -36,11 +36,13 @@ export function FigureCard({ figure, userHasPro }: Props) {
     >
       {figure.avatar_url && (
         <div
-          className="absolute top-0 w-full h-[120%] bg-cover bg-center transition-transform ease-in-out duration-500 group-hover:scale-110"
+          className="absolute top-0 w-full h-[120%] bg-cover bg-center transition-transform ease-in-out duration-400 group-hover:scale-110"
           style={{ backgroundImage: `url(${figure.avatar_url})` }}
         />
       )}
-      {figure.avatar_url && <div className="absolute inset-0 bg-black/40" />}
+      {figure.avatar_url && (
+        <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 duration-300" />
+      )}
       <div className="relative z-10 px-4 h-full flex flex-col justify-end">
         {isLocked && (
           <div className="absolute top-2 right-2 bg-gray-800/80 rounded-full p-2">
@@ -52,7 +54,9 @@ export function FigureCard({ figure, userHasPro }: Props) {
             <User className="w-12 h-12 text-gray-400" />
           </div>
         )}
-        <h3 className={`text-lg mb-2 font-bold ${figure.avatar_url ? "text-white" : ""}`}>
+        <h3
+          className={`text-lg group-hover:text-xl mb-2 font-bold duration-300 ease-initial ${figure.avatar_url ? "text-white" : ""}`}
+        >
           {figure.display_name}
         </h3>
         {figure.description && (

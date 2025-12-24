@@ -37,7 +37,7 @@ export function HomePage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-[#F5F0E6]">
+      <div className="min-h-screen">
         <AppHeader />
         <main className="container mx-auto px-4 py-8 pb-24 lg:pb-8">
           <Skeleton className="h-8 w-80 mb-6" />
@@ -54,7 +54,7 @@ export function HomePage() {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-[#F5F0E6]">
+      <div className="min-h-screen">
         <AppHeader />
         <main className="container mx-auto px-4 py-8 pb-24 lg:pb-8">
           <h1 className="text-3xl mb-6 text-center">Who would you like to talk to today?</h1>
@@ -66,7 +66,7 @@ export function HomePage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#F5F0E6]">
+    <div className="min-h-screen">
       <AppHeader />
       <main className="container mx-auto px-4 py-8 pb-24 lg:pb-8 space-y-8">
         {/* Hero Section */}

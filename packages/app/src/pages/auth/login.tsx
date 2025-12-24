@@ -76,7 +76,7 @@ export function LoginPage() {
         <p className="text-gray-600">Sign in to your account</p>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-6">
+      <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label htmlFor="email" className="block font-medium text-gray-700 text-sm mb-2">
             Email
