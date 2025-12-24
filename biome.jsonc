@@ -9,7 +9,8 @@
       "!**/node_modules",
       "!**/dist",
       "!**/.next",
-      "!**/build"
+      "!**/build",
+      "!**/packages/ui/src/components/ai-elements/**"
     ]
   },
   "javascript": {

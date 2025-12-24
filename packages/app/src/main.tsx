@@ -7,6 +7,7 @@ import { queryClient } from "./lib/query-client";
 import { LoginPage } from "./pages/auth/login";
 import { ProtectedRoute } from "./pages/auth/protected-route";
 import { SignupPage } from "./pages/auth/signup";
+import { ConversationPage } from "./pages/chats/[id]";
 import { ChatsListPage } from "./pages/chats/index";
 import { HomePage } from "./pages/home";
 import { ProfilePage } from "./pages/profile";
@@ -68,6 +69,14 @@ function App() {
               </ProtectedRoute>
             }
             path="/chats"
+          />
+          <Route
+            element={
+              <ProtectedRoute>
+                <ConversationPage />
+              </ProtectedRoute>
+            }
+            path="/chats/:id"
           />
           <Route
             element={

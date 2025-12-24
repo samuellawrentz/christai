@@ -1,5 +1,7 @@
 // Components
 
+// AI Elements
+export * from "./components/ai-elements";
 export {
   Avatar,
   AvatarFallback,

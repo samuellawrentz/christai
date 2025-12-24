@@ -48,7 +48,7 @@ export const chats = (app: AppType) => {
 
       try {
         systemPrompt = fs.readFileSync(promptPath, "utf-8");
-      } catch (error) {
+      } catch (_error) {
         // Fallback system prompt if file not found
         systemPrompt = `You are ${figure.display_name}. ${figure.description} Speak with wisdom and compassion.`;
       }
@@ -99,7 +99,7 @@ export const chats = (app: AppType) => {
         },
       });
 
-      return result.toTextStreamResponse();
+      return result.toUIMessageStreamResponse();
     },
     {
       body: t.Object({

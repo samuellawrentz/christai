@@ -62,6 +62,7 @@ export const figuresApi = {
 
 export const conversationsApi = {
   list: () => authenticatedRequest("/conversations"),
+  get: (id: string) => authenticatedRequest(`/conversations/${id}`),
   create: (figureId: number) =>
     authenticatedRequest("/conversations", {
       method: "POST",

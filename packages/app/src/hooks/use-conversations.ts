@@ -30,6 +30,14 @@ export function useCreateConversation() {
   });
 }
 
+export function useConversation(conversationId: string) {
+  return useQuery({
+    queryKey: ["conversations", conversationId],
+    queryFn: () => conversationsApi.get(conversationId),
+    enabled: !!conversationId,
+  });
+}
+
 export function useConversationMessages(conversationId: string) {
   return useQuery({
     queryKey: ["conversations", conversationId, "messages"],
