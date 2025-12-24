@@ -1,14 +1,5 @@
 // Components
-export { Button, type ButtonProps, buttonVariants } from "./components/button";
-export {
-  ButtonGroup,
-  ButtonGroupSeparator,
-  ButtonGroupText,
-  buttonGroupVariants,
-} from "./components/button-group";
-export { Input } from "./components/input";
-export { Loader, type LoaderProps } from "./components/loader";
-export { Separator } from "./components/separator";
+
 export {
   Avatar,
   AvatarFallback,
@@ -23,6 +14,13 @@ export {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "./components/ui/breadcrumb";
+export { Button, type ButtonProps, buttonVariants } from "./components/ui/button";
+export {
+  ButtonGroup,
+  ButtonGroupSeparator,
+  ButtonGroupText,
+  buttonGroupVariants,
+} from "./components/ui/button-group";
 export {
   Card,
   CardContent,
@@ -48,10 +46,13 @@ export {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "./components/ui/dropdown-menu";
+export { Input } from "./components/ui/input";
+export { Loader, type LoaderProps } from "./components/ui/loader";
 export {
   ScrollArea,
   ScrollBar,
 } from "./components/ui/scroll-area";
+export { Separator } from "./components/ui/separator";
 export { Skeleton } from "./components/ui/skeleton";
 
 // Utils
