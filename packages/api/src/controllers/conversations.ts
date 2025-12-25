@@ -56,6 +56,26 @@ export const conversations = (app: AppType) => {
         timestamp: new Date().toISOString(),
       };
     })
+    .get("/conversations/:id", async ({ supabase, params }) => {
+      const { data, error } = await supabase
+        .from("conversations")
+        .select(`
+           *,
+           figures (
+             id,
+             display_name,
+             avatar_url
+           )
+         `)
+        .eq("id", params.id)
+        .eq("is_deleted", false)
+        .single();
+
+      if (error) throw new Error(`Failed to fetch conversation: ${error.message}`);
+      if (!data) throw new Error("Conversation not found");
+
+      return data;
+    })
     .get("/conversations/:id/messages", async ({ supabase, params }): Promise<MessagesResponse> => {
       // RLS automatically filters messages by user's conversations
       const { data, error } = await supabase

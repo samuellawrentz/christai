@@ -9,14 +9,14 @@ const openrouter = createOpenRouter({
   apiKey: process.env.OPENROUTER_API_KEY!,
 });
 
-const MODEL = "meta-llama/llama-3.1-70b-instruct:free";
+const MODEL = "openai/gpt-oss-120b:free";
 const MESSAGE_HISTORY_LIMIT = 20;
 
 export const chats = (app: AppType) => {
   return app.post(
     "/chats/converse",
     async ({ supabase, userId, body }) => {
-      const { conversationId, message } = body;
+      const { conversationId, message, isGreeting } = body;
 
       // RLS automatically filters by auth.uid()
       const { data: conversation, error: convError } = await supabase
@@ -62,13 +62,16 @@ export const chats = (app: AppType) => {
         .limit(MESSAGE_HISTORY_LIMIT);
 
       // Save user message to database (trigger auto-updates conversation metadata)
-      await supabase.from("messages").insert({
-        conversation_id: conversationId,
-        user_id: userId,
-        role: "user",
-        content: message,
-        timestamp: new Date().toISOString(),
-      });
+      // Skip if this is an auto-greeting trigger
+      if (!isGreeting) {
+        await supabase.from("messages").insert({
+          conversation_id: conversationId,
+          user_id: userId,
+          role: "user",
+          content: message,
+          timestamp: new Date().toISOString(),
+        });
+      }
 
       // Build messages array for AI
       const messages = [
@@ -77,7 +80,7 @@ export const chats = (app: AppType) => {
           role: msg.role as "user" | "assistant",
           content: msg.content,
         })),
-        { role: "user" as const, content: message },
+        { role: "user" as const, content: isGreeting ? "" : message },
       ];
 
       // Stream AI response
@@ -85,7 +88,7 @@ export const chats = (app: AppType) => {
         model: openrouter.chat(MODEL),
         messages,
         temperature: 0.7,
-        maxOutputTokens: 1500,
+        maxOutputTokens: isGreeting ? 300 : 1500,
         async onFinish({ text, usage }) {
           // Save assistant message (trigger auto-updates conversation metadata)
           await supabase.from("messages").insert({
@@ -105,6 +108,7 @@ export const chats = (app: AppType) => {
       body: t.Object({
         conversationId: t.String({ format: "uuid" }),
         message: t.String({ minLength: 1, maxLength: 4000 }),
+        isGreeting: t.Optional(t.Boolean()),
       }),
     },
   );

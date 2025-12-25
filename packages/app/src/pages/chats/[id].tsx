@@ -17,7 +17,7 @@ import {
 } from "@christianai/ui";
 import { DefaultChatTransport } from "ai";
 import { ArrowLeft } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { AppHeader } from "@/components/layout/app-header";
 import { BottomNav } from "@/components/layout/bottom-nav";
@@ -51,11 +51,31 @@ export function ConversationPage() {
           Authorization: `Bearer ${session?.access_token}`,
         };
       },
-      body: () => ({
-        conversationId: id,
-      }),
+      prepareSendMessagesRequest: ({ messages: uiMessages, id, body }) => {
+        const lastMessage = uiMessages[uiMessages.length - 1];
+        const messageText = lastMessage?.parts?.find((part) => part.type === "text")?.text || "";
+        return {
+          body: {
+            conversationId: id,
+            message: messageText,
+            ...(body || {}), // Include additional body params like isGreeting
+          },
+        };
+      },
     }),
   });
+
+  // Auto-send greeting when conversation is empty
+  useEffect(() => {
+    if (!msgsLoading && messages.length === 0 && conversation && status === "ready") {
+      sendMessage(
+        { text: "hello" },
+        {
+          body: { isGreeting: true },
+        },
+      );
+    }
+  }, [msgsLoading, messages.length, conversation, status, sendMessage]);
 
   const handleSubmit = (message: { text: string }) => {
     if (!message.text?.trim()) return;
