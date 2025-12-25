@@ -16,18 +16,18 @@ import {
   PromptInputTextarea,
 } from "@christianai/ui";
 import { DefaultChatTransport } from "ai";
-import { ArrowLeft } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { AppHeader } from "@/components/layout/app-header";
 import { BottomNav } from "@/components/layout/bottom-nav";
 import { useConversation, useConversationMessages } from "@/hooks/use-conversations";
 import { api } from "@/lib/api";
 import { supabase } from "@/lib/supabase";
+import { convertToUIMessages } from "@/utils/message-adapter";
 
 export function ConversationPage() {
   const { id } = useParams<{ id: string }>();
-  const navigate = useNavigate();
   const [input, setInput] = useState("");
 
   // Load conversation details
@@ -40,7 +40,7 @@ export function ConversationPage() {
   // Setup useChat with custom auth
   const { messages, sendMessage, status } = useChat({
     id,
-    messages: messagesData?.data || [],
+    messages: messagesData?.data ? convertToUIMessages(messagesData.data) : [],
     transport: new DefaultChatTransport({
       api: `${api.baseUrl}/chats/converse`,
       headers: async () => {
@@ -89,7 +89,7 @@ export function ConversationPage() {
         <AppHeader />
         <main className="max-w-4xl mx-auto px-4 py-8">
           <div className="flex items-center justify-center h-64">
-            <Loader />
+            <Loader2 className="h-8 w-8 animate-spin" />
           </div>
         </main>
         <BottomNav />
@@ -102,23 +102,6 @@ export function ConversationPage() {
       <AppHeader />
 
       <main className="max-w-4xl mx-auto px-4 py-4 h-[calc(100vh-180px)]">
-        {/* Header with back button + figure info */}
-        <div className="flex items-center gap-4 mb-4 pb-4 border-b">
-          <button
-            type="button"
-            onClick={() => navigate("/chats")}
-            className="flex items-center gap-2 text-gray-600 hover:text-gray-900"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            Back
-          </button>
-          <div className="flex-1">
-            <h1 className="text-xl font-semibold">
-              {conversation?.figures?.display_name || "Conversation"}
-            </h1>
-          </div>
-        </div>
-
         {/* Chat container */}
         <Conversation className="h-[calc(100%-200px)]">
           <ConversationContent>
