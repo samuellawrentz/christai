@@ -101,10 +101,11 @@ export function ConversationPage() {
 
   return (
     <main className="max-w-4xl mx-auto px-4 py-4 h-[calc(100vh-80px)]">
-      <div>
+      <div className="fixed -left-[470px] top-0 bottom-0 object-contain">
         <img
           src={`${conversation?.figures?.avatar_url}`}
           alt={`${conversation?.figures?.display_name} avatar`}
+          className="object-top [mask-image:linear-gradient(to_right,black_0%,black_30%,black_50%,transparent_100%)]"
         />
       </div>
       {/* Chat container */}
@@ -113,7 +114,7 @@ export function ConversationPage() {
           <ConversationContent>
             {messages.map((message) => (
               <Message key={message.id} from={message.role}>
-                <MessageContent>
+                <MessageContent className="bg-transparent">
                   {message.parts.map((part, i) => {
                     if (part.type === "text") {
                       return (
