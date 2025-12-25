@@ -88,7 +88,7 @@ export const chats = (app: AppType) => {
         model: openrouter.chat(MODEL),
         messages,
         temperature: 0.7,
-        maxOutputTokens: isGreeting ? 300 : 1500,
+        maxOutputTokens: isGreeting ? 200 : 500,
         async onFinish({ text, usage }) {
           // Save assistant message (trigger auto-updates conversation metadata)
           await supabase.from("messages").insert({

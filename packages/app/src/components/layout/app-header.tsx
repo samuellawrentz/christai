@@ -7,7 +7,7 @@ import {
   DropdownMenuTrigger,
 } from "@christianai/ui";
 import { LogOut, Settings, User } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/shared/hooks/use-auth";
 
 export function AppHeader() {
@@ -26,14 +26,14 @@ export function AppHeader() {
   return (
     <header className="!bg-transparent backdrop-blur-md border-b border-gray-900 sticky top-0 z-50 shadow-sm transition-all duration-300 mix-blend-difference">
       <div className="container mx-auto flex items-center justify-between px-4 py-4">
-        <div className="flex w-[180px] items-center gap-3 invert">
+        <Link to="/" className="flex w-[180px] items-center gap-3 invert">
           <img
             src="/images/logo.svg"
             alt="ChristianAI Logo"
             className="h-[180px] absolute w-auto transition-all duration-300 hover:scale-105 hover:drop-shadow-md"
             loading="eager"
           />
-        </div>
+        </Link>
 
         <div className="invert">
           <DropdownMenu>
