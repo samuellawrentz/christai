@@ -112,10 +112,10 @@ export function ConversationPage() {
       <ScrollArea className="h-[calc(100%-200px)]">
         <Conversation>
           <ConversationContent>
-            {messages.map((message) => (
+            {messages.map((message: any) => (
               <Message key={message.id} from={message.role}>
                 <MessageContent className="bg-transparent">
-                  {message.parts.map((part, i) => {
+                  {message.parts.map((part: any, i: number) => {
                     if (part.type === "text") {
                       return (
                         <MessageResponse key={`${message.id}-${i}`}>{part.text}</MessageResponse>
