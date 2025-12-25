@@ -1,8 +1,7 @@
-import type { FiguresResponse } from "../../../shared/src/types/api/models";
 import type { AppType } from "../app";
 
 export const figures = (app: AppType) => {
-  return app.get("/figures", async ({ supabase }): Promise<FiguresResponse> => {
+  return app.get("/figures", async ({ supabase }) => {
     const { data, error } = await supabase
       .from("figures")
       .select("*")
@@ -13,12 +12,6 @@ export const figures = (app: AppType) => {
       throw new Error(`Failed to fetch figures: ${error.message}`);
     }
 
-    return {
-      success: true,
-      data,
-      error: null,
-      message: "Figures retrieved successfully",
-      timestamp: new Date().toISOString(),
-    };
+    return data;
   });
 };

@@ -1,9 +1,8 @@
-import type { UserResponse } from "../../../shared/src/types/api/models";
 import type { AppType } from "../app";
 
 export const users = (app: AppType) => {
   return app
-    .get("/users/me", async ({ supabase, headers }): Promise<UserResponse> => {
+    .get("/users/me", async ({ supabase, headers }) => {
       const authHeader = headers.authorization;
       if (!authHeader) {
         throw new Error("Authorization header required");
@@ -29,15 +28,9 @@ export const users = (app: AppType) => {
         throw new Error(`Failed to fetch user profile: ${profileError.message}`);
       }
 
-      return {
-        success: true,
-        data: profile,
-        error: null,
-        message: "User profile retrieved successfully",
-        timestamp: new Date().toISOString(),
-      };
+      return profile;
     })
-    .patch("/users/me", async ({ supabase, headers, body }): Promise<UserResponse> => {
+    .patch("/users/me", async ({ supabase, headers, body }) => {
       const authHeader = headers.authorization;
       if (!authHeader) {
         throw new Error("Authorization header required");
@@ -64,12 +57,6 @@ export const users = (app: AppType) => {
         throw new Error(`Failed to update user profile: ${profileError.message}`);
       }
 
-      return {
-        success: true,
-        data: profile,
-        error: null,
-        message: "User profile updated successfully",
-        timestamp: new Date().toISOString(),
-      };
+      return profile;
     });
 };

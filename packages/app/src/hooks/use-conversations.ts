@@ -1,3 +1,4 @@
+import type { Message } from "@christianai/shared/types/api/models";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
@@ -21,7 +22,7 @@ export function useCreateConversation() {
       // Invalidate conversations list to refetch
       queryClient.invalidateQueries({ queryKey: ["conversations"] });
       // Navigate to the new conversation
-      navigate(`/chats/${response.data.id}`);
+      navigate(`/chats/${response?.id}`);
     },
     onError: (error) => {
       toast.error("Failed to start conversation. Please try again.");
@@ -39,7 +40,7 @@ export function useConversation(conversationId: string) {
 }
 
 export function useConversationMessages(conversationId: string) {
-  return useQuery({
+  return useQuery<Message[]>({
     queryKey: ["conversations", conversationId, "messages"],
     queryFn: () => conversationsApi.getMessages(conversationId),
     enabled: !!conversationId, // Only fetch if conversationId exists

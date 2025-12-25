@@ -39,12 +39,8 @@ const createApp = () => {
 };
 
 export const app = createApp()
-  .use(openRoutes)
-  .use(figures)
-  .use(users)
-  .use(conversations)
-  .use(chats)
   .onAfterHandle(({ responseValue, status }) => {
+    console.log(status, responseValue);
     if (responseValue instanceof ElysiaCustomStatusResponse && responseValue.code >= 400)
       return status(401);
 
@@ -69,4 +65,9 @@ export const app = createApp()
     };
 
     return response;
-  });
+  })
+  .use(openRoutes)
+  .use(figures)
+  .use(users)
+  .use(conversations)
+  .use(chats);

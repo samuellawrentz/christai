@@ -1,9 +1,8 @@
 import { Loader } from "@christianai/ui";
-import type { PropsWithChildren } from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 import { useAuth } from "../../shared/hooks/use-auth";
 
-export function ProtectedRoute({ children }: PropsWithChildren) {
+export function ProtectedRoute() {
   const { userAuthenticated, loading } = useAuth();
 
   if (loading) {
@@ -14,5 +13,5 @@ export function ProtectedRoute({ children }: PropsWithChildren) {
     return <Navigate to="/" replace />;
   }
 
-  return <>{children}</>;
+  return <Outlet />;
 }

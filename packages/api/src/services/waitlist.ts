@@ -3,10 +3,7 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 import type { WaitlistInsert } from "../models/waitlist";
 
 export class WaitlistService {
-  async addToWaitlist(
-    supabase: SupabaseClient,
-    data: WaitlistInsert,
-  ): Promise<{ success: boolean }> {
+  async addToWaitlist(supabase: SupabaseClient, data: WaitlistInsert): Promise<boolean> {
     const emailError = validateEmail(data.email);
     if (emailError) {
       throw new Error(emailError);
@@ -20,6 +17,6 @@ export class WaitlistService {
       throw new Error("Failed to join waitlist");
     }
 
-    return { success: true };
+    return true;
   }
 }

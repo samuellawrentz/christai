@@ -1,13 +1,8 @@
-import type {
-  ConversationResponse,
-  ConversationsResponse,
-  MessagesResponse,
-} from "../../../shared/src/types/api/models";
 import type { AppType } from "../app";
 
 export const conversations = (app: AppType) => {
   return app
-    .get("/conversations", async ({ supabase }): Promise<ConversationsResponse> => {
+    .get("/conversations", async ({ supabase }) => {
       // RLS automatically filters by auth.uid()
       const { data, error } = await supabase
         .from("conversations")
@@ -24,15 +19,9 @@ export const conversations = (app: AppType) => {
 
       if (error) throw new Error(`Failed to fetch conversations: ${error.message}`);
 
-      return {
-        success: true,
-        data,
-        error: null,
-        message: "Conversations retrieved successfully",
-        timestamp: new Date().toISOString(),
-      };
+      return data;
     })
-    .post("/conversations", async ({ supabase, userId, body }): Promise<ConversationResponse> => {
+    .post("/conversations", async ({ supabase, userId, body }) => {
       const { figure_id } = body as { figure_id: number };
 
       // Create conversation (RLS ensures user_id matches auth.uid())
@@ -48,13 +37,7 @@ export const conversations = (app: AppType) => {
 
       if (convError) throw new Error(`Failed to create conversation: ${convError.message}`);
 
-      return {
-        success: true,
-        data: conversation,
-        error: null,
-        message: "Conversation created successfully",
-        timestamp: new Date().toISOString(),
-      };
+      return conversation;
     })
     .get("/conversations/:id", async ({ supabase, params }) => {
       const { data, error } = await supabase
@@ -76,7 +59,7 @@ export const conversations = (app: AppType) => {
 
       return data;
     })
-    .get("/conversations/:id/messages", async ({ supabase, params }): Promise<MessagesResponse> => {
+    .get("/conversations/:id/messages", async ({ supabase, params }) => {
       // RLS automatically filters messages by user's conversations
       const { data, error } = await supabase
         .from("messages")
@@ -86,12 +69,6 @@ export const conversations = (app: AppType) => {
 
       if (error) throw new Error(`Failed to fetch messages: ${error.message}`);
 
-      return {
-        success: true,
-        data,
-        error: null,
-        message: "Messages retrieved successfully",
-        timestamp: new Date().toISOString(),
-      };
+      return data;
     });
 };

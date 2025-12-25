@@ -5,7 +5,6 @@ import {
   Conversation,
   ConversationContent,
   ConversationScrollButton,
-  Loader,
   Message,
   MessageContent,
   MessageResponse,
@@ -14,13 +13,12 @@ import {
   PromptInputFooter,
   PromptInputSubmit,
   PromptInputTextarea,
+  ScrollArea,
 } from "@christianai/ui";
 import { DefaultChatTransport } from "ai";
 import { Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { AppHeader } from "@/components/layout/app-header";
-import { BottomNav } from "@/components/layout/bottom-nav";
 import { useConversation, useConversationMessages } from "@/hooks/use-conversations";
 import { api } from "@/lib/api";
 import { supabase } from "@/lib/supabase";
@@ -29,18 +27,17 @@ import { convertToUIMessages } from "@/utils/message-adapter";
 export function ConversationPage() {
   const { id } = useParams<{ id: string }>();
   const [input, setInput] = useState("");
+  const [isInitialized, setIsInitialized] = useState(false);
 
   // Load conversation details
-  const { data: conversationData, isLoading: convLoading } = useConversation(id!);
-  const conversation = conversationData?.data;
+  const { data: conversation, isLoading: convLoading } = useConversation(id!);
 
   // Load message history
   const { data: messagesData, isLoading: msgsLoading } = useConversationMessages(id!);
 
   // Setup useChat with custom auth
-  const { messages, sendMessage, status } = useChat({
+  const { messages, setMessages, sendMessage, status } = useChat({
     id,
-    messages: messagesData?.data ? convertToUIMessages(messagesData.data) : [],
     transport: new DefaultChatTransport({
       api: `${api.baseUrl}/chats/converse`,
       headers: async () => {
@@ -65,9 +62,18 @@ export function ConversationPage() {
     }),
   });
 
-  // Auto-send greeting when conversation is empty
+  // Load previous messages into chat when data arrives
   useEffect(() => {
-    if (!msgsLoading && messages.length === 0 && conversation && status === "ready") {
+    if (messagesData && !msgsLoading) {
+      const uiMessages = convertToUIMessages(messagesData);
+      setMessages(uiMessages);
+      setIsInitialized(true);
+    }
+  }, [messagesData?.length, msgsLoading, setMessages, setIsInitialized]);
+
+  // Auto-send greeting when conversation is empty (only after initialization)
+  useEffect(() => {
+    if (isInitialized && messages.length === 0 && conversation && status === "ready") {
       sendMessage(
         { text: "hello" },
         {
@@ -75,7 +81,7 @@ export function ConversationPage() {
         },
       );
     }
-  }, [msgsLoading, messages.length, conversation, status, sendMessage]);
+  }, [isInitialized, messages.length, conversation, status, sendMessage]);
 
   const handleSubmit = (message: { text: string }) => {
     if (!message.text?.trim()) return;
@@ -85,25 +91,25 @@ export function ConversationPage() {
 
   if (convLoading || msgsLoading) {
     return (
-      <div className="min-h-screen">
-        <AppHeader />
-        <main className="max-w-4xl mx-auto px-4 py-8">
-          <div className="flex items-center justify-center h-64">
-            <Loader2 className="h-8 w-8 animate-spin" />
-          </div>
-        </main>
-        <BottomNav />
-      </div>
+      <main className="max-w-4xl mx-auto px-4 py-8">
+        <div className="flex items-center justify-center h-64">
+          <Loader2 className="h-8 w-8 animate-spin" />
+        </div>
+      </main>
     );
   }
 
   return (
-    <div className="min-h-screen">
-      <AppHeader />
-
-      <main className="max-w-4xl mx-auto px-4 py-4 h-[calc(100vh-180px)]">
-        {/* Chat container */}
-        <Conversation className="h-[calc(100%-200px)]">
+    <main className="max-w-4xl mx-auto px-4 py-4 h-[calc(100vh-80px)]">
+      <div>
+        <img
+          src={`${conversation?.figures?.avatar_url}`}
+          alt={`${conversation?.figures?.display_name} avatar`}
+        />
+      </div>
+      {/* Chat container */}
+      <ScrollArea className="h-[calc(100%-200px)]">
+        <Conversation>
           <ConversationContent>
             {messages.map((message) => (
               <Message key={message.id} from={message.role}>
@@ -119,27 +125,25 @@ export function ConversationPage() {
                 </MessageContent>
               </Message>
             ))}
-            {status === "submitted" && <Loader />}
+            {status === "submitted" && <Loader2 className="h-4 w-4 animate-spin" />}
           </ConversationContent>
           <ConversationScrollButton />
         </Conversation>
+      </ScrollArea>
 
-        {/* Input */}
-        <PromptInput onSubmit={handleSubmit} className="mt-4">
-          <PromptInputBody>
-            <PromptInputTextarea
-              value={input}
-              onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setInput(e.target.value)}
-              placeholder={`Message ${conversation?.figures?.display_name || ""}...`}
-            />
-          </PromptInputBody>
-          <PromptInputFooter>
-            <PromptInputSubmit status={status} disabled={!input.trim()} />
-          </PromptInputFooter>
-        </PromptInput>
-      </main>
-
-      <BottomNav />
-    </div>
+      {/* Input */}
+      <PromptInput onSubmit={handleSubmit} className="mt-4">
+        <PromptInputBody>
+          <PromptInputTextarea
+            value={input}
+            onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setInput(e.target.value)}
+            placeholder={`Ask ${conversation?.figures?.display_name || ""}...`}
+          />
+        </PromptInputBody>
+        <PromptInputFooter>
+          <PromptInputSubmit status={status} disabled={!input.trim()} />
+        </PromptInputFooter>
+      </PromptInput>
+    </main>
   );
 }

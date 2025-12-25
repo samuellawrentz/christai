@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { Toaster } from "sonner";
+import { AppLayout } from "./layouts/app-layout";
 import { queryClient } from "./lib/query-client";
 import { LoginPage } from "./pages/auth/login";
 import { ProtectedRoute } from "./pages/auth/protected-route";
@@ -54,38 +55,14 @@ function App() {
             path="/signup"
             element={userAuthenticated ? <Navigate replace to="/home" /> : <SignupPage />}
           />
-          <Route
-            element={
-              <ProtectedRoute>
-                <HomePage />
-              </ProtectedRoute>
-            }
-            path="/home"
-          />
-          <Route
-            element={
-              <ProtectedRoute>
-                <ChatsListPage />
-              </ProtectedRoute>
-            }
-            path="/chats"
-          />
-          <Route
-            element={
-              <ProtectedRoute>
-                <ConversationPage />
-              </ProtectedRoute>
-            }
-            path="/chats/:id"
-          />
-          <Route
-            element={
-              <ProtectedRoute>
-                <ProfilePage />
-              </ProtectedRoute>
-            }
-            path="/profile"
-          />
+          <Route element={<ProtectedRoute />}>
+            <Route element={<AppLayout />}>
+              <Route path="/home" element={<HomePage />} />
+              <Route path="/chats" element={<ChatsListPage />} />
+              <Route path="/chats/:id" element={<ConversationPage />} />
+              <Route path="/profile" element={<ProfilePage />} />
+            </Route>
+          </Route>
         </Routes>
       </BrowserRouter>
     </QueryClientProvider>

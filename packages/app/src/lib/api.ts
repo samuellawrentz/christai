@@ -1,9 +1,13 @@
+import type { Conversation, Figure, Message } from "@christianai/shared/types/api/models";
 import { supabase } from "./supabase";
 
 // API utility for making authenticated requests to your backend
 const baseUrl = import.meta.env.VITE_API_URL || "https://api.christianai.world";
 
-async function authenticatedRequest(endpoint: string, options: RequestInit = {}) {
+async function authenticatedRequest<T = unknown>(
+  endpoint: string,
+  options: RequestInit = {},
+): Promise<T> {
   const {
     data: { session },
   } = await supabase.auth.getSession();
@@ -28,7 +32,8 @@ async function authenticatedRequest(endpoint: string, options: RequestInit = {})
     throw new Error(errorData.message || `API request failed: ${response.statusText}`);
   }
 
-  return response.json();
+  const apiResponse = await response.json();
+  return apiResponse.data;
 }
 
 // Legacy API methods (for backwards compatibility)
@@ -57,17 +62,17 @@ export const api = {
 
 // React Query API functions
 export const figuresApi = {
-  list: () => authenticatedRequest("/figures"),
+  list: () => authenticatedRequest<Figure[]>("/figures"),
 };
 
 export const conversationsApi = {
-  list: () => authenticatedRequest("/conversations"),
-  get: (id: string) => authenticatedRequest(`/conversations/${id}`),
+  list: () => authenticatedRequest<Conversation[]>("/conversations"),
+  get: (id: string) => authenticatedRequest<Conversation>(`/conversations/${id}`),
   create: (figureId: number) =>
-    authenticatedRequest("/conversations", {
+    authenticatedRequest<Conversation>("/conversations", {
       method: "POST",
       body: JSON.stringify({ figure_id: figureId }),
     }),
   getMessages: (conversationId: string) =>
-    authenticatedRequest(`/conversations/${conversationId}/messages`),
+    authenticatedRequest<Message[]>(`/conversations/${conversationId}/messages`),
 };
