@@ -8,8 +8,6 @@ export default defineConfig({
   base: "/",
   build: {
     outDir: "dist",
-    minify: false,
-    sourcemap: true,
   },
   resolve: {
     alias: {
