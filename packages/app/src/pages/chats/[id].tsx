@@ -16,9 +16,10 @@ import {
   ScrollArea,
 } from "@christianai/ui";
 import { DefaultChatTransport } from "ai";
-import { Loader2 } from "lucide-react";
-import { useEffect, useState } from "react";
+import { ArrowDownIcon, Loader2 } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
+import { useStickToBottom } from "use-stick-to-bottom";
 import { useConversation, useConversationMessages } from "@/hooks/use-conversations";
 import { api } from "@/lib/api";
 import { supabase } from "@/lib/supabase";
@@ -28,6 +29,9 @@ export function ConversationPage() {
   const { id } = useParams<{ id: string }>();
   const [input, setInput] = useState("");
   const [isInitialized, setIsInitialized] = useState(false);
+
+  // Create useStickToBottom instance connected to ScrollArea viewport
+  const stickToBottomInstance = useStickToBottom();
 
   // Load conversation details
   const { data: conversation, isLoading: convLoading } = useConversation(id!);
@@ -109,27 +113,33 @@ export function ConversationPage() {
         />
       </div>
       {/* Chat container */}
-      <ScrollArea className="h-[calc(100%-200px)]">
-        <Conversation>
-          <ConversationContent>
-            {messages.map((message: any) => (
-              <Message key={message.id} from={message.role}>
-                <MessageContent className="bg-transparent">
-                  {message.parts.map((part: any, i: number) => {
-                    if (part.type === "text") {
-                      return (
-                        <MessageResponse key={`${message.id}-${i}`}>{part.text}</MessageResponse>
-                      );
-                    }
-                    return null;
-                  })}
-                </MessageContent>
-              </Message>
-            ))}
-            {status === "submitted" && <Loader2 className="h-4 w-4 animate-spin" />}
-          </ConversationContent>
-          <ConversationScrollButton />
-        </Conversation>
+      <ScrollArea ref={stickToBottomInstance.scrollRef} className="h-[calc(100%-200px)]">
+        <div ref={stickToBottomInstance.contentRef} className="flex flex-col gap-8 p-4">
+          {messages.map((message: any) => (
+            <Message key={message.id} from={message.role}>
+              <MessageContent className="bg-transparent">
+                {message.parts.map((part: any, i: number) => {
+                  if (part.type === "text") {
+                    return (
+                      <MessageResponse key={`${message.id}-${i}`}>{part.text}</MessageResponse>
+                    );
+                  }
+                  return null;
+                })}
+              </MessageContent>
+            </Message>
+          ))}
+          {status === "submitted" && <Loader2 className="h-4 w-4 animate-spin" />}
+        </div>
+        {!stickToBottomInstance.isAtBottom && (
+          <button
+            className="absolute bottom-4 left-[50%] translate-x-[-50%] rounded-full bg-background border border-border hover:bg-accent hover:text-accent-foreground h-10 w-10 flex items-center justify-center"
+            onClick={() => stickToBottomInstance.scrollToBottom()}
+            type="button"
+          >
+            <ArrowDownIcon className="size-4" />
+          </button>
+        )}
       </ScrollArea>
 
       {/* Input */}
