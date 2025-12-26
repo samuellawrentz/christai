@@ -28,6 +28,13 @@ async function authenticatedRequest<T = unknown>(
   });
 
   if (!response.ok) {
+    // Handle 401 Unauthorized - logout and redirect to signin
+    if (response.status === 401) {
+      await supabase.auth.signOut();
+      window.location.href = "/";
+      throw new Error("Session expired. Please sign in again.");
+    }
+
     const errorData = await response.json().catch(() => ({ message: response.statusText }));
     throw new Error(errorData.message || `API request failed: ${response.statusText}`);
   }

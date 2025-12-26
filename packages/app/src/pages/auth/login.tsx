@@ -64,8 +64,8 @@ export function LoginPage() {
       setError(error.message);
       setLoading(false);
     } else {
-      // Navigate to chats on successful sign in
-      navigate("/chats", { replace: true });
+      // Navigate to home on successful sign in
+      navigate("/home", { replace: true });
     }
   };
 
