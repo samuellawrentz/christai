@@ -1,11 +1,18 @@
 import type { APIResponse } from "./response";
 
+export type UserPreferences = {
+  pronouns?: "he/him" | "she/her" | "they/them";
+  age_group?: "child" | "teen" | "adult" | "senior";
+  tone?: "formal" | "conversational" | "warm";
+  bible_translation?: "NIV" | "ESV" | "KJV" | "NLT" | "MSG";
+};
+
 export type User = {
   id: string;
   email: string;
   username?: string;
   first_name?: string;
-  preferences?: Record<string, any>;
+  preferences?: UserPreferences;
 };
 
 export type Figure = {

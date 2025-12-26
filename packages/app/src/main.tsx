@@ -1,8 +1,9 @@
 import { QueryClientProvider } from "@tanstack/react-query";
 import React, { useEffect } from "react";
 import ReactDOM from "react-dom/client";
-import { BrowserRouter, Navigate, Route, Routes, useLocation } from "react-router-dom";
+import { BrowserRouter, Navigate, Outlet, Route, Routes, useLocation } from "react-router-dom";
 import { Toaster } from "sonner";
+import { PreferencesWrapper } from "./components/preferences-wrapper";
 import { AppLayout } from "./layouts/app-layout";
 import { queryClient } from "./lib/query-client";
 import { LoginPage } from "./pages/auth/login";
@@ -57,10 +58,12 @@ function App() {
           />
           <Route element={<ProtectedRoute />}>
             <Route element={<AppLayout />}>
-              <Route path="/home" element={<HomePage />} />
-              <Route path="/chats" element={<ChatsListPage />} />
-              <Route path="/chats/:id" element={<ConversationPage />} />
-              <Route path="/profile" element={<ProfilePage />} />
+              <Route element={<PreferencesWrapper />}>
+                <Route path="/home" element={<HomePage />} />
+                <Route path="/chats" element={<ChatsListPage />} />
+                <Route path="/chats/:id" element={<ConversationPage />} />
+                <Route path="/profile" element={<ProfilePage />} />
+              </Route>
             </Route>
           </Route>
         </Routes>

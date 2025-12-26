@@ -1,9 +1,8 @@
-import fs from "node:fs";
-import path from "node:path";
 import { createOpenRouter } from "@openrouter/ai-sdk-provider";
 import { streamText } from "ai";
 import { t } from "elysia";
 import type { AppType } from "../app";
+import { buildSystemPrompt } from "../services/prompt-builder";
 
 const openrouter = createOpenRouter({
   apiKey: process.env.OPENROUTER_API_KEY!,
@@ -42,16 +41,23 @@ export const chats = (app: AppType) => {
         throw new Error("Figure not found or inactive");
       }
 
-      // Load system prompt from file
-      const promptPath = path.join(process.cwd(), "src", "prompts", "figures", `${figure.slug}.md`);
-      let systemPrompt: string;
+      // Fetch user preferences
+      const { data: userData } = await supabase
+        .from("users")
+        .select("preferences")
+        .eq("id", userId)
+        .single();
 
-      try {
-        systemPrompt = fs.readFileSync(promptPath, "utf-8");
-      } catch (_error) {
-        // Fallback system prompt if file not found
-        systemPrompt = `You are ${figure.display_name}. ${figure.description} Speak with wisdom and compassion.`;
-      }
+      const userPreferences = userData?.preferences || {};
+
+      // Build complete system prompt
+      const systemPrompt = buildSystemPrompt(
+        figure.slug,
+        figure.display_name,
+        figure.description || "",
+        userPreferences,
+        isGreeting,
+      );
 
       // Fetch conversation history
       const { data: history } = await supabase
@@ -88,7 +94,7 @@ export const chats = (app: AppType) => {
         model: openrouter.chat(MODEL),
         messages,
         temperature: 0.7,
-        maxOutputTokens: isGreeting ? 200 : 500,
+        maxOutputTokens: 1000,
         async onFinish({ text, usage }) {
           // Save assistant message (trigger auto-updates conversation metadata)
           await supabase.from("messages").insert({

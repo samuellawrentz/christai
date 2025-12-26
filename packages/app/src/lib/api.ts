@@ -1,4 +1,10 @@
-import type { Conversation, Figure, Message } from "@christianai/shared/types/api/models";
+import type {
+  Conversation,
+  Figure,
+  Message,
+  User,
+  UserPreferences,
+} from "@christianai/shared/types/api/models";
 import { supabase } from "./supabase";
 
 // API utility for making authenticated requests to your backend
@@ -82,4 +88,13 @@ export const conversationsApi = {
     }),
   getMessages: (conversationId: string) =>
     authenticatedRequest<Message[]>(`/conversations/${conversationId}/messages`),
+};
+
+export const usersApi = {
+  getMe: () => authenticatedRequest<User>("/users/me"),
+  updatePreferences: (preferences: UserPreferences) =>
+    authenticatedRequest<User>("/users/me", {
+      method: "PATCH",
+      body: JSON.stringify({ preferences }),
+    }),
 };
