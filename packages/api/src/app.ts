@@ -40,9 +40,11 @@ const createApp = () => {
 
 export const app = createApp()
   .onAfterHandle(({ responseValue, status }) => {
-    console.log(status, responseValue);
     if (responseValue instanceof ElysiaCustomStatusResponse && responseValue.code >= 400)
       return status(401);
+
+    // Bypass wrapper for Response objects (includes streams, redirects, etc.)
+    if (responseValue instanceof Response) return responseValue;
 
     const response: APIResponse = {
       success: true,
