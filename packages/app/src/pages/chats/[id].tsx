@@ -70,7 +70,7 @@ export function ConversationPage() {
     hasInitialized.current = false;
   }, [id]);
 
-  // Load messages and send greeting when both queries complete
+  // Load messages when both queries complete
   useEffect(() => {
     // Wait for both queries to complete
     if (msgsLoading || convLoading || !messagesData || !conversation) return;
@@ -81,12 +81,7 @@ export function ConversationPage() {
 
     // Load messages into UI (already converted via select in hook)
     setMessages(messagesData);
-
-    // Send greeting only if conversation has no messages in DB
-    if (messagesData.length === 0) {
-      sendMessage({ text: "hello" }, { body: { isGreeting: true } });
-    }
-  }, [messagesData, msgsLoading, convLoading, conversation, setMessages, sendMessage, id]);
+  }, [messagesData, msgsLoading, convLoading, conversation, setMessages, id]);
 
   const handleSubmit = (message: { text: string }) => {
     if (!message.text?.trim()) return;
