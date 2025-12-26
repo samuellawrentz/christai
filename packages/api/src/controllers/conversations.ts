@@ -2,6 +2,19 @@ import type { AppType } from "../app";
 
 export const conversations = (app: AppType) => {
   return app
+    .get("/figures/:slug", async ({ supabase, params }) => {
+      const { data, error } = await supabase
+        .from("figures")
+        .select("*")
+        .eq("slug", params.slug)
+        .eq("is_active", true)
+        .single();
+
+      if (error) throw new Error(`Failed to fetch figure: ${error.message}`);
+      if (!data) throw new Error("Figure not found");
+
+      return data;
+    })
     .get("/conversations", async ({ supabase }) => {
       // RLS automatically filters by auth.uid()
       const { data, error } = await supabase

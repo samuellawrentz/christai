@@ -76,6 +76,7 @@ export const api = {
 // React Query API functions
 export const figuresApi = {
   list: () => authenticatedRequest<Figure[]>("/figures"),
+  getBySlug: (slug: string) => authenticatedRequest<Figure>(`/figures/${slug}`),
 };
 
 export const conversationsApi = {

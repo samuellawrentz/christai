@@ -61,7 +61,8 @@ function App() {
               <Route element={<PreferencesWrapper />}>
                 <Route path="/home" element={<HomePage />} />
                 <Route path="/chats" element={<ChatsListPage />} />
-                <Route path="/chats/:id" element={<ConversationPage />} />
+                <Route path="/chats/new/:slug" element={<ConversationPage />} />
+                <Route path="/chats/:conversationId" element={<ConversationPage />} />
                 <Route path="/profile" element={<ProfilePage />} />
               </Route>
             </Route>

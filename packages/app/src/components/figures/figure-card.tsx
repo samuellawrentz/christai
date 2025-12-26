@@ -1,8 +1,8 @@
 import type { Figure } from "@christianai/shared/types/api/models";
 import { Card } from "@christianai/ui";
 import { Lock, User } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import { useCreateConversation } from "@/hooks/use-conversations";
 
 type Props = {
   figure: Figure;
@@ -10,21 +10,17 @@ type Props = {
 };
 
 export function FigureCard({ figure, userHasPro }: Props) {
-  const createConversation = useCreateConversation();
+  const navigate = useNavigate();
 
   const isLocked = figure.requires_pro && !userHasPro;
 
-  const handleClick = async () => {
+  const handleClick = () => {
     if (isLocked) {
       toast.error("This figure requires a Pro subscription. Please upgrade to access.");
       return;
     }
 
-    try {
-      await createConversation.mutateAsync(figure.id);
-    } catch (_error) {
-      toast.error("Failed to start conversation. Please try again.");
-    }
+    navigate(`/chats/new/${figure.slug}`);
   };
 
   return (

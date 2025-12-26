@@ -16,15 +16,13 @@ export function useConversations() {
 
 export function useCreateConversation() {
   const queryClient = useQueryClient();
-  const navigate = useNavigate();
 
   return useMutation({
     mutationFn: (figureId: number) => conversationsApi.create(figureId),
-    onSuccess: (response) => {
+    onSuccess: () => {
       // Invalidate conversations list to refetch
       queryClient.invalidateQueries({ queryKey: ["conversations"] });
-      // Navigate to the new conversation
-      navigate(`/chats/${response?.id}`);
+      // Note: Navigation is handled by the component, not here
     },
     onError: (error) => {
       toast.error("Failed to start conversation. Please try again.");
