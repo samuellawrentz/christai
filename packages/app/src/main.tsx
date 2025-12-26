@@ -11,6 +11,7 @@ import { ProtectedRoute } from "./pages/auth/protected-route";
 import { SignupPage } from "./pages/auth/signup";
 import { ConversationPage } from "./pages/chats/[id]";
 import { ChatsListPage } from "./pages/chats/index";
+import { NewConversationPage } from "./pages/chats/new";
 import { HomePage } from "./pages/home";
 import { ProfilePage } from "./pages/profile";
 import { useAuth, useInitAuth } from "./shared/hooks/use-auth";
@@ -61,7 +62,7 @@ function App() {
               <Route element={<PreferencesWrapper />}>
                 <Route path="/home" element={<HomePage />} />
                 <Route path="/chats" element={<ChatsListPage />} />
-                <Route path="/chats/new/:slug" element={<ConversationPage />} />
+                <Route path="/chats/new/:slug" element={<NewConversationPage />} />
                 <Route path="/chats/:conversationId" element={<ConversationPage />} />
                 <Route path="/profile" element={<ProfilePage />} />
               </Route>
