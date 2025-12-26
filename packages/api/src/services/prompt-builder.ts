@@ -91,7 +91,6 @@ export function buildSystemPrompt(
   figureDisplayName: string,
   figureDescription: string,
   userPreferences?: UserPreferences,
-  isGreeting?: boolean,
 ): string {
   const parts: string[] = [];
 
@@ -107,12 +106,6 @@ export function buildSystemPrompt(
     parts.push("\n---\n");
     parts.push("## User Preferences");
     parts.push(buildUserPreferencesPrompt(userPreferences));
-  }
-
-  // 4. Greeting-specific instruction
-  if (isGreeting) {
-    parts.push("\n---\n");
-    parts.push("## Context\nThis is a greeting message. Keep your response between 100-200 words.");
   }
 
   return parts.join("\n");

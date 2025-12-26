@@ -15,7 +15,7 @@ export const chats = (app: AppType) => {
   return app.post(
     "/chats/converse",
     async ({ supabase, userId, body }) => {
-      const { conversationId, message, isGreeting } = body;
+      const { conversationId, message } = body;
 
       // RLS automatically filters by auth.uid()
       const { data: conversation, error: convError } = await supabase
@@ -56,7 +56,6 @@ export const chats = (app: AppType) => {
         figure.display_name,
         figure.description || "",
         userPreferences,
-        isGreeting,
       );
 
       // Fetch conversation history
@@ -68,16 +67,13 @@ export const chats = (app: AppType) => {
         .limit(MESSAGE_HISTORY_LIMIT);
 
       // Save user message to database (trigger auto-updates conversation metadata)
-      // Skip if this is an auto-greeting trigger
-      if (!isGreeting) {
-        await supabase.from("messages").insert({
-          conversation_id: conversationId,
-          user_id: userId,
-          role: "user",
-          content: message,
-          timestamp: new Date().toISOString(),
-        });
-      }
+      await supabase.from("messages").insert({
+        conversation_id: conversationId,
+        user_id: userId,
+        role: "user",
+        content: message,
+        timestamp: new Date().toISOString(),
+      });
 
       // Build messages array for AI
       const messages = [
@@ -86,7 +82,7 @@ export const chats = (app: AppType) => {
           role: msg.role as "user" | "assistant",
           content: msg.content,
         })),
-        { role: "user" as const, content: isGreeting ? "" : message },
+        { role: "user" as const, content: message },
       ];
 
       // Stream AI response
@@ -114,7 +110,6 @@ export const chats = (app: AppType) => {
       body: t.Object({
         conversationId: t.String({ format: "uuid" }),
         message: t.String({ minLength: 1, maxLength: 4000 }),
-        isGreeting: t.Optional(t.Boolean()),
       }),
     },
   );

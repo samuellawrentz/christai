@@ -80,7 +80,7 @@ export function ConversationPage() {
           body: {
             conversationId: id,
             message: messageText,
-            ...(body || {}), // Include additional body params like isGreeting
+            ...(body || {}),
           },
         };
       },
