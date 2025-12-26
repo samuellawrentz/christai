@@ -24,9 +24,9 @@ export function AppHeader() {
   };
 
   return (
-    <header className="!bg-transparent backdrop-blur-md border-b border-gray-900 sticky top-0 z-50 shadow-sm transition-all duration-300 mix-blend-difference">
+    <header className="backdrop-blur-md border-b border-gray-900 sticky top-0 z-50 shadow-sm transition-all duration-300">
       <div className="container mx-auto flex items-center justify-between px-4 py-4">
-        <Link to="/" className="flex w-[180px] items-center gap-3 invert">
+        <Link to="/" className="flex w-[180px] items-center gap-3">
           <img
             src="/images/logo.svg"
             alt="ChristianAI Logo"
@@ -35,7 +35,7 @@ export function AppHeader() {
           />
         </Link>
 
-        <div className="invert">
+        <div>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <button

@@ -1,13 +1,14 @@
+import { SidebarProvider } from "@christianai/ui";
 import { Outlet } from "react-router-dom";
-import { AppHeader } from "@/components/layout/app-header";
-import { BottomNav } from "@/components/layout/bottom-nav";
+import { AppSidebar } from "@/components/layout/app-sidebar";
 
 export function AppLayout() {
   return (
-    <>
-      <AppHeader />
-      <Outlet />
-      <BottomNav />
-    </>
+    <SidebarProvider>
+      <AppSidebar />
+      <main className="flex-1">
+        <Outlet />
+      </main>
+    </SidebarProvider>
   );
 }

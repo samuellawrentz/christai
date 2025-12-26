@@ -67,45 +67,6 @@ export function HomePage() {
         </p>
       </div>
 
-      {/* Recent Conversations */}
-      {recentConversations.length > 0 && (
-        <section className="space-y-4">
-          <div className="flex items-center justify-between">
-            <h2 className="text-2xl font-serif text-gray-900">Continue Your Conversations</h2>
-            <button
-              type="button"
-              onClick={() => navigate("/chats")}
-              className="text-sm text-blue-600 hover:text-blue-700 font-medium"
-            >
-              View all
-            </button>
-          </div>
-          <div className="grid md:grid-cols-3 gap-4">
-            {recentConversations.map((conv: Conversation) => (
-              <Card
-                key={conv.id}
-                className="cursor-pointer hover:shadow-lg transition-all p-4"
-                onClick={() => navigate(`/chats/${conv.id}`)}
-              >
-                <div className="flex items-start gap-3">
-                  <MessageCircle className="w-5 h-5 text-blue-600 mt-1 flex-shrink-0" />
-                  <div className="flex-1 min-w-0">
-                    <h3 className="font-medium text-gray-900 truncate">
-                      {conv.figures?.display_name || "Unknown"}
-                    </h3>
-                    <p className="text-sm text-gray-500 truncate">
-                      {conv.last_message_at
-                        ? new Date(conv.last_message_at).toLocaleDateString()
-                        : "Start chatting..."}
-                    </p>
-                  </div>
-                </div>
-              </Card>
-            ))}
-          </div>
-        </section>
-      )}
-
       {/* Subscription Upsell for Free Users */}
       {/* {!userHasPro && ( */}
       {/*   <Card className="bg-gradient-to-r from-blue-50 to-purple-50 border-blue-200 p-6"> */}

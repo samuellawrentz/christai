@@ -104,16 +104,16 @@ export function ConversationPage() {
   }
 
   return (
-    <main className="max-w-4xl mx-auto px-4 py-4 h-[calc(100vh-80px)]">
-      <div className="fixed -left-[470px] top-0 bottom-0 object-contain">
+    <main className="max-w-4xl mx-auto px-4 py-4 h-[calc(100vh)] flex flex-col">
+      <div className="fixed -right-[470px] top-0 bottom-0 object-contain">
         <img
           src={`${conversation?.figures?.avatar_url}`}
           alt={`${conversation?.figures?.display_name} avatar`}
-          className="object-top [mask-image:linear-gradient(to_right,black_0%,black_30%,black_50%,transparent_100%)]"
+          className="object-top [mask-image:linear-gradient(to_left,black_0%,black_30%,black_50%,transparent_100%)]"
         />
       </div>
       {/* Chat container */}
-      <ScrollArea ref={stickToBottomInstance.scrollRef} className="h-[calc(100%-200px)]">
+      <ScrollArea ref={stickToBottomInstance.scrollRef} className="h-[calc(100%-120px)]">
         <div ref={stickToBottomInstance.contentRef} className="flex flex-col gap-8 p-4">
           {messages.map((message: any) => (
             <Message key={message.id} from={message.role}>
@@ -143,7 +143,7 @@ export function ConversationPage() {
       </ScrollArea>
 
       {/* Input */}
-      <PromptInput onSubmit={handleSubmit} className="mt-4">
+      <PromptInput onSubmit={handleSubmit} className="mt-auto">
         <PromptInputBody>
           <PromptInputTextarea
             value={input}
