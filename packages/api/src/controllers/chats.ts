@@ -8,7 +8,7 @@ const openrouter = createOpenRouter({
   apiKey: process.env.OPENROUTER_API_KEY!,
 });
 
-const MODEL = "openai/gpt-oss-120b:free";
+const MODEL = "openai/gpt-oss-20b";
 const MESSAGE_HISTORY_LIMIT = 20;
 
 export const chats = (app: AppType) => {
@@ -93,7 +93,7 @@ export const chats = (app: AppType) => {
       const result = streamText({
         model: openrouter.chat(MODEL),
         messages,
-        temperature: 0.7,
+        temperature: 0.8,
         maxOutputTokens: 1000,
         async onFinish({ text, usage }) {
           // Save assistant message (trigger auto-updates conversation metadata)
