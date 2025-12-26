@@ -1,8 +1,10 @@
 import type { Message } from "@christianai/shared/types/api/models";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import type { UIMessage } from "ai";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { conversationsApi } from "@/lib/api";
+import { convertToUIMessages } from "@/utils/message-adapter";
 
 export function useConversations() {
   return useQuery({
@@ -40,9 +42,10 @@ export function useConversation(conversationId: string) {
 }
 
 export function useConversationMessages(conversationId: string) {
-  return useQuery<Message[]>({
+  return useQuery<Message[], Error, UIMessage[]>({
     queryKey: ["conversations", conversationId, "messages"],
     queryFn: () => conversationsApi.getMessages(conversationId),
     enabled: !!conversationId, // Only fetch if conversationId exists
+    select: (data) => convertToUIMessages(data),
   });
 }

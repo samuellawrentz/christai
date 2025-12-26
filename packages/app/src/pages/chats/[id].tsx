@@ -23,12 +23,11 @@ import { useStickToBottom } from "use-stick-to-bottom";
 import { useConversation, useConversationMessages } from "@/hooks/use-conversations";
 import { api } from "@/lib/api";
 import { supabase } from "@/lib/supabase";
-import { convertToUIMessages } from "@/utils/message-adapter";
 
 export function ConversationPage() {
   const { id } = useParams<{ id: string }>();
   const [input, setInput] = useState("");
-  const [isInitialized, setIsInitialized] = useState(false);
+  const hasInitialized = useRef(false);
 
   // Create useStickToBottom instance connected to ScrollArea viewport
   const stickToBottomInstance = useStickToBottom();
@@ -66,26 +65,28 @@ export function ConversationPage() {
     }),
   });
 
-  // Load previous messages into chat when data arrives
+  // Reset initialization flag when conversation ID changes
   useEffect(() => {
-    if (messagesData && !msgsLoading) {
-      const uiMessages = convertToUIMessages(messagesData);
-      setMessages(uiMessages);
-      setIsInitialized(true);
-    }
-  }, [messagesData?.length, msgsLoading, setMessages, setIsInitialized]);
+    hasInitialized.current = false;
+  }, [id]);
 
-  // Auto-send greeting when conversation is empty (only after initialization)
+  // Load messages and send greeting when both queries complete
   useEffect(() => {
-    if (isInitialized && messages.length === 0 && conversation && status === "ready") {
-      sendMessage(
-        { text: "hello" },
-        {
-          body: { isGreeting: true },
-        },
-      );
+    // Wait for both queries to complete
+    if (msgsLoading || convLoading || !messagesData || !conversation) return;
+
+    // Only run once per conversation
+    if (hasInitialized.current) return;
+    hasInitialized.current = true;
+
+    // Load messages into UI (already converted via select in hook)
+    setMessages(messagesData);
+
+    // Send greeting only if conversation has no messages in DB
+    if (messagesData.length === 0) {
+      sendMessage({ text: "hello" }, { body: { isGreeting: true } });
     }
-  }, [isInitialized, messages.length, conversation, status, sendMessage]);
+  }, [messagesData, msgsLoading, convLoading, conversation, setMessages, sendMessage, id]);
 
   const handleSubmit = (message: { text: string }) => {
     if (!message.text?.trim()) return;

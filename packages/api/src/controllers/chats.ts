@@ -9,7 +9,7 @@ const openrouter = createOpenRouter({
 });
 
 const MODEL = "openai/gpt-oss-20b";
-const MESSAGE_HISTORY_LIMIT = 20;
+const MESSAGE_HISTORY_LIMIT = 10;
 
 export const chats = (app: AppType) => {
   return app.post(
