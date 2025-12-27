@@ -1,0 +1,125 @@
+---
+// Figure Showcase Section - Highlight 4 Key Biblical Figures
+import { ScrollText, CheckCircle, Heart, Sword } from '@lucide/astro';
+import { buttonVariants } from "@christianai/ui";
+
+const buttonClass = buttonVariants({ variant: "outline", size: "lg" });
+---
+
+<section class="py-20 bg-white">
+  <div class="container mx-auto px-4">
+    <div class="text-center mb-16">
+      <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+        Meet Your AI Biblical Guides
+      </h2>
+      <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+        Connect with these foundational biblical figures through meaningful AI-powered conversations that draw from their stories, wisdom, and teachings.
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
+
+      <!-- Jesus Christ -->
+      <article class="bg-gradient-to-br from-blue-50 to-blue-100 p-8 rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 border border-blue-200">
+        <div class="text-center">
+          <div class="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-blue-600 text-white">
+            <Heart aria-hidden="true" class="h-8 w-8" />
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 mb-2">Jesus Christ</h3>
+          <p class="text-sm text-gray-600 mb-4">Son of God & Savior</p>
+          <p class="text-gray-700 leading-relaxed mb-6">
+            Experience divine love, teachings, and eternal wisdom through conversations rooted in the Gospels and New Testament Scripture.
+          </p>
+          <a
+            href="https://app.christianai.world/chats/new/jesus"
+            target="_blank"
+            rel="noopener noreferrer"
+            class={`${buttonClass} w-full bg-white hover:bg-blue-50 text-blue-600 border-blue-300`}
+          >
+            Chat with Jesus
+          </a>
+        </div>
+      </article>
+
+      <!-- Moses -->
+      <article class="bg-gradient-to-br from-blue-50 to-blue-100 p-8 rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 border border-blue-200">
+        <div class="text-center">
+          <div class="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-blue-600 text-white">
+            <ScrollText aria-hidden="true" class="h-8 w-8" />
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 mb-2">Moses</h3>
+          <p class="text-sm text-gray-600 mb-4">Prophet & Lawgiver</p>
+          <p class="text-gray-700 leading-relaxed mb-6">
+            Receive guidance inspired by the wisdom of Moses, the great leader who led Israel from Egyptian bondage to freedom.
+          </p>
+          <a
+            href="https://app.christianai.world/chats/new/moses"
+            target="_blank"
+            rel="noopener noreferrer"
+            class={`${buttonClass} w-full bg-white hover:bg-blue-50 text-blue-600 border-blue-300`}
+          >
+            Chat with Moses
+          </a>
+        </div>
+      </article>
+
+      <!-- Joshua -->
+      <article class="bg-gradient-to-br from-blue-50 to-blue-100 p-8 rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 border border-blue-200">
+        <div class="text-center">
+          <div class="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-blue-600 text-white">
+            <CheckCircle aria-hidden="true" class="h-8 w-8" />
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 mb-2">Joshua</h3>
+          <p class="text-sm text-gray-600 mb-4">Conqueror & Successor</p>
+          <p class="text-gray-700 leading-relaxed mb-6">
+            Connect with the unwavering courage, faith, and leadership of Joshua, who led Israel into the Promised Land.
+          </p>
+          <a
+            href="https://app.christianai.world/chats/new/joshua"
+            target="_blank"
+            rel="noopener noreferrer"
+            class={`${buttonClass} w-full bg-white hover:bg-blue-50 text-blue-600 border-blue-300`}
+          >
+            Chat with Joshua
+          </a>
+        </div>
+      </article>
+
+      <!-- David -->
+      <article class="bg-gradient-to-br from-blue-50 to-blue-100 p-8 rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 border border-blue-200">
+        <div class="text-center">
+          <div class="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-blue-600 text-white">
+            <Sword aria-hidden="true" class="h-8 w-8" />
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 mb-2">King David</h3>
+          <p class="text-sm text-gray-600 mb-4">Psalmist & Warrior King</p>
+          <p class="text-gray-700 leading-relaxed mb-6">
+            Engage with the poetic wisdom, leadership, and spiritual insights of David, author of many Psalms and Israel's greatest king.
+          </p>
+          <a
+            href="https://app.christianai.world/chats/new/david"
+            target="_blank"
+            rel="noopener noreferrer"
+            class={`${buttonClass} w-full bg-white hover:bg-blue-50 text-blue-600 border-blue-300`}
+          >
+            Chat with David
+          </a>
+        </div>
+      </article>
+
+    </div>
+
+    <div class="text-center mt-12">
+      <p class="text-gray-600 mb-6">And many more biblical figures available...</p>
+      <a
+        href="https://app.christianai.world"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-blue-700 text-white px-8 py-4 rounded-lg font-semibold text-lg hover:from-blue-700 hover:to-blue-800 transition-all duration-300 shadow-lg hover:shadow-xl"
+      >
+        Explore All Biblical Figures
+        <Heart aria-hidden="true" class="w-5 h-5" />
+      </a>
+    </div>
+  </div>
+</section>
