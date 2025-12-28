@@ -2,9 +2,6 @@
 
 import { useChat } from "@ai-sdk/react";
 import {
-  Conversation,
-  ConversationContent,
-  ConversationScrollButton,
   Message,
   MessageContent,
   MessageResponse,
@@ -15,35 +12,44 @@ import {
   PromptInputTextarea,
   ScrollArea,
 } from "@christianai/ui";
-import { DefaultChatTransport } from "ai";
+import { DefaultChatTransport, type UIMessage } from "ai";
 import { ArrowDownIcon, Loader2 } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { useState } from "react";
+import { useParams } from "react-router-dom";
 import { useStickToBottom } from "use-stick-to-bottom";
 import { useConversation, useConversationMessages } from "@/hooks/use-conversations";
 import { api } from "@/lib/api";
 import { supabase } from "@/lib/supabase";
 
-export function ConversationPage() {
+export const ConversationPage = () => {
   const params = useParams<{ conversationId: string }>();
   const conversationId = params.conversationId!;
-  const location = useLocation();
 
+  // Load message history
+  const { data: messagesData, isLoading: msgsLoading } = useConversationMessages(conversationId);
+
+  if (msgsLoading || !messagesData) return null;
+
+  return <ConversationCore conversationId={conversationId} messagesData={messagesData} />;
+};
+
+interface ConversationCoreProps {
+  conversationId: string;
+  messagesData: UIMessage[];
+}
+
+function ConversationCore({ conversationId, messagesData }: ConversationCoreProps) {
   const [input, setInput] = useState("");
-  const initialMessageSentRef = useRef(false);
 
   // Create useStickToBottom instance connected to ScrollArea viewport
   const stickToBottomInstance = useStickToBottom();
 
   // Load conversation details
   const { data: conversation, isLoading: convLoading } = useConversation(conversationId);
-
-  // Load message history
-  const { data: messagesData, isLoading: msgsLoading } = useConversationMessages(conversationId);
-
   // Setup useChat
-  const { messages, setMessages, sendMessage, status } = useChat({
+  const { messages, sendMessage, status } = useChat({
     id: conversationId,
+    messages: messagesData,
     transport: new DefaultChatTransport({
       api: `${api.baseUrl}/chats/converse`,
       headers: async () => {
@@ -68,25 +74,6 @@ export function ConversationPage() {
     }),
   });
 
-  // Load messages when data is available (skip if sending initial message)
-  useEffect(() => {
-    const initialMessage = location.state?.initialMessage;
-    if (messagesData && !initialMessage) {
-      setMessages(messagesData);
-    }
-  }, [messagesData, setMessages, location.state]);
-
-  // Send initial message from navigation state once
-  useEffect(() => {
-    const initialMessage = location.state?.initialMessage;
-    if (initialMessage && !initialMessageSentRef.current) {
-      initialMessageSentRef.current = true;
-      sendMessage({ text: initialMessage });
-      // Clear state to prevent re-sending
-      window.history.replaceState({}, "");
-    }
-  }, [location.state, sendMessage]);
-
   const handleSubmit = async (message: { text: string }) => {
     if (!message.text?.trim()) return;
 
@@ -94,18 +81,10 @@ export function ConversationPage() {
     setInput("");
   };
 
-  if (convLoading || msgsLoading) {
-    return (
-      <main className="max-w-4xl mx-auto px-4 py-8">
-        <div className="flex items-center justify-center h-64">
-          <Loader2 className="h-8 w-8 animate-spin" />
-        </div>
-      </main>
-    );
-  }
+  if (convLoading) return null;
 
   return (
-    <main className="max-w-4xl mx-auto px-4 py-4 h-[calc(100vh)] flex flex-col">
+    <main className="max-w-4xl w-full mx-auto px-4 py-4 h-[calc(100vh)] flex flex-col">
       <div className="fixed -right-[470px] top-[50%] object-contain opacity-60">
         <img
           src={conversation?.figures?.avatar_url}
@@ -140,7 +119,7 @@ export function ConversationPage() {
       </ScrollArea>
 
       {/* Input */}
-      <PromptInput onSubmit={handleSubmit} className="mt-auto">
+      <PromptInput onSubmit={handleSubmit} className="mt-auto backdrop-brightness-90 rounded-md">
         <PromptInputBody>
           <PromptInputTextarea
             value={input}

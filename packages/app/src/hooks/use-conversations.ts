@@ -1,7 +1,6 @@
 import type { Message } from "@christianai/shared/types/api/models";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import type { UIMessage } from "ai";
-import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { conversationsApi } from "@/lib/api";
 import { convertToUIMessages } from "@/utils/message-adapter";
