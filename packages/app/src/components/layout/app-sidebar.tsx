@@ -31,15 +31,11 @@ export function AppSidebar() {
     await signOut();
   };
 
-  const handleProfile = () => {
-    // Navigation handled by Link component
-  };
-
   // Get last 20 conversations sorted by last_message_at or created_at
   const recentConversations = conversations
     .sort((a, b) => {
-      const aDate = a.last_message_at || a.created_at;
-      const bDate = b.last_message_at || b.created_at;
+      const aDate = a.last_message_at || a.updated_at;
+      const bDate = b.last_message_at || b.updated_at;
       return new Date(bDate).getTime() - new Date(aDate).getTime();
     })
     .slice(0, 20);
