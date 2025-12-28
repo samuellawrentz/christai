@@ -1,11 +1,6 @@
 "use client";
 
 import {
-  ConversationContent,
-  ConversationScrollButton,
-  Message,
-  MessageContent,
-  MessageResponse,
   PromptInput,
   PromptInputBody,
   PromptInputFooter,
@@ -40,9 +35,9 @@ export function NewConversationPage() {
 
     try {
       const newConversation = await createConversation.mutateAsync(figure.id);
+      localStorage.setItem("init", message.text);
       // Navigate to conversation page with initial message in state
       navigate(`/chats/${newConversation.id}`, {
-        state: { initialMessage: message.text },
         replace: true,
       });
     } catch (error) {

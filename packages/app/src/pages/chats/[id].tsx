@@ -14,8 +14,8 @@ import {
 } from "@christianai/ui";
 import { DefaultChatTransport, type UIMessage } from "ai";
 import { ArrowDownIcon, Loader2 } from "lucide-react";
-import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useLocation, useParams } from "react-router-dom";
 import { useStickToBottom } from "use-stick-to-bottom";
 import { useConversation, useConversationMessages } from "@/hooks/use-conversations";
 import { api } from "@/lib/api";
@@ -73,6 +73,14 @@ function ConversationCore({ conversationId, messagesData }: ConversationCoreProp
       },
     }),
   });
+
+  useEffect(() => {
+    const initialMessage = localStorage.getItem("init");
+    if (initialMessage) {
+      localStorage.removeItem("init");
+      sendMessage({ text: initialMessage });
+    }
+  }, []);
 
   const handleSubmit = async (message: { text: string }) => {
     if (!message.text?.trim()) return;
