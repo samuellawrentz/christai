@@ -28,7 +28,12 @@ export const ConversationPage = () => {
   // Load message history
   const { data: messagesData, isLoading: msgsLoading } = useConversationMessages(conversationId);
 
-  if (msgsLoading || !messagesData) return null;
+  if (msgsLoading || !messagesData)
+    return (
+      <div className="absolute inset-0 grid place-items-center">
+        <Loader2 className="animate-spin size-6" />
+      </div>
+    );
 
   return <ConversationCore conversationId={conversationId} messagesData={messagesData} />;
 };
