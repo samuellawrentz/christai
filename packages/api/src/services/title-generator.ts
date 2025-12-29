@@ -5,7 +5,8 @@ const openrouter = createOpenRouter({
   apiKey: process.env.OPENROUTER_API_KEY!,
 });
 
-const MODEL = "openai/gpt-oss-20b";
+// Use a fast, reliable model for title generation
+const TITLE_MODEL = "openai/gpt-4o-mini";
 const MAX_TITLE_LENGTH = 50;
 
 /**
@@ -19,9 +20,6 @@ export async function generateConversationTitle(
   assistantResponse: string,
 ): Promise<string> {
   try {
-    console.log("[Title Gen] Input - User:", userMessage.slice(0, 100));
-    console.log("[Title Gen] Input - Assistant:", assistantResponse.slice(0, 100));
-
     const prompt = `Generate a short, descriptive title (maximum 6 words) for this conversation:
 
 User: ${userMessage}
@@ -30,13 +28,11 @@ Assistant: ${assistantResponse}
 Return only the title, no quotes or extra text.`;
 
     const { text: title } = await generateText({
-      model: openrouter.chat(MODEL),
+      model: openrouter.chat(TITLE_MODEL),
       prompt,
-      maxOutputTokens: 20,
-      temperature: 0.3,
+      maxOutputTokens: 50,
+      temperature: 0.5,
     });
-
-    console.log("[Title Gen] Raw AI response:", title);
 
     // Clean and truncate title
     const cleanTitle = title
@@ -44,14 +40,9 @@ Return only the title, no quotes or extra text.`;
       .replace(/^["']|["']$/g, "") // Remove surrounding quotes
       .slice(0, MAX_TITLE_LENGTH);
 
-    console.log("[Title Gen] Clean title:", cleanTitle);
-
-    const finalTitle = cleanTitle || getFallbackTitle(userMessage);
-    console.log("[Title Gen] Final title:", finalTitle);
-
-    return finalTitle;
+    return cleanTitle || getFallbackTitle(userMessage);
   } catch (error) {
-    console.error("[Title Gen] Error:", error);
+    console.error("[Title Gen] Failed to generate title:", error);
     return getFallbackTitle(userMessage);
   }
 }

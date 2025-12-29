@@ -103,8 +103,8 @@ export const chats = (app: AppType) => {
             token_count: usage?.totalTokens,
           });
 
-          // Generate title if none exists (uses current exchange for context)
-          if (!conversation.title) {
+          // Generate title only for first exchange (no history exists)
+          if (!conversation.title && (!history || history.length === 0)) {
             try {
               const title = await generateConversationTitle(message, text);
               await supabase.from("conversations").update({ title }).eq("id", conversationId);
