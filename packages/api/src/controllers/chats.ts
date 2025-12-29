@@ -3,6 +3,7 @@ import { streamText } from "ai";
 import { t } from "elysia";
 import type { AppType } from "../app";
 import { buildSystemPrompt } from "../services/prompt-builder";
+import { generateConversationTitle } from "../services/title-generator";
 
 const openrouter = createOpenRouter({
   apiKey: process.env.OPENROUTER_API_KEY!,
@@ -20,7 +21,7 @@ export const chats = (app: AppType) => {
       // RLS automatically filters by auth.uid()
       const { data: conversation, error: convError } = await supabase
         .from("conversations")
-        .select("id, figure_id")
+        .select("id, figure_id, title")
         .eq("id", conversationId)
         .eq("is_deleted", false)
         .single();
@@ -101,6 +102,17 @@ export const chats = (app: AppType) => {
             timestamp: new Date().toISOString(),
             token_count: usage?.totalTokens,
           });
+
+          // Generate title if none exists (uses current exchange for context)
+          if (!conversation.title) {
+            try {
+              const title = await generateConversationTitle(message, text);
+              await supabase.from("conversations").update({ title }).eq("id", conversationId);
+            } catch (error) {
+              console.error("Failed to generate conversation title:", error);
+              // Non-critical error, don't throw
+            }
+          }
         },
       });
 
