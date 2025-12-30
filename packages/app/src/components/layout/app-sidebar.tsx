@@ -61,7 +61,6 @@ export function AppSidebar() {
 
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>Your Chats</SidebarGroupLabel>
           <SidebarGroupContent>
             {recentConversations.length === 0 ? (
               <div className="flex flex-col items-center justify-center py-8 text-gray-500">
@@ -84,11 +83,6 @@ export function AppSidebar() {
                         <SidebarMenuItem key={chat.id}>
                           <SidebarMenuButton asChild isActive={isActive}>
                             <Link to={`/chats/${chat.id}`} className="flex items-center gap-2">
-                              <Avatar className="w-6 h-6">
-                                <AvatarFallback className="text-xs">
-                                  {figureName[0]?.toUpperCase() || "C"}
-                                </AvatarFallback>
-                              </Avatar>
                               <span className="truncate">{title}</span>
                             </Link>
                           </SidebarMenuButton>

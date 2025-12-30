@@ -37,7 +37,7 @@ export function FigureCard({ figure, userHasPro }: Props) {
         />
       )}
       {figure.avatar_url && (
-        <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 duration-300" />
+        <div className="absolute inset-0 bg-black/30 dark:bg-black/40 group-hover:bg-black/20 duration-300" />
       )}
       <div className="relative z-10 px-4 h-full flex flex-col justify-end">
         {isLocked && (
