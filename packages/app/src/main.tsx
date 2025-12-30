@@ -4,6 +4,8 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter, Navigate, Outlet, Route, Routes, useLocation } from "react-router-dom";
 import { Toaster } from "sonner";
 import { PreferencesWrapper } from "./components/preferences-wrapper";
+import { useTheme } from "./hooks/use-theme";
+import { useUser } from "./hooks/use-user";
 import { AppLayout } from "./layouts/app-layout";
 import { queryClient } from "./lib/query-client";
 import { LoginPage } from "./pages/auth/login";
@@ -37,6 +39,14 @@ function RouteTracker() {
   return null;
 }
 
+function ThemeInitializer() {
+  const { user } = useUser();
+  useTheme(user?.preferences);
+
+  // Theme is initialized by the hook on mount
+  return null;
+}
+
 function App() {
   const { userAuthenticated } = useAuth();
 
@@ -46,6 +56,7 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
+        <ThemeInitializer />
         <RouteTracker />
         <Toaster position="top-right" />
         <Routes>

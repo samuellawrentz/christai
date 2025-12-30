@@ -149,4 +149,8 @@
     background-repeat: no-repeat;
     background-attachment: fixed;
   }
+
+  .dark body {
+    background-image: url('/images/background_dark.webp');
+  }
 }

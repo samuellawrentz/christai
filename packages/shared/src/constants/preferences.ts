@@ -22,6 +22,11 @@ export const PREFERENCE_OPTIONS = {
     { value: "NLT", label: "NLT (New Living Translation)" },
     { value: "MSG", label: "MSG (The Message)" },
   ] as const,
+  theme: [
+    { value: "light", label: "Light" },
+    { value: "dark", label: "Dark" },
+    { value: "system", label: "System" },
+  ] as const,
 } as const;
 
 export type PreferenceOption = typeof PREFERENCE_OPTIONS;

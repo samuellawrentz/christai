@@ -168,6 +168,26 @@ export function PreferencesDialog({
               </SelectContent>
             </Select>
           </div>
+
+          <div className="grid gap-2">
+            <Label htmlFor="theme">Theme</Label>
+            <p className="text-xs text-gray-500 mb-1">Choose your preferred theme</p>
+            <Select
+              value={preferences.theme || "system"}
+              onValueChange={(value) => updatePreference("theme", value as any)}
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Select theme" />
+              </SelectTrigger>
+              <SelectContent>
+                {PREFERENCE_OPTIONS.theme.map((option: PreferenceOptionItem) => (
+                  <SelectItem key={option.value} value={option.value}>
+                    {option.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
         </div>
 
         <DialogFooter>

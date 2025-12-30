@@ -5,6 +5,7 @@ export type UserPreferences = {
   age_group?: "child" | "teen" | "adult" | "senior";
   tone?: "formal" | "conversational" | "warm";
   bible_translation?: "NIV" | "ESV" | "KJV" | "NLT" | "MSG";
+  theme?: "light" | "dark" | "system";
 };
 
 export type User = {

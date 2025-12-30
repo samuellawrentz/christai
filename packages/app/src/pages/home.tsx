@@ -58,11 +58,11 @@ export function HomePage() {
   return (
     <main className="container mx-auto px-4 py-8 pb-24 lg:pb-8 space-y-8">
       {/* Hero Section */}
-      <div className="text-center space-y-3">
-        <h1 className="text-4xl md:text-5xl font-serif text-gray-900">
+      <div className="text-center space-y-3 mt-8">
+        <h1 className="text-4xl md:text-5xl font-serif text-gray-900 dark:text-gray-100">
           Welcome back, {user?.email?.split("@")[0] || "friend"}
         </h1>
-        <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+        <p className="text-lg text-gray-600 max-w-2xl mx-auto dark:text-gray-300">
           Explore biblical wisdom through meaningful conversations with historical figures
         </p>
       </div>
@@ -111,7 +111,7 @@ export function HomePage() {
       <section className="space-y-8">
         <div className="flex items-center gap-2 pt-8">
           <Sparkles className="w-5 h-5 text-blue-600" />
-          <h2 className="text-2xl text-gray-900">
+          <h2 className="text-2xl text-gray-900 dark:text-gray-100">
             {searchQuery ? "Search Results" : "Start a New Conversation"}
           </h2>
           {searchQuery && <Badge variant="secondary">{filteredFigures.length} found</Badge>}

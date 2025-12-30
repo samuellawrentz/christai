@@ -15,7 +15,7 @@ import {
 import { DefaultChatTransport, type UIMessage } from "ai";
 import { ArrowDownIcon, Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useStickToBottom } from "use-stick-to-bottom";
 import { useConversation, useConversationMessages } from "@/hooks/use-conversations";
 import { api } from "@/lib/api";
@@ -98,7 +98,7 @@ function ConversationCore({ conversationId, messagesData }: ConversationCoreProp
 
   return (
     <main className="max-w-4xl w-full mx-auto px-4 py-4 h-[calc(100vh)] flex flex-col">
-      <div className="fixed -right-[470px] top-[50%] object-contain opacity-60">
+      <div className="fixed -right-[470px] top-[50%] object-contain opacity-60 dark:opacity-40">
         <img
           src={conversation?.figures?.avatar_url}
           alt={`${conversation?.figures?.display_name} avatar`}

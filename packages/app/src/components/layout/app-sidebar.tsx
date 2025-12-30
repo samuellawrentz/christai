@@ -16,16 +16,20 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@christianai/ui";
-import { MessageCircle, User } from "lucide-react";
+import { MessageCircle, Moon, Settings, Sun, User } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { useConversations } from "@/hooks/use-conversations";
+import { useTheme } from "@/hooks/use-theme";
+import { useUser } from "@/hooks/use-user";
 import { useAuth } from "@/shared/hooks/use-auth";
 import { groupConversationsByDate } from "@/utils/chat-utils";
 
 export function AppSidebar() {
-  const { user, signOut } = useAuth();
+  const { signOut } = useAuth();
+  const { user } = useUser();
   const location = useLocation();
   const { data: conversations = [] } = useConversations();
+  const { resolvedTheme, setTheme } = useTheme(user?.preferences);
 
   const handleSignOut = async () => {
     await signOut();
@@ -49,7 +53,7 @@ export function AppSidebar() {
           <img
             src="/images/logo.svg"
             alt="ChristianAI Logo"
-            className="h-[180px] w-auto transition-all duration-300 hover:scale-105 hover:drop-shadow-md"
+            className="h-[180px] w-auto transition-all duration-300 hover:scale-105 hover:drop-shadow-md dark:invert"
             loading="eager"
           />
         </Link>
@@ -102,6 +106,19 @@ export function AppSidebar() {
       <SidebarFooter>
         <SidebarMenu>
           <SidebarMenuItem>
+            <SidebarMenuButton
+              onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
+              className="w-full"
+            >
+              {resolvedTheme === "dark" ? (
+                <Sun className="w-4 h-4" />
+              ) : (
+                <Moon className="w-4 h-4" />
+              )}
+              <span>{resolvedTheme === "dark" ? "Light Mode" : "Dark Mode"}</span>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+          <SidebarMenuItem>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <SidebarMenuButton className="w-full">
@@ -122,6 +139,7 @@ export function AppSidebar() {
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
                   <Link to="/profile" className="flex items-center gap-2">
+                    <Settings className="w-4 h-4" />
                     Settings
                   </Link>
                 </DropdownMenuItem>
