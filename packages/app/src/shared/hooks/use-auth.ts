@@ -10,6 +10,7 @@ interface AuthState {
   setAuth: (user: User | null, loading?: boolean) => void;
   signIn: (email: string, password: string) => Promise<{ error: Error | null }>;
   signUp: (email: string, password: string) => Promise<{ error: Error | null }>;
+  signInWithGoogle: () => Promise<{ error: Error | null }>;
   signOut: () => Promise<{ error: Error | null }>;
 }
 
@@ -32,6 +33,12 @@ export const useAuthStore = create<AuthState>((set) => ({
     const { error } = await supabase.auth.signUp({
       email,
       password,
+    });
+    return { error };
+  },
+  signInWithGoogle: async () => {
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
     });
     return { error };
   },
@@ -67,7 +74,7 @@ export const useInitAuth = () => {
 
 // Main hook to use in components
 export const useAuth = () => {
-  const { user, loading, signIn, signUp, signOut } = useAuthStore();
+  const { user, loading, signIn, signUp, signInWithGoogle, signOut } = useAuthStore();
 
   return {
     user,
@@ -75,6 +82,7 @@ export const useAuth = () => {
     userAuthenticated: !!user,
     signIn,
     signUp,
+    signInWithGoogle,
     signOut,
   };
 };
