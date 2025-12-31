@@ -25,6 +25,7 @@ const createApp = () => {
           "https://christianai.world",
           "https://www.christianai.world",
           "https://app.christianai.world",
+          "http://localhost:8081",
         ],
         methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
         allowedHeaders: ["Content-Type", "Authorization"],
