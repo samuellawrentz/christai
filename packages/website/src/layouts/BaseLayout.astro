@@ -12,7 +12,7 @@ export interface Props {
 
 const { title, description, image, url, showHero = false } = Astro.props;
 const canonicalUrl = url || new URL(Astro.request.url).origin + Astro.url.pathname;
-const defaultDescription = "Experience meaningful conversations with Christian figures like Moses, Joshua, and Jesus through advanced AI technology. Join our waitlist for spiritual guidance and biblical wisdom.";
+const defaultDescription = "Experience meaningful conversations with Christian figures like Moses, Joshua, and Jesus through advanced AI technology. Sign up now for spiritual guidance and biblical wisdom.";
 const defaultImage = "/og_image.png";
 ---
 

@@ -1,30 +1,51 @@
 ---
-// Import React components
-import WaitlistForm from "../forms/WaitlistForm.tsx";
+// Import UI components
 import { buttonVariants } from "@christianai/ui";
+import { Sparkles, MessageCircle } from '@lucide/astro';
 
+const buttonClass = buttonVariants({ variant: "default", size: "lg" });
+const outlineButtonClass = buttonVariants({ variant: "outline", size: "lg" });
 ---
 
-<section class="relative w-full md:-top-20 md:-mb-20">
-  <div
-    class="relative w-full bg-center bg-cover bg-no-repeat px-4 py-24"
-    style="background-image: url(/images/moses.webp)"
-  >
-    <div class="absolute inset-0 bg-gradient-to-b from-black/70 via-transparent-30" />
-
-    <div class="relative mx-auto mt-16 max-w-4xl text-center">
-      <h1 class="mb-6 font-bold text-5xl text-white md:text-6xl">
-        Chat with <span class="text-white">Biblical Figures</span> Using AI
-      </h1>
-      <div class="mx-auto mb-8 max-w-2xl bg-gradient-radial from-black/15 via-black/10 to-transparent p-4 backdrop-blur-[2px]">
-        <p class="text-white text-xl drop-shadow-lg">
-          Experience meaningful AI-powered conversations with Christian figures like Moses,
-          Joshua, and Jesus Christ. Gain spiritual wisdom, biblical insights, and faith
-          guidance through advanced AI technology trained on Scripture.
-        </p>
+<section class="relative overflow-hidden">
+  <img
+    src="/images/background.webp"
+    alt=""
+    class="absolute inset-0 w-full h-full object-cover [mask-image:linear-gradient(to_bottom,black_40%,transparent_100%)]"
+  />
+  <div class="container mx-auto px-4 py-20 lg:py-32 relative z-10">
+    <div class="max-w-4xl mx-auto text-center">
+      <div class="inline-flex items-center gap-2 px-4 py-2 bg-blue-100 text-blue-700 rounded-full text-sm font-medium mb-6">
+        <Sparkles aria-hidden="true" class="h-4 w-4" />
+        AI-Powered Biblical Conversations
       </div>
+
+      <h1 class="text-4xl md:text-6xl font-bold mb-6">
+        Chat with <span class="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent leading-relaxed">Biblical Figures</span> and grow Spiritually 
+      </h1>
+
+      <p class="text-xl text-gray-900 mb-8 max-w-2xl mx-auto leading-relaxed">
+        Experience meaningful AI-powered conversations with Moses, Joshua, and Jesus Christ. Gain spiritual wisdom, biblical insights, and faith guidance through advanced AI technology trained on Scripture.
+      </p>
+
       <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
-        <WaitlistForm source="hero" className="max-w-md" client:load />
+        <a
+          href="https://app.christianai.world/signup"
+          target="_blank"
+          rel="noopener noreferrer"
+          onclick="if(window.gtag){gtag('event', 'sign_up', {source: 'hero'});}"
+          class={`${buttonClass} group bg-gradient-to-r from-blue-600 to-blue-700 text-white px-8 py-4 text-lg font-semibold`}
+        >
+                    Get Started
+          <MessageCircle aria-hidden="true" class="w-5 h-5 ml-2 transition-transform duration-300 group-hover:translate-x-1" />
+        </a>
+
+        <a
+          href="/features"
+          class={`${outlineButtonClass}`}
+        >
+          Explore Features
+        </a>
       </div>
     </div>
   </div>

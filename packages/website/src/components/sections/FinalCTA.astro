@@ -1,6 +1,8 @@
 ---
 // Import UI components
-import WaitlistForm from "../forms/WaitlistForm.tsx";
+import { buttonVariants } from "@christianai/ui";
+
+const buttonClass = buttonVariants({ variant: "default", size: "lg" });
 ---
 
 <section
@@ -9,7 +11,15 @@ import WaitlistForm from "../forms/WaitlistForm.tsx";
 >
   <h2 class="mb-4 font-bold text-4xl">Ready to Begin Your Journey?</h2>
   <p class="mb-8 text-xl opacity-90">
-    Join thousands on the waitlist for early access to ChristianAI
+    Sign up now to start your journey with ChristianAI
   </p>
-  <WaitlistForm source="final_cta" className="mx-auto max-w-md" client:load />
+  <a
+    href="https://app.christianai.world/signup"
+    target="_blank"
+    rel="noopener noreferrer"
+    onclick="if(window.gtag){gtag('event', 'sign_up', {source: 'final_cta'});}"
+    class={`${buttonClass} hover:bg-blue-50 bg-transparent border border-white`}
+  >
+    Sign Up
+  </a>
 </section>
