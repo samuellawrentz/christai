@@ -9,7 +9,7 @@ const openrouter = createOpenRouter({
   apiKey: process.env.OPENROUTER_API_KEY!,
 });
 
-const MODEL = "openai/gpt-oss-20b";
+const MODEL = "openai/gpt-oss-120b";
 const MESSAGE_HISTORY_LIMIT = 10;
 
 export const chats = (app: AppType) => {
