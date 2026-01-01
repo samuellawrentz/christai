@@ -55,9 +55,10 @@ Automatically runs on commit:
 ## Package Details
 
 ### Website
-- Vite + React + Tailwind
+- Astro + Tailwind
 - Static marketing site
 - Auto-deploys to `christianai.world`
+- **Blog Images**: Blog images are automatically loaded from `packages/website/src/assets/blog/`. Just add your image there and reference it in the blog frontmatter
 
 ### App  
 - Vite + React + Zustand

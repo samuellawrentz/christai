@@ -5,28 +5,24 @@ import BreadcrumbNav from '../../components/BreadcrumbNav.astro';
 import { getCollection } from 'astro:content';
 import { Image } from 'astro:assets';
 
-import prayerPeopleImg from '../../assets/blog/prayer_people.png';
-import prayerPeople1Img from '../../assets/blog/prayer_people_1.png';
-import mosesTechImg from '../../assets/blog/moses_tech.png';
-import joshuaPrayerImg from '../../assets/blog/joshua_prayer.png';
-import blog1Img from '../../assets/blog/blog_1.png';
-import blog2Img from '../../assets/blog/blog_2.png';
-
 export async function getStaticPaths() {
+  // Dynamically import all images from the blog assets directory
+  const images = import.meta.glob<{ default: ImageMetadata }>('../../assets/blog/*.{png,jpg,jpeg,webp}', { eager: true });
+  
   const posts = await getCollection('blog', ({ data }) => !data.draft);
-
-  const imageMap: Record<string, ImageMetadata> = {
-    'prayer_people.png': prayerPeopleImg,
-    'prayer_people_1.png': prayerPeople1Img,
-    'moses_tech.png': mosesTechImg,
-    'joshua_prayer.png': joshuaPrayerImg,
-    'blog_1.png': blog1Img,
-    'blog_2.png': blog2Img,
-  };
 
   return posts.map((post) => {
     const imageName = post.data.image?.split('/').pop();
-    const featuredImage = imageName ? imageMap[imageName] : null;
+    let featuredImage = null;
+    
+    if (imageName) {
+      // Find the matching image from our dynamic imports
+      const imageKey = Object.keys(images).find(key => key.endsWith(imageName));
+      if (imageKey) {
+        featuredImage = images[imageKey].default;
+      }
+    }
+    
     return {
       params: { slug: post.slug },
       props: { post, featuredImage },
