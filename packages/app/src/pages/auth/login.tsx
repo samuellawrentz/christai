@@ -1,6 +1,6 @@
 import { Button, Input } from "@christianai/ui";
-import { Book, MessageCircle, Shield } from "lucide-react";
-import { useState } from "react";
+import { MessageCircle, Shield } from "lucide-react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthLayout } from "../../layouts/auth-layout";
 import { useAuth } from "../../shared/hooks/use-auth";
@@ -10,35 +10,23 @@ function LoginContent() {
   return (
     <div className="bg-gradient-to-br from-blue-600 to-indigo-700 p-12 flex flex-col justify-center text-white">
       <div className="max-w-md">
-        <h1 className="font-bold text-4xl mb-6 leading-tight">
-          Login to ChristianAI
-          <span className="block text-blue-200 text-2xl mt-2">
-            Your AI-Powered Spiritual Companion
-          </span>
-        </h1>
+        <h1 className="font-bold text-4xl mb-6 leading-tight">Welcome Back to ChristianAI</h1>
 
-        <div className="space-y-4 text-blue-50">
-          <p className="text-lg">
-            Welcome back! Sign in to continue your sacred journey of faith and spiritual growth.
-          </p>
+        <p className="text-lg text-blue-50 mb-8">
+          Continue your spiritual journey with meaningful conversations with biblical figures.
+        </p>
 
-          <div className="space-y-3 pt-4">
-            <AuthFeatureCard
-              icon={<MessageCircle className="h-6 w-6 flex-shrink-0 mt-0.5" />}
-              title="Connect with Biblical Figures"
-              description="Engage in meaningful conversations with Moses, Joshua, Jesus, and more"
-            />
-            <AuthFeatureCard
-              icon={<Book className="h-6 w-6 flex-shrink-0 mt-0.5" />}
-              title="Access Biblical Wisdom"
-              description="Receive Scripture-based guidance and spiritual insights 24/7"
-            />
-            <AuthFeatureCard
-              icon={<Shield className="h-6 w-6 flex-shrink-0 mt-0.5" />}
-              title="Private & Secure"
-              description="Your spiritual conversations are confidential and protected"
-            />
-          </div>
+        <div className="space-y-4">
+          <AuthFeatureCard
+            icon={<MessageCircle className="h-6 w-6 flex-shrink-0 mt-0.5" />}
+            title="Connect with Wisdom"
+            description="Chat with Moses, Joshua, Jesus"
+          />
+          <AuthFeatureCard
+            icon={<Shield className="h-6 w-6 flex-shrink-0 mt-0.5" />}
+            title="Private & Secure"
+            description="Your conversations are protected"
+          />
         </div>
       </div>
     </div>
@@ -79,11 +67,22 @@ export function LoginPage() {
     }
   };
 
+  useEffect(() => {
+    document.title = "Login - ChristianAI | Your Spiritual AI Companion";
+    const metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc) {
+      metaDesc.setAttribute(
+        "content",
+        "Sign in to ChristianAI to continue your spiritual journey with AI-powered conversations with biblical figures.",
+      );
+    }
+  }, []);
+
   return (
     <AuthLayout content={<LoginContent />}>
       <div className="mb-8">
         <h2 className="font-bold text-2xl text-gray-900 mb-2">Welcome Back</h2>
-        <p className="text-gray-600">Sign in to your account</p>
+        <p className="text-gray-600">Free • Sign in to continue</p>
       </div>
 
       <Button

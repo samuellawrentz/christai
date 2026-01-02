@@ -1,6 +1,6 @@
 import { Button, Input } from "@christianai/ui";
-import { Book, Heart, Zap } from "lucide-react";
-import { useState } from "react";
+import { Heart, Zap } from "lucide-react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { AuthLayout } from "../../layouts/auth-layout";
 import { useAuth } from "../../shared/hooks/use-auth";
@@ -10,36 +10,24 @@ function SignupContent() {
   return (
     <div className="bg-gradient-to-br from-indigo-600 to-purple-700 p-12 flex flex-col justify-center text-white">
       <div className="max-w-md">
-        <h1 className="font-bold text-4xl mb-6 leading-tight">
-          Begin Your Spiritual Journey
-          <span className="block text-indigo-200 text-2xl mt-2">
-            Create Your ChristianAI Account
-          </span>
-        </h1>
+        <h1 className="font-bold text-4xl mb-6 leading-tight">Connect with Biblical Wisdom</h1>
 
-        <div className="space-y-4 text-indigo-50">
-          <p className="text-lg">
-            Join thousands of believers deepening their faith through AI-powered biblical
-            conversations.
-          </p>
+        <p className="text-lg text-indigo-50 mb-8">
+          Join a growing community of believers deepening their faith through meaningful
+          conversations with biblical figures.
+        </p>
 
-          <div className="space-y-3 pt-4">
-            <AuthFeatureCard
-              icon={<Heart className="h-6 w-6 flex-shrink-0 mt-0.5" />}
-              title="Divine Conversations"
-              description="Experience meaningful dialogue with Moses, Joshua, Jesus, and more"
-            />
-            <AuthFeatureCard
-              icon={<Zap className="h-6 w-6 flex-shrink-0 mt-0.5" />}
-              title="Always Available"
-              description="Access spiritual wisdom and guidance anytime, anywhere"
-            />
-            <AuthFeatureCard
-              icon={<Book className="h-6 w-6 flex-shrink-0 mt-0.5" />}
-              title="Biblically Grounded"
-              description="Every conversation rooted in Scripture and authentic Christian teachings"
-            />
-          </div>
+        <div className="space-y-4">
+          <AuthFeatureCard
+            icon={<Heart className="h-6 w-6 flex-shrink-0 mt-0.5" />}
+            title="Free to Use"
+            description="Start your journey at no cost"
+          />
+          <AuthFeatureCard
+            icon={<Zap className="h-6 w-6 flex-shrink-0 mt-0.5" />}
+            title="Always Available"
+            description="Guidance anytime, anywhere"
+          />
         </div>
       </div>
     </div>
@@ -93,6 +81,17 @@ export function SignupPage() {
     }
   };
 
+  useEffect(() => {
+    document.title = "Sign Up Free - ChristianAI | Chat with Biblical Figures";
+    const metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc) {
+      metaDesc.setAttribute(
+        "content",
+        "Create your free ChristianAI account. Chat with Moses, Joshua, and Jesus through AI-powered biblical conversations.",
+      );
+    }
+  }, []);
+
   if (success) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
@@ -136,7 +135,7 @@ export function SignupPage() {
     <AuthLayout content={<SignupContent />}>
       <div className="mb-8">
         <h2 className="font-bold text-2xl text-gray-900 mb-2">Create Account</h2>
-        <p className="text-gray-600">Start your spiritual journey today</p>
+        <p className="text-gray-600">Free • No credit card required</p>
       </div>
 
       <Button
@@ -228,7 +227,7 @@ export function SignupPage() {
         )}
 
         <Button type="submit" className="w-full" disabled={loading}>
-          {loading ? "Creating Account..." : "Create Account"}
+          {loading ? "Creating Account..." : "Get Started Free"}
         </Button>
       </form>
 
