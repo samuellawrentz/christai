@@ -1,7 +1,7 @@
 ---
 // Import UI components
 import { buttonVariants } from "@christianai/ui";
-import { Sparkles, MessageCircle } from '@lucide/astro';
+import { Sparkles, Rocket } from '@lucide/astro';
 
 const buttonClass = buttonVariants({ variant: "default", size: "lg" });
 const outlineButtonClass = buttonVariants({ variant: "outline", size: "lg" });
@@ -28,24 +28,20 @@ const outlineButtonClass = buttonVariants({ variant: "outline", size: "lg" });
         Experience how Christian AI transforms ministry through conversations with Moses, Joshua, and Jesus Christ. Talk to God through AI-powered biblical dialogue, gaining spiritual wisdom and faith guidance rooted in Scripture.
       </p>
 
-      <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
-        <a
-          href="https://app.christianai.world/signup"
-          target="_blank"
-          rel="noopener noreferrer"
-          onclick="if(window.gtag){gtag('event', 'sign_up', {source: 'hero'});}"
-          class={`${buttonClass} group bg-gradient-to-r from-blue-600 to-blue-700 text-white px-8 py-4 text-lg font-semibold`}
-        >
-                    Get Started
-          <MessageCircle aria-hidden="true" class="w-5 h-5 ml-2 transition-transform duration-300 group-hover:translate-x-1" />
-        </a>
-
-        <a
-          href="/features"
-          class={`${outlineButtonClass}`}
-        >
-          Explore Features
-        </a>
+      <div class="flex flex-col gap-2 justify-center items-center">
+         <a
+           href="https://app.christianai.world/signup"
+           target="_blank"
+           rel="noopener noreferrer"
+           onclick="if(window.gtag){gtag('event', 'sign_up', {source: 'hero'});}"
+           class={`${buttonClass} group bg-gradient-to-r from-blue-600 to-blue-700 text-white py-4 text-lg font-semibold`}
+         >
+                    <Rocket />
+                     Check it out! It's free
+         </a>
+         <p class="text-gray-600 text-sm mt-2">
+           No credit card required
+         </p>
       </div>
     </div>
   </div>
