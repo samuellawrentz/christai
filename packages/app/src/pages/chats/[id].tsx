@@ -2,6 +2,9 @@
 
 import { useChat } from "@ai-sdk/react";
 import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
   Message,
   MessageContent,
   MessageResponse,
@@ -11,9 +14,10 @@ import {
   PromptInputSubmit,
   PromptInputTextarea,
   ScrollArea,
+  SidebarTrigger,
 } from "@christianai/ui";
 import { DefaultChatTransport, type UIMessage } from "ai";
-import { ArrowDownIcon, Loader2 } from "lucide-react";
+import { ArrowDownIcon, Loader2, SidebarIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Navigate, useLocation, useParams } from "react-router-dom";
 import { useStickToBottom } from "use-stick-to-bottom";
@@ -35,7 +39,11 @@ export const ConversationPage = () => {
   const initialMessage = (location.state as { initialMessage?: string })?.initialMessage;
 
   // Load message history
-  const { data: messagesData, isLoading: msgsLoading, error } = useConversationMessages(conversationId);
+  const {
+    data: messagesData,
+    isLoading: msgsLoading,
+    error,
+  } = useConversationMessages(conversationId);
 
   if (msgsLoading || !messagesData)
     return (
@@ -54,7 +62,13 @@ export const ConversationPage = () => {
     );
   }
 
-  return <ConversationCore conversationId={conversationId} messagesData={messagesData} initialMessage={initialMessage} />;
+  return (
+    <ConversationCore
+      conversationId={conversationId}
+      messagesData={messagesData}
+      initialMessage={initialMessage}
+    />
+  );
 };
 
 interface ConversationCoreProps {
@@ -114,12 +128,24 @@ function ConversationCore({ conversationId, messagesData, initialMessage }: Conv
 
   if (convLoading) return null;
 
+  const figure = conversation?.figures;
+
   return (
     <main className="max-w-4xl w-full mx-auto px-4 py-4 h-[calc(100vh)] flex flex-col">
+      {/* Header */}
+      <header className="flex items-center gap-3 pb-4 border-b border-border mb-4">
+        <SidebarTrigger className="md:hidden" />
+        <Avatar className="h-10 w-10">
+          <AvatarImage src={figure?.avatar_url} alt={figure?.display_name} />
+          <AvatarFallback>{figure?.display_name?.[0]}</AvatarFallback>
+        </Avatar>
+        <h1 className="font-semibold text-lg">{figure?.display_name}</h1>
+      </header>
+
       <div className="fixed -right-[470px] top-[50%] object-contain opacity-60 dark:opacity-40">
         <img
-          src={conversation?.figures?.avatar_url}
-          alt={`${conversation?.figures?.display_name} avatar`}
+          src={figure?.avatar_url}
+          alt={`${figure?.display_name} avatar`}
           className="object-top [mask-image:linear-gradient(to_left,black_0%,black_30%,black_70%,transparent_100%),linear-gradient(to_top,black_0%,black_30%,black_90%,transparent_100%)] [mask-composite:intersect]"
         />
       </div>
@@ -156,7 +182,7 @@ function ConversationCore({ conversationId, messagesData, initialMessage }: Conv
           <PromptInputTextarea
             value={input}
             onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setInput(e.target.value)}
-            placeholder={`Ask ${conversation?.figures?.display_name || ""}...`}
+            placeholder={`Ask ${figure?.display_name || ""}...`}
           />
         </PromptInputBody>
         <PromptInputFooter>
