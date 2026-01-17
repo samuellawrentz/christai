@@ -7,6 +7,7 @@ import {
   BreadcrumbSeparator,
 } from "@christianai/ui";
 import { ChevronRight, Home } from "lucide-react";
+import { Fragment } from "react";
 
 interface AppBreadcrumbProps {
   items: Array<{
@@ -30,7 +31,7 @@ export function AppBreadcrumb({ items }: AppBreadcrumbProps) {
           </BreadcrumbSeparator>
 
           {items.map((item, index) => (
-            <>
+            <Fragment key={item.label}>
               <BreadcrumbItem>
                 {item.href ? (
                   <BreadcrumbLink href={item.href}>{item.label}</BreadcrumbLink>
@@ -43,7 +44,7 @@ export function AppBreadcrumb({ items }: AppBreadcrumbProps) {
                   <ChevronRight width={16} height={16} />
                 </BreadcrumbSeparator>
               )}
-            </>
+            </Fragment>
           ))}
         </BreadcrumbList>
       </Breadcrumb>

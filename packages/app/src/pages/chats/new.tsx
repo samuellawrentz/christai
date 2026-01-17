@@ -11,6 +11,7 @@ import {
 import { ArrowDownIcon, Loader2 } from "lucide-react";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "sonner";
 import { useStickToBottom } from "use-stick-to-bottom";
 import { EmptyState } from "@/components/empty-state";
 import { useCreateConversation } from "@/hooks/use-conversations";
@@ -35,13 +36,13 @@ export function NewConversationPage() {
 
     try {
       const newConversation = await createConversation.mutateAsync(figure.id);
-      localStorage.setItem("init", message.text);
-      // Navigate to conversation page with initial message in state
+      // Navigate to conversation page with initial message in router state
       navigate(`/chats/${newConversation.id}`, {
         replace: true,
+        state: { initialMessage: message.text },
       });
     } catch (error) {
-      console.error("Failed to create conversation:", error);
+      toast.error("Failed to start conversation. Please try again.");
     }
 
     setInput("");
@@ -76,6 +77,7 @@ export function NewConversationPage() {
             className="absolute bottom-4 left-[50%] translate-x-[-50%] rounded-full bg-background border border-border hover:bg-accent hover:text-accent-foreground h-10 w-10 flex items-center justify-center"
             onClick={() => stickToBottomInstance.scrollToBottom()}
             type="button"
+            aria-label="Scroll to bottom"
           >
             <ArrowDownIcon className="size-4" />
           </button>

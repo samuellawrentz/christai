@@ -15,7 +15,7 @@ import {
 import { DefaultChatTransport, type UIMessage } from "ai";
 import { ArrowDownIcon, Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Navigate, useLocation, useParams } from "react-router-dom";
 import { useStickToBottom } from "use-stick-to-bottom";
 import { useConversation, useConversationMessages } from "@/hooks/use-conversations";
 import { api } from "@/lib/api";
@@ -23,10 +23,19 @@ import { supabase } from "@/lib/supabase";
 
 export const ConversationPage = () => {
   const params = useParams<{ conversationId: string }>();
-  const conversationId = params.conversationId!;
+  const location = useLocation();
+  const conversationId = params.conversationId;
+
+  // Validate conversationId
+  if (!conversationId) {
+    return <Navigate to="/home" replace />;
+  }
+
+  // Get initial message from router state (passed from new conversation page)
+  const initialMessage = (location.state as { initialMessage?: string })?.initialMessage;
 
   // Load message history
-  const { data: messagesData, isLoading: msgsLoading } = useConversationMessages(conversationId);
+  const { data: messagesData, isLoading: msgsLoading, error } = useConversationMessages(conversationId);
 
   if (msgsLoading || !messagesData)
     return (
@@ -35,15 +44,26 @@ export const ConversationPage = () => {
       </div>
     );
 
-  return <ConversationCore conversationId={conversationId} messagesData={messagesData} />;
+  if (error) {
+    return (
+      <div className="absolute inset-0 grid place-items-center">
+        <div className="text-center text-red-600">
+          Failed to load conversation. Please try again.
+        </div>
+      </div>
+    );
+  }
+
+  return <ConversationCore conversationId={conversationId} messagesData={messagesData} initialMessage={initialMessage} />;
 };
 
 interface ConversationCoreProps {
   conversationId: string;
   messagesData: UIMessage[];
+  initialMessage?: string;
 }
 
-function ConversationCore({ conversationId, messagesData }: ConversationCoreProps) {
+function ConversationCore({ conversationId, messagesData, initialMessage }: ConversationCoreProps) {
   const [input, setInput] = useState("");
 
   // Create useStickToBottom instance connected to ScrollArea viewport
@@ -80,12 +100,10 @@ function ConversationCore({ conversationId, messagesData }: ConversationCoreProp
   });
 
   useEffect(() => {
-    const initialMessage = localStorage.getItem("init");
     if (initialMessage) {
-      localStorage.removeItem("init");
       sendMessage({ text: initialMessage });
     }
-  }, []);
+  }, [initialMessage]);
 
   const handleSubmit = async (message: { text: string }) => {
     if (!message.text?.trim()) return;
@@ -125,6 +143,7 @@ function ConversationCore({ conversationId, messagesData }: ConversationCoreProp
             className="absolute bottom-4 left-[50%] translate-x-[-50%] rounded-full bg-background border border-border hover:bg-accent hover:text-accent-foreground h-10 w-10 flex items-center justify-center"
             onClick={() => stickToBottomInstance.scrollToBottom()}
             type="button"
+            aria-label="Scroll to bottom"
           >
             <ArrowDownIcon className="size-4" />
           </button>

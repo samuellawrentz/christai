@@ -1,5 +1,6 @@
 import type { Conversation } from "@christianai/shared/types/api/models";
 import { Skeleton } from "@christianai/ui";
+import { Link } from "react-router-dom";
 import { useConversations } from "@/hooks/use-conversations";
 
 export function ChatsListPage() {
@@ -41,20 +42,24 @@ export function ChatsListPage() {
       ) : (
         <div className="space-y-3">
           {conversations.map((conversation: Conversation) => (
-            <div key={conversation.id} className="bg-white rounded-lg p-4 shadow-sm">
+            <Link
+              key={conversation.id}
+              to={`/chats/${conversation.id}`}
+              className="block bg-white dark:bg-gray-800 rounded-lg p-4 shadow-sm hover:shadow-md transition-shadow"
+            >
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center">
+                <div className="w-10 h-10 bg-gray-200 dark:bg-gray-700 rounded-full flex items-center justify-center">
                   <span className="text-lg">💬</span>
                 </div>
                 <div className="flex-1">
-                  <h3 className="font-medium">{conversation.title || "Untitled Conversation"}</h3>
-                  <p className="text-sm text-gray-600">{conversation.message_count} messages</p>
+                  <h3 className="font-medium text-gray-900 dark:text-gray-100">{conversation.title || "Untitled Conversation"}</h3>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">{conversation.message_count} messages</p>
                 </div>
-                <div className="text-xs text-gray-500">
+                <div className="text-xs text-gray-500 dark:text-gray-400">
                   {new Date(conversation.updated_at).toLocaleDateString()}
                 </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       )}

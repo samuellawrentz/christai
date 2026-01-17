@@ -5,6 +5,7 @@ import type {
   User,
   UserPreferences,
 } from "@christianai/shared/types/api/models";
+import { APIError } from "./query-client";
 import { supabase } from "./supabase";
 
 // API utility for making authenticated requests to your backend
@@ -38,11 +39,11 @@ async function authenticatedRequest<T = unknown>(
     if (response.status === 401) {
       await supabase.auth.signOut();
       window.location.href = "/";
-      throw new Error("Session expired. Please sign in again.");
+      throw new APIError("Session expired. Please sign in again.", 401);
     }
 
     const errorData = await response.json().catch(() => ({ message: response.statusText }));
-    throw new Error(errorData.message || `API request failed: ${response.statusText}`);
+    throw new APIError(errorData.message || `API request failed: ${response.statusText}`, response.status);
   }
 
   const apiResponse = await response.json();
