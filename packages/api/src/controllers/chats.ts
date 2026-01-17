@@ -1,9 +1,10 @@
 import { createOpenRouter } from "@openrouter/ai-sdk-provider";
-import { streamText } from "ai";
+import { stepCountIs, streamText } from "ai";
 import { t } from "elysia";
 import type { AppType } from "../app";
 import { buildSystemPrompt } from "../services/prompt-builder";
 import { generateConversationTitle } from "../services/title-generator";
+import { createBibleTools } from "../tools";
 
 const openrouter = createOpenRouter({
   apiKey: process.env.OPENROUTER_API_KEY!,
@@ -51,6 +52,9 @@ export const chats = (app: AppType) => {
 
       const userPreferences = userData?.preferences || {};
 
+      // Create Bible tools with user's preferred translation
+      const bibleTools = createBibleTools(userData?.preferences?.bible_translation);
+
       // Build complete system prompt
       const systemPrompt = buildSystemPrompt(
         figure.slug,
@@ -90,6 +94,8 @@ export const chats = (app: AppType) => {
       const result = streamText({
         model: openrouter.chat(MODEL),
         messages,
+        tools: bibleTools,
+        stopWhen: stepCountIs(3), // Allow up to 3 steps (tool calls + final response)
         temperature: 0.8,
         maxOutputTokens: 1000,
         async onFinish({ text, usage }) {
