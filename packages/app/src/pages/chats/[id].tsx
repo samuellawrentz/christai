@@ -133,13 +133,16 @@ function ConversationCore({ conversationId, messagesData, initialMessage }: Conv
   return (
     <main className="max-w-4xl w-full mx-auto px-4 py-4 h-[calc(100vh)] flex flex-col">
       {/* Header */}
-      <header className="flex items-center gap-3 pb-4 border-b border-border mb-4">
+      <header className="hidden md:flex items-center gap-3 pb-4 border-b border-border">
         <SidebarTrigger className="md:hidden" />
         <Avatar className="h-10 w-10">
           <AvatarImage src={figure?.avatar_url} alt={figure?.display_name} />
           <AvatarFallback>{figure?.display_name?.[0]}</AvatarFallback>
         </Avatar>
-        <h1 className="font-semibold text-lg">{figure?.display_name}</h1>
+        <div className="flex flex-col">
+          <h1 className="font-semibold text-lg">{conversation?.title}</h1>
+          <span className="text-xs text-gray-600 dark:text-gray-400">{figure?.display_name}</span>
+        </div>
       </header>
 
       <div className="fixed -right-[470px] top-[50%] object-contain opacity-60 dark:opacity-40">
@@ -150,7 +153,10 @@ function ConversationCore({ conversationId, messagesData, initialMessage }: Conv
         />
       </div>
       {/* Chat container */}
-      <ScrollArea ref={stickToBottomInstance.scrollRef} className="h-[calc(100%-120px)]">
+      <ScrollArea
+        ref={stickToBottomInstance.scrollRef}
+        className="md:h-[calc(100%-200px)] h-[calc(100%-120px)]"
+      >
         <div ref={stickToBottomInstance.contentRef} className="flex flex-col gap-8 p-4 min-h-full">
           {messages.map((message) => {
             const textContent = message.parts.find((part) => part.type === "text")?.text || "";
