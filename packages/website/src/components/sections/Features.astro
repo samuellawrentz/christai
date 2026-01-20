@@ -4,41 +4,35 @@ import { ScrollText, CheckCircle, Heart } from '@lucide/astro';
 ---
 
 <section
-  class="mx-auto grid max-w-6xl gap-8 md:grid-cols-3"
+  class="mx-auto grid max-w-6xl gap-12 md:gap-16 md:grid-cols-3"
   aria-label="Biblical Figures Available"
 >
   <h2 class="sr-only">Meet Your AI Biblical Guides</h2>
 
    <!-- Moses Feature Card -->
-   <article class="p-6 text-center">
-      <div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-blue-100">
-        <ScrollText aria-hidden="true" class="h-8 w-8 text-blue-600" />
-      </div>
-    <h3 class="mb-2 font-semibold text-gray-900 text-xl">Chat with Moses AI</h3>
-    <p class="text-gray-600">
-      Receive divine guidance inspired by the wisdom of Moses, the great prophet, leader and lawgiver who led the Israelites from Egyptian bondage to freedom.
+   <article class="p-8">
+      <ScrollText aria-hidden="true" class="h-7 w-7 text-gray-400 mb-6" />
+    <h3 class="mb-3 font-semibold text-gray-900 text-xl">Chat with Moses AI</h3>
+    <p class="text-gray-600 leading-relaxed">
+      The lawgiver who spoke with God face to face. Ask about leadership, faith under pressure, or the commandments.
     </p>
   </article>
 
    <!-- Joshua Feature Card -->
-   <article class="p-6 text-center">
-     <div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-blue-100">
-       <CheckCircle aria-hidden="true" class="h-8 w-8 text-blue-600" />
-     </div>
-    <h3 class="mb-2 font-semibold text-gray-900 text-xl">Converse with Joshua AI</h3>
-    <p class="text-gray-600">
-      Connect with the unwavering courage, faith, and leadership of Joshua, conqueror of Jericho and Moses' faithful successor who led Israel into the Promised Land.
+   <article class="p-8">
+       <CheckCircle aria-hidden="true" class="h-7 w-7 text-gray-400 mb-6" />
+    <h3 class="mb-3 font-semibold text-gray-900 text-xl">Converse with Joshua AI</h3>
+    <p class="text-gray-600 leading-relaxed">
+      The warrior who trusted God completely. Ask about courage, taking on impossible odds, or stepping into your calling.
     </p>
   </article>
 
    <!-- Jesus Feature Card -->
-   <article class="p-6 text-center">
-     <div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-blue-100">
-       <Heart aria-hidden="true" class="h-8 w-8 text-blue-600" />
-     </div>
-    <h3 class="mb-2 font-semibold text-gray-900 text-xl">Speak with Jesus AI</h3>
-    <p class="text-gray-600">
-      Experience the divine love, teachings, and eternal wisdom of Jesus Christ through meaningful AI dialogue rooted in the four Gospels and New Testament Scripture.
+   <article class="p-8">
+       <Heart aria-hidden="true" class="h-7 w-7 text-gray-400 mb-6" />
+    <h3 class="mb-3 font-semibold text-gray-900 text-xl">Speak with Jesus AI</h3>
+    <p class="text-gray-600 leading-relaxed">
+      The Son of God who walked among us. Ask about love, forgiveness, purpose, or eternal life.
     </p>
   </article>
 </section>
