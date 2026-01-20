@@ -1,25 +1,20 @@
 ---
 // Features Hero Section
 import { buttonVariants } from "@christianai/ui";
-import { Sparkles, MessageCircle } from '@lucide/astro';
+import { MessageCircle } from '@lucide/astro';
 
 const buttonClass = buttonVariants({ variant: "default", size: "lg" });
 ---
 
-<section class="relative overflow-hidden bg-gradient-to-br from-blue-50 to-indigo-100">
+<section class="relative overflow-hidden bg-white">
   <div class="container mx-auto px-4 py-20 lg:py-32">
     <div class="max-w-4xl mx-auto text-center">
-      <div class="inline-flex items-center gap-2 px-4 py-2 bg-blue-100 text-blue-700 rounded-full text-sm font-medium mb-6">
-        <Sparkles aria-hidden="true" class="h-4 w-4" />
-        Christian AI in Ministry
-      </div>
-
-      <h1 class="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
-        Talk to God Through <span class="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Meaningful</span> Biblical Conversations
+      <h1 class="text-5xl md:text-7xl font-semibold tracking-tight text-gray-900 mb-6">
+        Features built for your faith journey
       </h1>
 
-      <p class="text-xl text-gray-600 mb-8 max-w-2xl mx-auto leading-relaxed">
-        Experience how Christian AI transforms ministry with AI-powered spiritual guidance. Talk to God through biblical conversations designed to deepen your faith journey and connect you with divine wisdom.
+      <p class="text-xl md:text-2xl text-gray-600 mb-12 max-w-3xl mx-auto leading-relaxed font-normal">
+        Everything you need to have meaningful, Scripture-grounded conversations with biblical figures.
       </p>
 
       <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
@@ -27,24 +22,17 @@ const buttonClass = buttonVariants({ variant: "default", size: "lg" });
            href="https://app.christianai.world"
            target="_blank"
            rel="noopener noreferrer"
-           class={`${buttonClass} group bg-gradient-to-r from-blue-600 to-blue-700 text-white px-8 py-4 text-lg font-semibold`}
+           class={`${buttonClass} group bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 text-lg font-medium rounded-full transition-all`}
          >
            Start Your Journey
            <MessageCircle aria-hidden="true" class="w-5 h-5 ml-2 transition-transform duration-300 group-hover:translate-x-1" />
          </a>
-
       </div>
-            <div>
-         <p class="text-gray-600 text-sm mt-2">
+      <div>
+         <p class="text-gray-500 text-sm mt-4">
            No credit card required
          </p>
-            </div>
+      </div>
     </div>
-  </div>
-
-  <!-- Background decoration -->
-  <div class="absolute inset-0 overflow-hidden pointer-events-none">
-    <div class="absolute -top-40 -right-40 w-80 h-80 bg-blue-200 rounded-full opacity-20 blur-3xl"></div>
-    <div class="absolute -bottom-40 -left-40 w-80 h-80 bg-purple-200 rounded-full opacity-20 blur-3xl"></div>
   </div>
 </section>
