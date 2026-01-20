@@ -12,7 +12,8 @@ export interface Props {
 
 const { title, description, image, url, showHero = false } = Astro.props;
 const canonicalUrl = url || new URL(Astro.request.url).origin + Astro.url.pathname;
-const defaultDescription = "Experience meaningful conversations with Christian figures like Moses, Joshua, and Jesus through advanced AI technology. Sign up now for spiritual guidance and biblical wisdom.";
+const defaultTitle = "Christian AI — Talk with Biblical Figures | Moses, Joshua, Jesus";
+const defaultDescription = "Have AI-powered conversations with Moses, Joshua, and Jesus. Christian AI for ministry, spiritual growth, and Scripture-grounded guidance.";
 const defaultImage = "/og_image.png";
 ---
 
@@ -20,9 +21,9 @@ const defaultImage = "/og_image.png";
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{title}</title>
+  <title>{title || defaultTitle}</title>
   <meta name="description" content={description || defaultDescription}>
-  <meta name="keywords" content="Christian AI chat, biblical figures AI, Moses AI conversation, Joshua AI chat, Jesus AI dialogue, spiritual conversations, Christian technology, faith AI, biblical wisdom, AI chatbot Christian, religious AI, Christian guidance, Bible study AI, faith journey, spiritual mentor AI" />
+  <meta name="keywords" content="Christian AI, AI for ministry, biblical AI, talk to God AI, Christian AI chat, biblical figures AI, Moses AI conversation, Joshua AI chat, Jesus AI dialogue, spiritual conversations, Christian technology, faith AI, biblical wisdom, AI chatbot Christian, religious AI, Christian guidance, Bible study AI, faith journey, spiritual mentor AI" />
   <meta name="author" content="ChristianAI">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href={canonicalUrl} />
@@ -30,7 +31,7 @@ const defaultImage = "/og_image.png";
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website">
   <meta property="og:url" content={canonicalUrl}>
-  <meta property="og:title" content={title}>
+  <meta property="og:title" content={title || defaultTitle}>
   <meta property="og:description" content={description || defaultDescription}>
   <meta property="og:image" content={image || defaultImage}>
   <meta property="og:site_name" content="ChristianAI">
@@ -38,7 +39,7 @@ const defaultImage = "/og_image.png";
   <!-- Twitter -->
   <meta property="twitter:card" content="summary_large_image">
   <meta property="twitter:url" content={canonicalUrl}>
-  <meta property="twitter:title" content={title}>
+  <meta property="twitter:title" content={title || defaultTitle}>
   <meta property="twitter:description" content={description || defaultDescription}>
   <meta property="twitter:image" content={image || defaultImage}>
 
