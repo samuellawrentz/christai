@@ -7,10 +7,9 @@ export interface Props {
   description?: string;
   image?: string;
   url?: string;
-  showHero?: boolean;
 }
 
-const { title, description, image, url, showHero = false } = Astro.props;
+const { title, description, image, url } = Astro.props;
 const canonicalUrl = url || new URL(Astro.request.url).origin + Astro.url.pathname;
 const defaultTitle = "Christian AI — Talk with Biblical Figures | Moses, Joshua, Jesus";
 const defaultDescription = "Have AI-powered conversations with Moses, Joshua, and Jesus. Christian AI for ministry, spiritual growth, and Scripture-grounded guidance.";
@@ -86,7 +85,7 @@ const defaultImage = "/og_image.png";
   })} />
 
   <!-- Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-F2FVEHRW7E"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-F2FVEHRW7E" is:inline></script>
   <script is:inline>
     window.dataLayer = window.dataLayer || [];
     function gtag() { window.dataLayer.push(arguments); }

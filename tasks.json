@@ -1,0 +1,119 @@
+{
+  "tasks": [
+    {
+      "id": "1",
+      "task": "Modernize Hero section - minimalist design and compelling copy",
+      "related_files_folders": [
+        "packages/website/src/components/sections/Hero.astro"
+      ],
+      "notes": [
+        "1. Remove background image mask effect, use clean white/off-white bg",
+        "2. Remove pill badge with Sparkles icon",
+        "3. Replace gradient text with solid dark color",
+        "4. Increase whitespace: py-32 lg:py-40",
+        "5. Update H1 to: 'Have a conversation with Moses, Joshua, or Jesus'",
+        "6. Update subtitle to: 'Ask questions. Seek wisdom. Grow in faith. AI-powered conversations grounded in Scripture.'",
+        "7. Update CTA to: 'Start a conversation — it's free'",
+        "8. Keep the CTA link to https://app.christianai.world/signup",
+        "Keep it Apple-style minimalist"
+      ],
+      "group": 1,
+      "status": "done",
+      "complexity": "medium"
+    },
+    {
+      "id": "2",
+      "task": "Modernize Features section (Moses, Joshua, Jesus cards) - cleaner design and benefit-focused copy",
+      "related_files_folders": [
+        "packages/website/src/components/sections/Features.astro"
+      ],
+      "notes": [
+        "1. Remove colored circle backgrounds around icons, use subtle gray icons",
+        "2. Remove center alignment, use left-aligned text",
+        "3. Add more whitespace between cards",
+        "4. Moses copy: 'The lawgiver who spoke with God face to face. Ask about leadership, faith under pressure, or the commandments.'",
+        "5. Joshua copy: 'The warrior who trusted God completely. Ask about courage, taking on impossible odds, or stepping into your calling.'",
+        "6. Jesus copy: 'The Son of God who walked among us. Ask about love, forgiveness, purpose, or eternal life.'",
+        "Keep it minimal and Apple-style"
+      ],
+      "group": 1,
+      "status": "done",
+      "complexity": "medium"
+    },
+    {
+      "id": "3",
+      "task": "Modernize FeaturesHero section - remove decorative elements, simplify copy",
+      "related_files_folders": [
+        "packages/website/src/components/sections/FeaturesHero.astro"
+      ],
+      "notes": [
+        "1. Remove gradient background, use white/off-white",
+        "2. Remove decorative blur circles",
+        "3. Remove Sparkles badge",
+        "4. Update H1 to: 'Features built for your faith journey'",
+        "5. Update subtitle to: 'Everything you need to have meaningful, Scripture-grounded conversations with biblical figures.'",
+        "6. Keep CTA button linking to app",
+        "Apple-style minimal design"
+      ],
+      "group": 1,
+      "status": "done",
+      "complexity": "medium"
+    },
+    {
+      "id": "4",
+      "task": "Modernize CoreFeatures section - reduce to 6 features, cleaner design, punchier copy",
+      "related_files_folders": [
+        "packages/website/src/components/sections/CoreFeatures.astro"
+      ],
+      "notes": [
+        "1. Remove card shadows and borders, use clean dividers or none",
+        "2. Change to 2-column layout (md:grid-cols-2) with more breathing room",
+        "3. Make icons smaller and gray",
+        "4. REMOVE 'Conversation History' and 'User Preferences' features (keep 6)",
+        "5. Update copy to be punchy:",
+        "   - Biblical Figures: 'Conversations with Moses, Joshua, and Jesus—each response drawn from their actual words and stories in Scripture.'",
+        "   - Real-time: 'Instant responses. No waiting. Just type and receive.'",
+        "   - Bible Translations: 'NIV, ESV, KJV—read Scripture in the translation that speaks to you.'",
+        "   - Privacy: 'Your conversations stay between you and God. Private by default.'",
+        "   - 24/7: 'Day or night, whenever you need guidance.'",
+        "   - Biblically Grounded: 'Every response rooted in Scripture. Faithful to the Word.'",
+        "6. Keep header/CTA but simplify",
+        "Apple-style minimal"
+      ],
+      "group": 1,
+      "status": "done",
+      "complexity": "medium"
+    },
+    {
+      "id": "5",
+      "task": "Update SEO meta tags in Layout.astro",
+      "related_files_folders": [
+        "packages/website/src/layouts/Layout.astro"
+      ],
+      "notes": [
+        "1. Update default title to: 'Christian AI — Talk with Biblical Figures | Moses, Joshua, Jesus'",
+        "2. Update default description to: 'Have AI-powered conversations with Moses, Joshua, and Jesus. Christian AI for ministry, spiritual growth, and Scripture-grounded guidance.'",
+        "3. Keep existing OG tags, structured data, and other SEO setup",
+        "4. Make sure keywords include: Christian AI, AI for ministry, biblical AI, talk to God AI"
+      ],
+      "group": 1,
+      "status": "done",
+      "complexity": "low"
+    },
+    {
+      "id": "6",
+      "task": "Build and verify website compiles successfully",
+      "related_files_folders": [
+        "packages/website"
+      ],
+      "notes": [
+        "1. Run 'bun run build' in packages/website",
+        "2. Check for any TypeScript or build errors",
+        "3. Verify no broken links or missing imports"
+      ],
+      "group": 2,
+      "status": "running",
+      "complexity": "low"
+    }
+  ]
+}

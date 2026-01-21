@@ -1,0 +1,76 @@
+---
+Task: Modernize FeaturesHero section - remove decorative elements, simplify copy
+Status: done
+Learnings:
+- Apple-style minimal design focuses on white space, clean typography, and removing unnecessary visual elements
+- Changed from gradient background (from-blue-50 to-indigo-100) to solid white (bg-white)
+- Removed decorative elements: blur circles, Sparkles badge
+- Updated typography hierarchy: text-5xl/text-7xl for H1, text-xl/text-2xl for subtitle with better leading and spacing
+- Simplified button from gradient to solid color (bg-blue-600) with rounded-full for pill shape
+- Font weights adjusted: font-semibold for headings, font-medium for buttons, font-normal for body
+- Removed unused Sparkles import after removing badge
+- Changes were in packages/website/src/components/sections/FeaturesHero.astro
+---
+
+---
+Task: Modernize Features section (Moses, Joshua, Jesus cards) - cleaner design and benefit-focused copy
+Status: done
+Learnings:
+- Removed colored circle backgrounds (bg-blue-100), used direct icon placement with subtle gray (text-gray-400)
+- Removed text-center alignment, switched to left-aligned text for better readability
+- Increased whitespace: gap-12/md:gap-16 (from gap-8), padding-8 (from padding-6)
+- Updated copy to be benefit-focused and action-oriented instead of descriptive
+- Smaller icons (h-7 w-7 from h-8 w-8 in circles) with mb-6 spacing
+- Added leading-relaxed to paragraphs for better readability
+- Apple-style design = remove decoration, increase whitespace, focus content
+- Changes were in packages/website/src/components/sections/Features.astro
+---
+
+---
+Task: Modernize Hero section - minimalist design and compelling copy
+Status: done
+Learnings:
+- Removed background image with mask effect, replaced with clean bg-gray-50
+- Removed pill badge with Sparkles icon completely
+- Replaced gradient text (bg-gradient-to-r from-blue-400 to-purple-400) with solid text-gray-900
+- Increased whitespace from py-20 lg:py-32 to py-32 lg:py-40
+- Upgraded typography: text-5xl md:text-7xl for H1 (from text-4xl md:text-6xl)
+- Increased subtitle size: text-xl md:text-2xl with max-w-3xl (from max-w-2xl)
+- Updated CTA button: removed Rocket icon, simplified gradient to solid bg-blue-600
+- Removed unused imports: Sparkles, Rocket, outlineButtonClass
+- Apple minimalism = generous whitespace, solid colors, no decorative elements, clear hierarchy
+- Changes in packages/website/src/components/sections/Hero.astro
+- Note: @astrojs/check and typescript needed to be installed for typecheck to work
+---
+
+---
+Task: Update SEO meta tags in Layout.astro
+Status: done
+Learnings:
+- Updated default page title to 'Christian AI — Talk with Biblical Figures | Moses, Joshua, Jesus' for better SEO and clarity
+- Changed default description to focus on key value props: AI conversations, ministry, spiritual growth, Scripture-grounded guidance
+- Added new keywords (Christian AI, AI for ministry, biblical AI, talk to God AI) to the beginning of keywords list for priority
+- Applied defaultTitle and defaultDescription fallbacks to all meta tags: title, og:title, twitter:title for consistency
+- Typecheck passed with 0 errors (Astro check tool: astro check)
+- No test files exist in website package, so test step was skipped
+- Changes in packages/website/src/layouts/BaseLayout.astro
+- Pre-commit hooks (biome) automatically formatted changes
+---
+
+---
+Task: Modernize CoreFeatures section - reduce to 6 features, cleaner design, punchier copy
+Status: done
+Learnings:
+- Reduced from 8 features to 6 by removing 'Conversation History' and 'User Preferences'
+- Changed layout from 4-column (lg:grid-cols-4) to 2-column (md:grid-cols-2) with max-w-5xl for better readability
+- Removed all shadows (shadow-sm, hover:shadow-lg), borders (border-gray-100), and backgrounds (bg-white)
+- Replaced colored icon backgrounds (bg-blue-100 with blue-600 icons) with plain gray icons (h-5 w-5 text-gray-400)
+- Simplified header: 'Everything you need' with punchy subtitle 'Biblical conversations. Instant guidance. Always private.'
+- Updated CTA from gradient button to simple bg-gray-900 rounded-full pill with 'Get started' text
+- Removed MessageCircle icon from CTA button
+- Increased gap spacing: gap-x-12 gap-y-16 (from gap-8) for breathing room
+- Punchier feature copy: focused on direct value (e.g., 'Instant responses. No waiting.' vs long explanations)
+- Apple-style minimal = clean cards without decoration, smaller gray icons, generous whitespace, concise copy
+- Changes in packages/website/src/components/sections/CoreFeatures.astro
+- Pre-commit hooks (biome + lint-staged) ran automatically and passed
+---
