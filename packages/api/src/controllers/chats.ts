@@ -2,6 +2,7 @@ import { createOpenRouter } from "@openrouter/ai-sdk-provider";
 import { stepCountIs, streamText } from "ai";
 import { t } from "elysia";
 import type { AppType } from "../app";
+import { log } from "../libs/logger";
 import { buildSystemPrompt } from "../services/prompt-builder";
 import { generateConversationTitle } from "../services/title-generator";
 import { createBibleTools } from "../tools";
@@ -18,6 +19,12 @@ export const chats = (app: AppType) => {
     "/chats/converse",
     async ({ supabase, userId, body }) => {
       const { conversationId, message } = body;
+      const startTime = Date.now();
+      log.chat.info("Conversation started", {
+        conversationId,
+        userId,
+        messageLength: message.length,
+      });
 
       // RLS automatically filters by auth.uid()
       const { data: conversation, error: convError } = await supabase
@@ -90,6 +97,12 @@ export const chats = (app: AppType) => {
         { role: "user" as const, content: message },
       ];
 
+      log.chat.debug("Streaming AI response", {
+        model: MODEL,
+        historyLength: history?.length || 0,
+        figure: figure.slug,
+      });
+
       // Stream AI response
       const result = streamText({
         model: openrouter.chat(MODEL),
@@ -98,7 +111,34 @@ export const chats = (app: AppType) => {
         stopWhen: stepCountIs(3), // Allow up to 3 steps (tool calls + final response)
         temperature: 0.8,
         maxOutputTokens: 1000,
-        async onFinish({ text, usage }) {
+        onStepFinish({ toolCalls, toolResults }) {
+          if (toolCalls && toolCalls.length > 0) {
+            for (const call of toolCalls) {
+              log.chat.info("Tool call executed", {
+                conversationId,
+                tool: call.toolName,
+              });
+            }
+          }
+          if (toolResults && toolResults.length > 0) {
+            log.chat.debug("Tool results received", {
+              conversationId,
+              resultCount: toolResults.length,
+            });
+          }
+        },
+        async onFinish({ text, usage, steps }) {
+          const durationMs = Date.now() - startTime;
+          const toolCallCount = steps.filter((s) => s.toolCalls && s.toolCalls.length > 0).length;
+
+          log.chat.info("Conversation completed", {
+            conversationId,
+            durationMs,
+            tokens: usage?.totalTokens,
+            toolCalls: toolCallCount,
+            responseLength: text.length,
+          });
+
           // Save assistant message (trigger auto-updates conversation metadata)
           await supabase.from("messages").insert({
             conversation_id: conversationId,
@@ -114,9 +154,9 @@ export const chats = (app: AppType) => {
             try {
               const title = await generateConversationTitle(message, text);
               await supabase.from("conversations").update({ title }).eq("id", conversationId);
+              log.chat.debug("Title generated", { conversationId, title });
             } catch (error) {
-              console.error("Failed to generate conversation title:", error);
-              // Non-critical error, don't throw
+              log.chat.error("Failed to generate title", { conversationId, error: String(error) });
             }
           }
         },

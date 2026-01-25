@@ -8,6 +8,7 @@ import { figures } from "./controllers/figures";
 import { root as openRoutes } from "./controllers/root";
 import { users } from "./controllers/users";
 import { authPlugin } from "./libs/auth";
+import { log } from "./libs/logger";
 
 export type AppType = ReturnType<typeof createApp>;
 
@@ -57,8 +58,15 @@ export const app = createApp()
 
     return response;
   })
-  .onError(({ error }) => {
+  .onError(({ error, path, request }) => {
     const errorMessage = error instanceof Error ? error.message : error.toString();
+    log.api.error("Request failed", {
+      path,
+      method: request.method,
+      error: errorMessage,
+      stack: error instanceof Error ? error.stack?.split("\n").slice(0, 3).join(" ") : undefined,
+    });
+
     const response: APIResponse = {
       success: false,
       data: null,

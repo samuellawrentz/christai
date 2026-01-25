@@ -1,5 +1,6 @@
 import { tool } from "ai";
 import { z } from "zod";
+import { log } from "../libs/logger";
 import type { BibleVerseResponse, BollsSearchResponse } from "./types";
 
 const BIBLE_API_TIMEOUT = 5000;
@@ -42,21 +43,39 @@ export const createBibleTools = (userTranslation?: string) => {
           .describe('Bible reference like "John 3:16" or "Romans 8:28-39" or "Psalm 23"'),
       }),
       execute: async (input) => {
+        const startTime = Date.now();
+        log.tools.info("getBibleVerse called", {
+          reference: input.reference,
+          translation: defaultTranslation,
+        });
+
         try {
           const url = `https://bible-api.com/${encodeURIComponent(input.reference)}?translation=${defaultTranslation}`;
           const res = await fetchWithTimeout(url);
 
           if (!res.ok) {
+            log.tools.warn("getBibleVerse not found", {
+              reference: input.reference,
+              status: res.status,
+            });
             return { error: true, message: `Could not find verse: ${input.reference}` };
           }
 
           const data = (await res.json()) as BibleVerseResponse;
+          log.tools.info("getBibleVerse success", {
+            reference: data.reference,
+            durationMs: Date.now() - startTime,
+          });
           return {
             reference: data.reference,
             text: data.text,
             translation: data.translation_name || defaultTranslation.toUpperCase(),
           };
         } catch (error) {
+          log.tools.error("getBibleVerse failed", {
+            reference: input.reference,
+            error: String(error),
+          });
           return { error: true, message: `Failed to fetch verse: ${input.reference}` };
         }
       },
@@ -71,6 +90,12 @@ export const createBibleTools = (userTranslation?: string) => {
           .describe('Search terms like "love neighbor" or "faith hope" or "forgiveness"'),
       }),
       execute: async (input) => {
+        const startTime = Date.now();
+        log.tools.info("searchBible called", {
+          query: input.query,
+          translation: defaultTranslation,
+        });
+
         try {
           // bolls.life uses uppercase translation codes
           const translation = defaultTranslation.toUpperCase();
@@ -78,10 +103,16 @@ export const createBibleTools = (userTranslation?: string) => {
           const res = await fetchWithTimeout(url);
 
           if (!res.ok) {
+            log.tools.warn("searchBible failed", { query: input.query, status: res.status });
             return { error: true, message: `Search failed for: ${input.query}` };
           }
 
           const data = (await res.json()) as BollsSearchResponse;
+          log.tools.info("searchBible success", {
+            query: input.query,
+            resultCount: data.results.length,
+            durationMs: Date.now() - startTime,
+          });
           return {
             query: input.query,
             results: data.results.map((v) => ({
@@ -96,6 +127,7 @@ export const createBibleTools = (userTranslation?: string) => {
             translation: translation,
           };
         } catch (error) {
+          log.tools.error("searchBible failed", { query: input.query, error: String(error) });
           return { error: true, message: `Search failed for: ${input.query}` };
         }
       },
@@ -106,21 +138,30 @@ export const createBibleTools = (userTranslation?: string) => {
         "Get a random Bible verse for inspiration, encouragement, or when starting a conversation.",
       inputSchema: z.object({}),
       execute: async () => {
+        const startTime = Date.now();
+        log.tools.info("getRandomVerse called", { translation: defaultTranslation });
+
         try {
           const url = `https://bible-api.com/data/${defaultTranslation}/random`;
           const res = await fetchWithTimeout(url);
 
           if (!res.ok) {
+            log.tools.warn("getRandomVerse failed", { status: res.status });
             return { error: true, message: "Could not get random verse" };
           }
 
           const data = (await res.json()) as BibleVerseResponse;
+          log.tools.info("getRandomVerse success", {
+            reference: data.reference,
+            durationMs: Date.now() - startTime,
+          });
           return {
             reference: data.reference,
             text: data.text,
             translation: data.translation_name || defaultTranslation.toUpperCase(),
           };
         } catch (error) {
+          log.tools.error("getRandomVerse failed", { error: String(error) });
           return { error: true, message: "Could not get random verse" };
         }
       },
