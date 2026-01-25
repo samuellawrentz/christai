@@ -14,6 +14,7 @@ import { SignupPage } from "./pages/auth/signup";
 import { ConversationPage } from "./pages/chats/[id]";
 import { ChatsListPage } from "./pages/chats/index";
 import { NewConversationPage } from "./pages/chats/new";
+import { FiguresPage } from "./pages/figures";
 import { HomePage } from "./pages/home";
 import { ProfilePage } from "./pages/profile";
 import { useAuth, useInitAuth } from "./shared/hooks/use-auth";
@@ -75,6 +76,7 @@ function App() {
                 <Route path="/chats" element={<ChatsListPage />} />
                 <Route path="/chats/new/:slug" element={<NewConversationPage />} />
                 <Route path="/chats/:conversationId" element={<ConversationPage />} />
+                <Route path="/figures" element={<FiguresPage />} />
                 <Route path="/profile" element={<ProfilePage />} />
               </Route>
             </Route>
