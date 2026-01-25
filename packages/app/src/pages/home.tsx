@@ -25,7 +25,7 @@ export function HomePage() {
   const [input, setInput] = useState("");
 
   const figures = figuresResponse ?? [];
-  const userHasPro = subscription?.data?.status === "active";
+  const userHasPro = subscription?.data?.status === "pro";
   const selectedFigure = figures.find((f) => f.slug === selectedFigureSlug) ?? figures[0];
 
   const handleSubmit = async () => {

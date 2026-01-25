@@ -1,6 +1,6 @@
 import type { Figure } from "@christianai/shared";
 import { Card } from "@christianai/ui";
-import { Lock } from "lucide-react";
+import { Lock, User } from "lucide-react";
 
 interface HomeFigureCardProps {
   figure: Figure;
@@ -18,11 +18,17 @@ export function HomeFigureCard({ figure, onClick, isLocked }: HomeFigureCardProp
     >
       <div className="flex items-center gap-3 p-3">
         <div className="relative">
-          <img
-            src={figure.avatar_url}
-            alt={figure.display_name}
-            className="w-20 aspect-square object-cover rounded"
-          />
+          {figure.avatar_url ? (
+            <img
+              src={figure.avatar_url}
+              alt={figure.display_name}
+              className="w-20 aspect-square object-cover rounded"
+            />
+          ) : (
+            <div className="w-20 aspect-square bg-gray-100 rounded flex items-center justify-center">
+              <User className="w-8 h-8 text-gray-400" />
+            </div>
+          )}
           {isLocked && (
             <div className="absolute inset-0 flex items-center justify-center bg-black/40 rounded">
               <Lock className="w-6 h-6 text-white" />
