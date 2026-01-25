@@ -55,7 +55,13 @@ export function HomePage() {
             {"Start a New Conversation"}
           </h2>
         </div>
-        <FigureGrid figures={figures} userHasPro={userHasPro} />
+        {figures.length === 0 ? (
+          <div className="text-center py-12 text-gray-500 dark:text-gray-400">
+            No figures available at the moment. Please check back later.
+          </div>
+        ) : (
+          <FigureGrid figures={figures} userHasPro={userHasPro} />
+        )}
       </section>
     </main>
   );

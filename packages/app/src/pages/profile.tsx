@@ -93,6 +93,7 @@ export function ProfilePage() {
         open={dialogOpen}
         initialPreferences={user?.preferences || {}}
         onSave={handleSave}
+        onCancel={() => setDialogOpen(false)}
         allowCancel={true}
       />
     </main>

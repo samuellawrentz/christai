@@ -1,5 +1,6 @@
 import { createOpenRouter } from "@openrouter/ai-sdk-provider";
 import { generateText } from "ai";
+import { log } from "../libs/logger";
 
 const openrouter = createOpenRouter({
   apiKey: process.env.OPENROUTER_API_KEY!,
@@ -42,7 +43,7 @@ Return only the title, no quotes or extra text.`;
 
     return cleanTitle || getFallbackTitle(userMessage);
   } catch (error) {
-    console.error("[Title Gen] Failed to generate title:", error);
+    log.chat.error("Title generation failed", { error: String(error) });
     return getFallbackTitle(userMessage);
   }
 }

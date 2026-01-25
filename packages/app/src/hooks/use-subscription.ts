@@ -9,6 +9,5 @@ export function useSubscription() {
     queryKey: ["subscription"],
     queryFn: () => Promise.resolve({ data: { status: "free" } }),
     staleTime: 60 * 1000, // 1 minute
-    enabled: false, // Disabled for now
   });
 }

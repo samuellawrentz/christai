@@ -26,6 +26,7 @@ interface PreferencesDialogProps {
   open: boolean;
   initialPreferences?: UserPreferences;
   onSave: (preferences: UserPreferences) => Promise<void>;
+  onCancel?: () => void;
   allowCancel?: boolean; // For profile page editing (non-blocking)
 }
 
@@ -33,6 +34,7 @@ export function PreferencesDialog({
   open,
   initialPreferences = {},
   onSave,
+  onCancel,
   allowCancel = false,
 }: PreferencesDialogProps) {
   const [preferences, setPreferences] = useState<UserPreferences>(initialPreferences);
@@ -69,7 +71,7 @@ export function PreferencesDialog({
   };
 
   return (
-    <Dialog open={open} onOpenChange={() => {}} modal>
+    <Dialog open={open} onOpenChange={(isOpen) => !isOpen && allowCancel && onCancel?.()} modal>
       <DialogContent className="sm:max-w-[500px]" showCloseButton={allowCancel}>
         <DialogHeader>
           <DialogTitle>{allowCancel ? "Edit Preferences" : "Welcome to ChristianAI!"}</DialogTitle>
@@ -192,7 +194,7 @@ export function PreferencesDialog({
 
         <DialogFooter>
           {allowCancel && (
-            <Button variant="outline" disabled={saving}>
+            <Button variant="outline" disabled={saving} onClick={onCancel}>
               Cancel
             </Button>
           )}

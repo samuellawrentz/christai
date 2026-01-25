@@ -2,6 +2,9 @@
 
 import { useChat } from "@ai-sdk/react";
 import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
   Message,
   MessageContent,
   MessageResponse,
@@ -11,11 +14,12 @@ import {
   PromptInputSubmit,
   PromptInputTextarea,
   ScrollArea,
+  SidebarTrigger,
 } from "@christianai/ui";
 import { DefaultChatTransport, type UIMessage } from "ai";
-import { ArrowDownIcon, Loader2 } from "lucide-react";
+import { ArrowDownIcon, Loader2, SidebarIcon } from "lucide-react";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Navigate, useLocation, useParams } from "react-router-dom";
 import { useStickToBottom } from "use-stick-to-bottom";
 import { useConversation, useConversationMessages } from "@/hooks/use-conversations";
 import { api } from "@/lib/api";
@@ -23,10 +27,23 @@ import { supabase } from "@/lib/supabase";
 
 export const ConversationPage = () => {
   const params = useParams<{ conversationId: string }>();
-  const conversationId = params.conversationId!;
+  const location = useLocation();
+  const conversationId = params.conversationId;
+
+  // Validate conversationId
+  if (!conversationId) {
+    return <Navigate to="/home" replace />;
+  }
+
+  // Get initial message from router state (passed from new conversation page)
+  const initialMessage = (location.state as { initialMessage?: string })?.initialMessage;
 
   // Load message history
-  const { data: messagesData, isLoading: msgsLoading } = useConversationMessages(conversationId);
+  const {
+    data: messagesData,
+    isLoading: msgsLoading,
+    error,
+  } = useConversationMessages(conversationId);
 
   if (msgsLoading || !messagesData)
     return (
@@ -35,15 +52,32 @@ export const ConversationPage = () => {
       </div>
     );
 
-  return <ConversationCore conversationId={conversationId} messagesData={messagesData} />;
+  if (error) {
+    return (
+      <div className="absolute inset-0 grid place-items-center">
+        <div className="text-center text-red-600">
+          Failed to load conversation. Please try again.
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <ConversationCore
+      conversationId={conversationId}
+      messagesData={messagesData}
+      initialMessage={initialMessage}
+    />
+  );
 };
 
 interface ConversationCoreProps {
   conversationId: string;
   messagesData: UIMessage[];
+  initialMessage?: string;
 }
 
-function ConversationCore({ conversationId, messagesData }: ConversationCoreProps) {
+function ConversationCore({ conversationId, messagesData, initialMessage }: ConversationCoreProps) {
   const [input, setInput] = useState("");
 
   // Create useStickToBottom instance connected to ScrollArea viewport
@@ -80,12 +114,10 @@ function ConversationCore({ conversationId, messagesData }: ConversationCoreProp
   });
 
   useEffect(() => {
-    const initialMessage = localStorage.getItem("init");
     if (initialMessage) {
-      localStorage.removeItem("init");
       sendMessage({ text: initialMessage });
     }
-  }, []);
+  }, [initialMessage]);
 
   const handleSubmit = async (message: { text: string }) => {
     if (!message.text?.trim()) return;
@@ -96,17 +128,35 @@ function ConversationCore({ conversationId, messagesData }: ConversationCoreProp
 
   if (convLoading) return null;
 
+  const figure = conversation?.figures;
+
   return (
     <main className="max-w-4xl w-full mx-auto px-4 py-4 h-[calc(100vh)] flex flex-col">
+      {/* Header */}
+      <header className="hidden md:flex items-center gap-3 pb-4 border-b border-border">
+        <SidebarTrigger className="md:hidden" />
+        <Avatar className="h-10 w-10">
+          <AvatarImage src={figure?.avatar_url} alt={figure?.display_name} />
+          <AvatarFallback>{figure?.display_name?.[0]}</AvatarFallback>
+        </Avatar>
+        <div className="flex flex-col">
+          <h1 className="font-semibold text-lg">{conversation?.title}</h1>
+          <span className="text-xs text-gray-600 dark:text-gray-400">{figure?.display_name}</span>
+        </div>
+      </header>
+
       <div className="fixed -right-[470px] top-[50%] object-contain opacity-60 dark:opacity-40">
         <img
-          src={conversation?.figures?.avatar_url}
-          alt={`${conversation?.figures?.display_name} avatar`}
+          src={figure?.avatar_url}
+          alt={`${figure?.display_name} avatar`}
           className="object-top [mask-image:linear-gradient(to_left,black_0%,black_30%,black_70%,transparent_100%),linear-gradient(to_top,black_0%,black_30%,black_90%,transparent_100%)] [mask-composite:intersect]"
         />
       </div>
       {/* Chat container */}
-      <ScrollArea ref={stickToBottomInstance.scrollRef} className="h-[calc(100%-120px)]">
+      <ScrollArea
+        ref={stickToBottomInstance.scrollRef}
+        className="md:h-[calc(100%-200px)] h-[calc(100%-120px)]"
+      >
         <div ref={stickToBottomInstance.contentRef} className="flex flex-col gap-8 p-4 min-h-full">
           {messages.map((message) => {
             const textContent = message.parts.find((part) => part.type === "text")?.text || "";
@@ -125,6 +175,7 @@ function ConversationCore({ conversationId, messagesData }: ConversationCoreProp
             className="absolute bottom-4 left-[50%] translate-x-[-50%] rounded-full bg-background border border-border hover:bg-accent hover:text-accent-foreground h-10 w-10 flex items-center justify-center"
             onClick={() => stickToBottomInstance.scrollToBottom()}
             type="button"
+            aria-label="Scroll to bottom"
           >
             <ArrowDownIcon className="size-4" />
           </button>
@@ -137,7 +188,7 @@ function ConversationCore({ conversationId, messagesData }: ConversationCoreProp
           <PromptInputTextarea
             value={input}
             onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setInput(e.target.value)}
-            placeholder={`Ask ${conversation?.figures?.display_name || ""}...`}
+            placeholder={`Ask ${figure?.display_name || ""}...`}
           />
         </PromptInputBody>
         <PromptInputFooter>

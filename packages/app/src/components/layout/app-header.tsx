@@ -41,6 +41,7 @@ export function AppHeader() {
               <button
                 type="button"
                 className="flex items-center gap-2 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+                aria-label="User menu"
               >
                 <Avatar className="w-8 h-8">
                   <AvatarFallback className="bg-blue-100 text-blue-600">
