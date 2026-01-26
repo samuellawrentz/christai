@@ -1,5 +1,4 @@
 ---
-// Core Features Section - 8 Key Features
 import {
   MessageCircle,
   Users,
@@ -10,121 +9,90 @@ import {
   Zap,
   Heart
 } from '@lucide/astro';
+
+const features = [
+  {
+    icon: MessageCircle,
+    title: "Biblical Figure Conversations",
+    description: "Engage in meaningful dialogues with figures from Scripture, drawing from their stories and teachings."
+  },
+  {
+    icon: Zap,
+    title: "Real-time Responses",
+    description: "Experience smooth, natural conversations with instant responses powered by cutting-edge AI streaming."
+  },
+  {
+    icon: Clock,
+    title: "Conversation History",
+    description: "Access your complete chat history, organized by date, to revisit and reflect on previous conversations."
+  },
+  {
+    icon: Settings,
+    title: "Personalized Experience",
+    description: "Customize your conversations with preferences for pronouns, age group, tone, and Bible translation."
+  },
+  {
+    icon: BookOpen,
+    title: "Multiple Translations",
+    description: "Choose from various Bible translations including NIV, ESV, KJV, and others to align with your reading style."
+  },
+  {
+    icon: Shield,
+    title: "Secure & Private",
+    description: "Your conversations are protected with enterprise-grade security, keeping your discussions confidential."
+  },
+  {
+    icon: Users,
+    title: "24/7 Availability",
+    description: "Access spiritual guidance anytime, day or night, whenever you need encouragement or wisdom."
+  },
+  {
+    icon: Heart,
+    title: "Biblically Grounded",
+    description: "Every conversation is rooted in Scripture, providing faithful interpretations aligned with biblical teachings."
+  }
+];
 ---
 
-<section id="core-features" class="py-20">
-  <div class="container mx-auto px-4">
-    <div class="text-center mb-16">
-      <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-        Christian AI Features That Transform Ministry
-      </h2>
-      <p class="text-xl text-gray-600 max-w-2xl mx-auto">
-        Talk to God through AI-powered biblical conversations. Discover comprehensive tools that make Christian AI your trusted companion for ministry, spiritual growth, and divine guidance.
+<section class="py-24 lg:py-32 bg-[var(--color-cream)] relative overflow-hidden">
+  <!-- Decorative background pattern -->
+  <div class="absolute inset-0 opacity-[0.02]" style="background-image: url('data:image/svg+xml,%3Csvg width=\"60\" height=\"60\" viewBox=\"0 0 60 60\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cg fill=\"none\" fill-rule=\"evenodd\"%3E%3Cg fill=\"%231a1612\" fill-opacity=\"1\"%3E%3Cpath d=\"M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');" />
+
+  <div class="container mx-auto px-6 lg:px-8 relative">
+    <!-- Section header -->
+    <div class="text-center mb-20">
+      <p class="text-[var(--color-ochre)] text-sm tracking-[0.3em] uppercase mb-4">
+        Everything You Need
       </p>
+      <h2 class="text-4xl lg:text-5xl text-[var(--color-ink)] mb-6">
+        Core <span class="italic">Features</span>
+      </h2>
+      <div class="sacred-divider max-w-xs mx-auto">
+        <span class="text-2xl">&#10041;</span>
+      </div>
     </div>
 
-    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
+    <!-- Features grid -->
+    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 max-w-7xl mx-auto stagger-children">
+      {features.map((feature, index) => (
+        <article
+          class="group relative bg-[var(--color-parchment)] p-8 transition-all duration-500 hover:bg-white ornament-corners"
+          style={`animation-delay: ${0.1 * index}s`}
+        >
+          <!-- Icon -->
+          <div class="w-14 h-14 rounded-full bg-[var(--color-ink)] flex items-center justify-center mb-6 group-hover:bg-[var(--gradient-sacred)] transition-colors duration-300">
+            <feature.icon class="w-6 h-6 text-[var(--color-ochre-light)]" />
+          </div>
 
-      <!-- Feature 1: Biblical Figure Conversations -->
-      <article class="bg-white p-8 rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 border border-gray-100">
-        <div class="mb-6 flex h-12 w-12 items-center justify-center rounded-lg bg-blue-100">
-          <MessageCircle aria-hidden="true" class="h-6 w-6 text-blue-600" />
-        </div>
-        <h3 class="text-xl font-semibold text-gray-900 mb-3">Talk to God Through Biblical Figures</h3>
-        <p class="text-gray-600 leading-relaxed">
-          Talk to God through meaningful dialogues with biblical figures using Christian AI technology, drawing from their stories and teachings in Scripture.
-        </p>
-      </article>
-
-      <!-- Feature 2: Real-time AI Chat -->
-      <article class="bg-white p-8 rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 border border-gray-100">
-        <div class="mb-6 flex h-12 w-12 items-center justify-center rounded-lg bg-blue-100">
-          <Zap aria-hidden="true" class="h-6 w-6 text-blue-600" />
-        </div>
-        <h3 class="text-xl font-semibold text-gray-900 mb-3">Real-time AI Conversations</h3>
-        <p class="text-gray-600 leading-relaxed">
-          Experience smooth, natural conversations with instant responses powered by cutting-edge AI streaming technology.
-        </p>
-      </article>
-
-      <!-- Feature 3: Conversation History -->
-      <article class="bg-white p-8 rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 border border-gray-100">
-        <div class="mb-6 flex h-12 w-12 items-center justify-center rounded-lg bg-blue-100">
-          <Clock aria-hidden="true" class="h-6 w-6 text-blue-600" />
-        </div>
-        <h3 class="text-xl font-semibold text-gray-900 mb-3">Conversation History</h3>
-        <p class="text-gray-600 leading-relaxed">
-          Access your complete chat history, organized by date, so you can revisit and reflect on previous spiritual conversations.
-        </p>
-      </article>
-
-      <!-- Feature 4: User Preferences -->
-      <article class="bg-white p-8 rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 border border-gray-100">
-        <div class="mb-6 flex h-12 w-12 items-center justify-center rounded-lg bg-blue-100">
-          <Settings aria-hidden="true" class="h-6 w-6 text-blue-600" />
-        </div>
-        <h3 class="text-xl font-semibold text-gray-900 mb-3">Personalized Experience</h3>
-        <p class="text-gray-600 leading-relaxed">
-          Customize your conversations with preferences for pronouns, age group, conversation tone, and Bible translation choices.
-        </p>
-      </article>
-
-      <!-- Feature 5: Multiple Bible Translations -->
-      <article class="bg-white p-8 rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 border border-gray-100">
-        <div class="mb-6 flex h-12 w-12 items-center justify-center rounded-lg bg-blue-100">
-          <BookOpen aria-hidden="true" class="h-6 w-6 text-blue-600" />
-        </div>
-        <h3 class="text-xl font-semibold text-gray-900 mb-3">Multiple Bible Translations</h3>
-        <p class="text-gray-600 leading-relaxed">
-          Choose from various Bible translations including NIV, ESV, KJV, and others to align with your preferred reading style.
-        </p>
-      </article>
-
-      <!-- Feature 6: Secure & Private -->
-      <article class="bg-white p-8 rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 border border-gray-100">
-        <div class="mb-6 flex h-12 w-12 items-center justify-center rounded-lg bg-blue-100">
-          <Shield aria-hidden="true" class="h-6 w-6 text-blue-600" />
-        </div>
-        <h3 class="text-xl font-semibold text-gray-900 mb-3">Secure & Private</h3>
-        <p class="text-gray-600 leading-relaxed">
-          Your conversations are protected with enterprise-grade security, ensuring your spiritual discussions remain private and confidential.
-        </p>
-      </article>
-
-      <!-- Feature 7: 24/7 Availability -->
-      <article class="bg-white p-8 rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 border border-gray-100">
-        <div class="mb-6 flex h-12 w-12 items-center justify-center rounded-lg bg-blue-100">
-          <Users aria-hidden="true" class="h-6 w-6 text-blue-600" />
-        </div>
-        <h3 class="text-xl font-semibold text-gray-900 mb-3">24/7 AI in Ministry</h3>
-        <p class="text-gray-600 leading-relaxed">
-          Christian AI brings ministry support anytime, day or night. Talk to God through biblical conversations whenever you need spiritual encouragement or divine wisdom.
-        </p>
-      </article>
-
-      <!-- Feature 8: Biblically Grounded -->
-      <article class="bg-white p-8 rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 border border-gray-100">
-        <div class="mb-6 flex h-12 w-12 items-center justify-center rounded-lg bg-blue-100">
-          <Heart aria-hidden="true" class="h-6 w-6 text-blue-600" />
-        </div>
-        <h3 class="text-xl font-semibold text-gray-900 mb-3">Biblically Grounded</h3>
-        <p class="text-gray-600 leading-relaxed">
-          Every conversation is rooted in Scripture, providing faithful interpretations and guidance that align with biblical teachings.
-        </p>
-      </article>
-
-    </div>
-
-    <div class="text-center mt-16">
-      <a
-        href="https://app.christianai.world"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="inline-flex items-center gap-2 bg-gradient-to-r from-blue-600 to-blue-700 text-white px-8 py-4 rounded-lg font-semibold text-lg hover:from-blue-700 hover:to-blue-800 transition-all duration-300 shadow-lg hover:shadow-xl"
-      >
-        Experience All Features Now
-        <MessageCircle aria-hidden="true" class="w-5 h-5" />
-      </a>
+          <!-- Content -->
+          <h3 class="text-xl text-[var(--color-ink)] mb-3 group-hover:text-[var(--color-ochre)] transition-colors">
+            {feature.title}
+          </h3>
+          <p class="text-[var(--color-warm-gray)] leading-relaxed text-sm">
+            {feature.description}
+          </p>
+        </article>
+      ))}
     </div>
   </div>
 </section>

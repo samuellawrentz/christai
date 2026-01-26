@@ -1,106 +1,42 @@
 ---
-// Features CTA Section - Multiple CTAs for user engagement
-import { buttonVariants } from "@christianai/ui";
-import { MessageCircle, Sparkles, Heart, ArrowRight } from '@lucide/astro';
-
-const primaryButtonClass = buttonVariants({ variant: "default", size: "lg" });
-const secondaryButtonClass = buttonVariants({ variant: "outline", size: "lg" });
+import { ArrowRight } from '@lucide/astro';
 ---
 
-<section class="py-20 bg-gradient-to-r from-blue-600 to-purple-600 text-white">
-  <div class="container mx-auto px-4">
-    <div class="max-w-4xl mx-auto text-center">
+<section class="py-24 lg:py-32 relative overflow-hidden">
+  <!-- Background -->
+  <div class="absolute inset-0 bg-[var(--color-ink)]" />
+  <div class="absolute top-0 left-1/4 w-96 h-96 bg-[var(--color-ochre)]/10 rounded-full blur-3xl" />
+  <div class="absolute bottom-0 right-1/4 w-64 h-64 bg-[var(--color-terracotta)]/10 rounded-full blur-3xl" />
 
-      <!-- Main headline -->
-      <div class="mb-8">
-        <Sparkles aria-hidden="true" class="w-12 h-12 mx-auto mb-6 text-blue-100" />
-        <h2 class="text-3xl md:text-4xl font-bold mb-4">
-          Ready to Begin Your Spiritual Journey?
-        </h2>
-        <p class="text-xl text-blue-100 max-w-2xl mx-auto leading-relaxed">
-          Join thousands of believers who are deepening their faith through meaningful conversations with biblical figures powered by AI.
-        </p>
+  <div class="container mx-auto px-6 lg:px-8 relative">
+    <div class="max-w-3xl mx-auto text-center">
+      <!-- Ornamental element -->
+      <div class="flex justify-center mb-8">
+        <span class="text-[var(--color-ochre)] text-4xl">&#10041;</span>
       </div>
 
-      <!-- Primary CTA -->
-      <div class="mb-12">
-        <a
-          href="https://app.christianai.world"
-          target="_blank"
-          rel="noopener noreferrer"
-          class={`${primaryButtonClass} group bg-white text-blue-600 hover:bg-blue-50 px-10 py-5 text-xl font-bold rounded-lg shadow-2xl hover:shadow-3xl transition-all duration-300 mb-6 inline-block`}
-        >
-          Start Your First Conversation
-          <MessageCircle aria-hidden="true" class="w-6 h-6 ml-3 transition-transform duration-300 group-hover:translate-x-1" />
-        </a>
-        <p class="text-blue-100 text-sm">
-          Free to start • No credit card required • Join instantly
-        </p>
-      </div>
+      <h2 class="text-4xl md:text-5xl lg:text-6xl text-white mb-6 leading-tight">
+        Ready to Experience<br/>
+        <span class="italic text-[var(--color-ochre-light)]">These Features?</span>
+      </h2>
 
-      <!-- Secondary CTAs -->
-      <div class="grid md:grid-cols-3 gap-6 max-w-3xl mx-auto">
+      <p class="text-xl text-white/70 mb-12 max-w-xl mx-auto">
+        Join thousands seeking wisdom through conversations with Scripture's greatest figures.
+      </p>
 
-        <a
-          href="https://app.christianai.world/chats/new/jesus"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="group bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg p-6 hover:bg-white/20 transition-all duration-300"
-        >
-          <Heart aria-hidden="true" class="w-8 h-8 mx-auto mb-3 text-blue-100 group-hover:text-white transition-colors" />
-          <h3 class="font-semibold text-lg mb-2">Chat with Jesus</h3>
-          <p class="text-blue-100 text-sm leading-relaxed">
-            Experience divine love and eternal wisdom
-          </p>
-          <div class="mt-3 flex items-center justify-center text-blue-100 group-hover:text-white transition-colors">
-            <span class="text-sm font-medium">Start Now</span>
-            <ArrowRight aria-hidden="true" class="w-4 h-4 ml-1 transition-transform duration-300 group-hover:translate-x-1" />
-          </div>
-        </a>
+      <a
+        href="https://app.christianai.world/signup"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="btn-sacred inline-flex items-center gap-3"
+      >
+        Start Free Today
+        <ArrowRight class="w-5 h-5" />
+      </a>
 
-        <a
-          href="https://app.christianai.world/chats/new/moses"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="group bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg p-6 hover:bg-white/20 transition-all duration-300"
-        >
-          <MessageCircle aria-hidden="true" class="w-8 h-8 mx-auto mb-3 text-blue-100 group-hover:text-white transition-colors" />
-          <h3 class="font-semibold text-lg mb-2">Chat with Moses</h3>
-          <p class="text-blue-100 text-sm leading-relaxed">
-            Receive guidance from the great prophet
-          </p>
-          <div class="mt-3 flex items-center justify-center text-blue-100 group-hover:text-white transition-colors">
-            <span class="text-sm font-medium">Start Now</span>
-            <ArrowRight aria-hidden="true" class="w-4 h-4 ml-1 transition-transform duration-300 group-hover:translate-x-1" />
-          </div>
-        </a>
-
-        <a
-          href="https://app.christianai.world/chats/new/joshua"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="group bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg p-6 hover:bg-white/20 transition-all duration-300"
-        >
-          <MessageCircle aria-hidden="true" class="w-8 h-8 mx-auto mb-3 text-blue-100 group-hover:text-white transition-colors" />
-          <h3 class="font-semibold text-lg mb-2">Chat with Joshua</h3>
-          <p class="text-blue-100 text-sm leading-relaxed">
-            Connect with unwavering courage and faith
-          </p>
-          <div class="mt-3 flex items-center justify-center text-blue-100 group-hover:text-white transition-colors">
-            <span class="text-sm font-medium">Start Now</span>
-            <ArrowRight aria-hidden="true" class="w-4 h-4 ml-1 transition-transform duration-300 group-hover:translate-x-1" />
-          </div>
-        </a>
-
-      </div>
-
-      <!-- Additional encouragement -->
-      <div class="mt-12 pt-8 border-t border-white/20">
-        <p class="text-blue-100 text-lg">
-          🌟 <strong>Join a growing community</strong> of believers strengthening their faith through AI-powered biblical conversations
-        </p>
-      </div>
-
+      <p class="text-white/40 text-sm mt-6">
+        No credit card required
+      </p>
     </div>
   </div>
 </section>
