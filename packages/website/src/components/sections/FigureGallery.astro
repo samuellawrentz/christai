@@ -1,0 +1,80 @@
+---
+const figures = [
+  { slug: 'jesus', name: 'Jesus Christ', title: 'Son of God' },
+  { slug: 'moses', name: 'Moses', title: 'Lawgiver of Israel' },
+  { slug: 'david', name: 'King David', title: 'Shepherd King' },
+  { slug: 'paul', name: 'Paul', title: 'Apostle to the Gentiles' },
+  { slug: 'mary', name: 'Mary', title: 'Mother of Jesus' },
+  { slug: 'abraham', name: 'Abraham', title: 'Father of Faith' },
+  { slug: 'peter', name: 'Peter', title: 'Rock of the Church' },
+  { slug: 'solomon', name: 'Solomon', title: 'Wisest King' },
+  { slug: 'joshua', name: 'Joshua', title: 'Conqueror of Canaan' },
+  { slug: 'elijah', name: 'Elijah', title: 'Prophet of Fire' },
+  { slug: 'deborah', name: 'Deborah', title: 'Judge of Israel' },
+  { slug: 'ruth', name: 'Ruth', title: 'Loyal Daughter' },
+  { slug: 'esther', name: 'Esther', title: 'Courageous Queen' },
+  { slug: 'john-the-baptist', name: 'John the Baptist', title: 'Voice in the Wilderness' },
+];
+---
+
+<section class="py-24 lg:py-32">
+  <div class="container mx-auto px-6 lg:px-8">
+    <!-- Section header with ornamental divider -->
+    <div class="max-w-2xl mx-auto text-center mb-16">
+      <p class="text-[var(--color-ochre)] text-sm tracking-[0.3em] uppercase mb-4">
+        Your Guides Await
+      </p>
+      <h2 class="text-4xl lg:text-5xl text-[var(--color-ink)] mb-6">
+        Meet the <span class="italic">Figures</span>
+      </h2>
+      <div class="sacred-divider max-w-xs mx-auto">
+        <span class="text-2xl">&#10041;</span>
+      </div>
+    </div>
+
+    <!-- Figure grid - 7 columns on desktop, horizontal scroll on mobile -->
+    <div class="overflow-x-auto pb-4 -mx-6 px-6 lg:mx-0 lg:px-0 lg:overflow-visible scrollbar-hide">
+      <div class="flex gap-4 lg:grid lg:grid-cols-7 lg:gap-5 min-w-max lg:min-w-0 stagger-children">
+        {figures.map((figure, index) => (
+          <a
+            href={`https://app.christianai.world/chats/new/${figure.slug}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="figure-card group relative flex-shrink-0 w-40 lg:w-auto aspect-[3/4] overflow-hidden"
+            style={`animation-delay: ${0.05 * index}s`}
+          >
+            <!-- Image -->
+            <img
+              src={`https://app.christianai.world/images/${figure.slug}.webp`}
+              alt={figure.name}
+              class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+              loading="lazy"
+            />
+
+            <!-- Gradient overlay -->
+            <div class="absolute inset-0 bg-gradient-to-t from-[var(--color-ink)] via-[var(--color-ink)]/30 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-300" />
+
+            <!-- Content -->
+            <div class="absolute bottom-0 left-0 right-0 p-4 text-white">
+              <h3 class="font-['Baskervville'] text-base lg:text-lg leading-tight mb-1 group-hover:text-[var(--color-ochre-light)] transition-colors">
+                {figure.name}
+              </h3>
+              <p class="text-xs text-white/60 italic">
+                {figure.title}
+              </p>
+            </div>
+
+            <!-- Hover corner accents -->
+            <div class="absolute top-3 left-3 w-4 h-4 border-t-2 border-l-2 border-[var(--color-ochre)] opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:-translate-x-1 group-hover:-translate-y-1" />
+            <div class="absolute bottom-3 right-3 w-4 h-4 border-b-2 border-r-2 border-[var(--color-ochre)] opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:translate-x-1 group-hover:translate-y-1" />
+          </a>
+        ))}
+      </div>
+    </div>
+
+    <!-- Mobile scroll hint -->
+    <p class="text-center text-[var(--color-stone)] text-sm mt-8 lg:hidden italic">
+      Swipe to discover more figures
+    </p>
+  </div>
+</section>

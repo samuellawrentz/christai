@@ -1,50 +1,53 @@
 ---
-// Features Hero Section
-import { buttonVariants } from "@christianai/ui";
-import { Sparkles, MessageCircle } from '@lucide/astro';
-
-const buttonClass = buttonVariants({ variant: "default", size: "lg" });
+import { ArrowRight } from '@lucide/astro';
 ---
 
-<section class="relative overflow-hidden bg-gradient-to-br from-blue-50 to-indigo-100">
-  <div class="container mx-auto px-4 py-20 lg:py-32">
+<section class="relative min-h-[70vh] flex items-center overflow-hidden texture-overlay">
+  <!-- Background -->
+  <div class="absolute inset-0 bg-[var(--color-parchment)]" />
+
+  <!-- Decorative blurs -->
+  <div class="absolute top-20 right-10 w-64 h-64 bg-[var(--color-ochre)]/10 rounded-full blur-3xl" />
+  <div class="absolute bottom-20 left-20 w-96 h-96 bg-[var(--color-terracotta)]/10 rounded-full blur-3xl" />
+
+  <div class="container mx-auto px-6 lg:px-8 relative z-10 py-24 lg:py-32">
     <div class="max-w-4xl mx-auto text-center">
-      <div class="inline-flex items-center gap-2 px-4 py-2 bg-blue-100 text-blue-700 rounded-full text-sm font-medium mb-6">
-        <Sparkles aria-hidden="true" class="h-4 w-4" />
-        Christian AI in Ministry
-      </div>
-
-      <h1 class="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
-        Talk to God Through <span class="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Meaningful</span> Biblical Conversations
-      </h1>
-
-      <p class="text-xl text-gray-600 mb-8 max-w-2xl mx-auto leading-relaxed">
-        Experience how Christian AI transforms ministry with AI-powered spiritual guidance. Talk to God through biblical conversations designed to deepen your faith journey and connect you with divine wisdom.
+      <!-- Eyebrow -->
+      <p class="text-[var(--color-ochre)] text-sm tracking-[0.3em] uppercase mb-6 animate-fade-in">
+        Designed for Your Faith Journey
       </p>
 
-      <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
-         <a
-           href="https://app.christianai.world"
-           target="_blank"
-           rel="noopener noreferrer"
-           class={`${buttonClass} group bg-gradient-to-r from-blue-600 to-blue-700 text-white px-8 py-4 text-lg font-semibold`}
-         >
-           Start Your Journey
-           <MessageCircle aria-hidden="true" class="w-5 h-5 ml-2 transition-transform duration-300 group-hover:translate-x-1" />
-         </a>
+      <!-- Main headline -->
+      <h1 class="text-5xl md:text-6xl lg:text-7xl text-[var(--color-ink)] leading-[0.95] mb-8 animate-fade-in" style="animation-delay: 0.1s">
+        Powerful <span class="italic text-[var(--color-ochre)]">Features</span><br/>
+        for Meaningful Conversations
+      </h1>
 
+      <!-- Subheadline -->
+      <p class="text-xl md:text-2xl text-[var(--color-warm-gray)] max-w-2xl mx-auto mb-12 leading-relaxed animate-fade-in" style="animation-delay: 0.2s">
+        Every tool designed to deepen your connection with Scripture and the wisdom of biblical figures.
+      </p>
+
+      <!-- CTA -->
+      <div class="flex flex-col sm:flex-row gap-4 items-center justify-center animate-fade-in" style="animation-delay: 0.3s">
+        <a
+          href="https://app.christianai.world"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn-sacred inline-flex items-center gap-3"
+        >
+          Start Your Journey
+          <ArrowRight class="w-5 h-5" />
+        </a>
+        <span class="text-[var(--color-stone)] text-sm">
+          Free to use
+        </span>
       </div>
-            <div>
-         <p class="text-gray-600 text-sm mt-2">
-           No credit card required
-         </p>
-            </div>
-    </div>
-  </div>
 
-  <!-- Background decoration -->
-  <div class="absolute inset-0 overflow-hidden pointer-events-none">
-    <div class="absolute -top-40 -right-40 w-80 h-80 bg-blue-200 rounded-full opacity-20 blur-3xl"></div>
-    <div class="absolute -bottom-40 -left-40 w-80 h-80 bg-purple-200 rounded-full opacity-20 blur-3xl"></div>
+      <!-- Sacred divider -->
+      <div class="sacred-divider max-w-xs mx-auto mt-16">
+        <span class="text-2xl">&#10041;</span>
+      </div>
+    </div>
   </div>
 </section>

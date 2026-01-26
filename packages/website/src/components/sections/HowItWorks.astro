@@ -1,44 +1,66 @@
 ---
-// How It Works Section Component
+import { Users, MessageCircle, Sparkles } from '@lucide/astro';
+
+const steps = [
+  {
+    icon: Users,
+    number: "01",
+    title: "Choose Your Guide",
+    description: "Select from 14 biblical figures, each with unique wisdom and perspective"
+  },
+  {
+    icon: MessageCircle,
+    number: "02",
+    title: "Begin the Dialogue",
+    description: "Ask about faith, life's challenges, or dive deep into Scripture"
+  },
+  {
+    icon: Sparkles,
+    number: "03",
+    title: "Receive Wisdom",
+    description: "Gain biblically-grounded insights for your spiritual journey"
+  }
+];
 ---
 
-<section class="mx-auto mt-32 max-w-5xl">
-  <h2 class="mb-4 text-center font-bold text-4xl text-gray-900">How It Works</h2>
-  <p class="mx-auto mb-12 max-w-2xl text-center text-gray-600 text-lg">
-    Start your spiritual journey in three simple steps
-  </p>
-  <div class="grid gap-12 md:grid-cols-3">
-    <!-- Step 1 -->
-    <article class="text-center">
-      <div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-blue-600 font-bold text-2xl text-white">
-        1
-      </div>
-      <h3 class="mb-3 font-semibold text-gray-900 text-xl">Choose Your Guide</h3>
-      <p class="text-gray-600">
-        Select from biblical figures including Moses, Joshua, Jesus, and many more to come
-      </p>
-    </article>
+<section class="py-24 lg:py-32 bg-[var(--color-cream)] relative overflow-hidden">
+  <!-- Decorative background -->
+  <div class="absolute inset-0 opacity-[0.02]" style="background-image: url('data:image/svg+xml,%3Csvg width=\"60\" height=\"60\" viewBox=\"0 0 60 60\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cg fill=\"none\" fill-rule=\"evenodd\"%3E%3Cg fill=\"%231a1612\" fill-opacity=\"1\"%3E%3Cpath d=\"M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');" />
 
-    <!-- Step 2 -->
-    <article class="text-center">
-      <div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-blue-600 font-bold text-2xl text-white">
-        2
-      </div>
-      <h3 class="mb-3 font-semibold text-gray-900 text-xl">Ask Questions</h3>
-      <p class="text-gray-600">
-        Engage in meaningful dialogue about faith, life challenges, or biblical teachings
+  <div class="container mx-auto px-6 lg:px-8 relative">
+    <!-- Section header -->
+    <div class="text-center mb-20">
+      <p class="text-[var(--color-ochre)] text-sm tracking-[0.3em] uppercase mb-4">
+        Simple & Meaningful
       </p>
-    </article>
+      <h2 class="text-4xl lg:text-5xl text-[var(--color-ink)]">
+        How It <span class="italic">Works</span>
+      </h2>
+    </div>
 
-    <!-- Step 3 -->
-    <article class="text-center">
-      <div class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-blue-600 font-bold text-2xl text-white">
-        3
-      </div>
-      <h3 class="mb-3 font-semibold text-gray-900 text-xl">Grow Spiritually</h3>
-      <p class="text-gray-600">
-        Receive wisdom and guidance inspired by Scripture to strengthen your faith journey
-      </p>
-    </article>
+    <!-- Steps -->
+    <div class="grid md:grid-cols-3 gap-8 lg:gap-16 max-w-5xl mx-auto">
+      {steps.map((step, index) => (
+        <article class={`relative ${index < steps.length - 1 ? 'step-connector' : ''}`}>
+          <!-- Number -->
+          <span class="block text-6xl lg:text-7xl font-['Baskervville'] text-[var(--color-ochre)]/20 mb-4 leading-none">
+            {step.number}
+          </span>
+
+          <!-- Icon -->
+          <div class="w-14 h-14 rounded-full bg-[var(--color-ink)] flex items-center justify-center mb-6">
+            <step.icon class="w-6 h-6 text-[var(--color-ochre-light)]" />
+          </div>
+
+          <!-- Content -->
+          <h3 class="text-xl lg:text-2xl text-[var(--color-ink)] mb-3">
+            {step.title}
+          </h3>
+          <p class="text-[var(--color-warm-gray)] leading-relaxed">
+            {step.description}
+          </p>
+        </article>
+      ))}
+    </div>
   </div>
 </section>

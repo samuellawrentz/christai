@@ -1,66 +1,74 @@
 ---
-// FAQ Section Component
-import { HelpCircle } from '@lucide/astro';
+import { ChevronDown } from '@lucide/astro';
+
+export interface FAQItem {
+  question: string;
+  answer: string;
+}
+
+interface Props {
+  items?: FAQItem[];
+}
+
+const defaultItems: FAQItem[] = [
+  {
+    question: "Is this theologically accurate?",
+    answer: "Our AI is trained on biblical texts and Christian teachings. While it provides meaningful insights, we encourage users to verify guidance with Scripture and consult spiritual leaders for important decisions."
+  },
+  {
+    question: "Can this replace my church or pastor?",
+    answer: "No. ChristianAI is a supplementary tool for spiritual reflection and learning. It's designed to enhance your faith journey, not replace fellowship, worship, or pastoral care."
+  },
+  {
+    question: "Which biblical figures are available?",
+    answer: "14 figures are available including Jesus, Moses, David, Paul, Mary, Abraham, Peter, Solomon, Joshua, Elijah, Deborah, Ruth, Esther, and John the Baptist."
+  },
+  {
+    question: "How much does it cost?",
+    answer: "ChristianAI is currently free. We're committed to keeping the platform accessible to believers worldwide."
+  }
+];
+
+const { items = defaultItems } = Astro.props;
 ---
 
-<section class="mx-auto mt-32 max-w-4xl">
-  <h2 class="mb-4 text-center font-bold text-4xl text-gray-900">
-    Frequently Asked Questions
-  </h2>
-  <p class="mb-12 text-center text-gray-600 text-lg">
-    Common questions about ChristianAI
-  </p>
-  <div class="space-y-6">
-     <!-- FAQ 1 -->
-     <article class="rounded-lg bg-white p-6 shadow">
-       <div class="flex items-start gap-4">
-         <HelpCircle aria-hidden="true" class="mt-1 h-6 w-6 flex-shrink-0 text-blue-600" />
-        <div>
-          <h3 class="mb-2 font-semibold text-gray-900 text-xl">Is this theologically accurate?</h3>
-          <p class="text-gray-600">
-            Our AI is trained on biblical texts and Christian teachings. While it provides meaningful insights, we encourage users to verify guidance with Scripture and consult spiritual leaders for important decisions.
-          </p>
+<section class="py-24 lg:py-32">
+  <div class="container mx-auto px-6 lg:px-8">
+    <div class="grid lg:grid-cols-2 gap-16 lg:gap-24 max-w-6xl mx-auto">
+      <!-- Left column: Header -->
+      <div class="lg:sticky lg:top-24 lg:self-start">
+        <p class="text-[var(--color-ochre)] text-sm tracking-[0.3em] uppercase mb-4">
+          Common Questions
+        </p>
+        <h2 class="text-4xl lg:text-5xl text-[var(--color-ink)] mb-6">
+          Questions &<br/><span class="italic">Answers</span>
+        </h2>
+        <p class="text-[var(--color-warm-gray)] text-lg leading-relaxed mb-8">
+          Everything you need to know about ChristianAI and how it can support your faith journey.
+        </p>
+        <div class="sacred-divider max-w-[200px]">
+          <span class="text-xl">&#10041;</span>
         </div>
       </div>
-    </article>
 
-     <!-- FAQ 2 -->
-     <article class="rounded-lg bg-white p-6 shadow">
-       <div class="flex items-start gap-4">
-         <HelpCircle aria-hidden="true" class="mt-1 h-6 w-6 flex-shrink-0 text-blue-600" />
-        <div>
-          <h3 class="mb-2 font-semibold text-gray-900 text-xl">Can this replace my church or pastor?</h3>
-          <p class="text-gray-600">
-            No. ChristianAI is a supplementary tool for spiritual reflection and learning. It's designed to enhance your faith journey, not replace fellowship, worship, or pastoral care.
-          </p>
-        </div>
+      <!-- Right column: FAQ items -->
+      <div class="space-y-4">
+        {items.map((item, index) => (
+          <details class="faq-item group border border-[var(--color-ochre)]/20 bg-white/50 cursor-pointer">
+            <summary class="flex items-center justify-between p-6 list-none">
+              <h3 class="font-['Baskervville'] text-lg lg:text-xl text-[var(--color-ink)] pr-4">
+                {item.question}
+              </h3>
+              <ChevronDown class="w-5 h-5 text-[var(--color-ochre)] flex-shrink-0 transition-transform duration-300 group-open:rotate-180" />
+            </summary>
+            <div class="px-6 pb-6 pt-0">
+              <p class="text-[var(--color-warm-gray)] leading-relaxed">
+                {item.answer}
+              </p>
+            </div>
+          </details>
+        ))}
       </div>
-    </article>
-
-     <!-- FAQ 3 -->
-     <article class="rounded-lg bg-white p-6 shadow">
-       <div class="flex items-start gap-4">
-         <HelpCircle aria-hidden="true" class="mt-1 h-6 w-6 flex-shrink-0 text-blue-600" />
-        <div>
-          <h3 class="mb-2 font-semibold text-gray-900 text-xl">Which biblical figures will be available?</h3>
-          <p class="text-gray-600">
-            We're launching with Moses, Joshua, and Jesus. More figures from both Old and New Testament will be added based on community feedback and demand.
-          </p>
-        </div>
-      </div>
-    </article>
-
-     <!-- FAQ 4 -->
-     <article class="rounded-lg bg-white p-6 shadow">
-       <div class="flex items-start gap-4">
-         <HelpCircle aria-hidden="true" class="mt-1 h-6 w-6 flex-shrink-0 text-blue-600" />
-        <div>
-           <h3 class="mb-2 font-semibold text-gray-900 text-xl">How much does it cost?</h3>
-           <p class="text-gray-600">
-             ChristianAI is currently free during beta testing. We're committed to keeping the platform accessible to believers worldwide with free and premium tiers as we grow.
-           </p>
-        </div>
-      </div>
-    </article>
+    </div>
   </div>
 </section>

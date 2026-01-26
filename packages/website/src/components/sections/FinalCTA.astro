@@ -1,28 +1,43 @@
 ---
-// Import UI components
-import { buttonVariants } from "@christianai/ui";
-
-const buttonClass = buttonVariants({ variant: "default", size: "lg" });
+import { ArrowRight } from '@lucide/astro';
 ---
 
-<section
-  id="final-cta"
-  class="mx-auto mt-32 max-w-4xl rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 p-12 text-center text-white shadow-xl"
->
-  <h2 class="mb-4 font-bold text-4xl">Ready to Begin Your Journey?</h2>
-  <p class="mb-8 text-xl opacity-90">
-    Sign up now to start your journey with ChristianAI
-  </p>
-   <a
-     href="https://app.christianai.world/signup"
-     target="_blank"
-     rel="noopener noreferrer"
-     onclick="if(window.gtag){gtag('event', 'sign_up', {source: 'final_cta'});}"
-     class={`${buttonClass} hover:bg-blue-50 bg-transparent border border-white`}
-   >
-     Get Started Free
-   </a>
-   <p class="text-blue-100 text-sm mt-4">
-     No credit card required
-   </p>
+<section class="py-24 lg:py-32 relative overflow-hidden">
+  <!-- Background decorations -->
+  <div class="absolute inset-0 bg-[var(--color-ink)]" />
+  <div class="absolute top-0 left-1/4 w-96 h-96 bg-[var(--color-ochre)]/10 rounded-full blur-3xl" />
+  <div class="absolute bottom-0 right-1/4 w-64 h-64 bg-[var(--color-terracotta)]/10 rounded-full blur-3xl" />
+
+  <div class="container mx-auto px-6 lg:px-8 relative">
+    <div class="max-w-3xl mx-auto text-center">
+      <!-- Ornamental element -->
+      <div class="flex justify-center mb-8">
+        <span class="text-[var(--color-ochre)] text-4xl">&#10041;</span>
+      </div>
+
+      <h2 class="text-4xl md:text-5xl lg:text-6xl text-white mb-6 leading-tight">
+        Begin Your Journey<br/>
+        <span class="italic text-[var(--color-ochre-light)]">Today</span>
+      </h2>
+
+      <p class="text-xl text-white/70 mb-12 max-w-xl mx-auto">
+        Join thousands seeking wisdom through conversations with Scripture's greatest figures.
+      </p>
+
+      <a
+        href="https://app.christianai.world/signup"
+        target="_blank"
+        rel="noopener noreferrer"
+        onclick="if(window.gtag){gtag('event', 'sign_up', {source: 'final_cta'});}"
+        class="btn-sacred inline-flex items-center gap-3"
+      >
+        Start Free
+        <ArrowRight class="w-5 h-5" />
+      </a>
+
+      <p class="text-white/40 text-sm mt-6">
+        No credit card required
+      </p>
+    </div>
+  </div>
 </section>

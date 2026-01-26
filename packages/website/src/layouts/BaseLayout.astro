@@ -2,18 +2,72 @@
 import "../styles/global.css";
 import Navigation from "../components/sections/Navigation.astro";
 
+export interface FAQSchema {
+  question: string;
+  answer: string;
+}
+
 export interface Props {
   title: string;
   description?: string;
   image?: string;
   url?: string;
   showHero?: boolean;
+  faqSchema?: FAQSchema[];
 }
 
-const { title, description, image, url, showHero = false } = Astro.props;
+const { title, description, image, url, showHero = false, faqSchema } = Astro.props;
 const canonicalUrl = url || new URL(Astro.request.url).origin + Astro.url.pathname;
-const defaultDescription = "Experience meaningful conversations with Christian figures like Moses, Joshua, and Jesus through advanced AI technology. Sign up now for spiritual guidance and biblical wisdom.";
+const siteUrl = new URL(Astro.request.url).origin;
+const defaultDescription = "Chat with 14 biblical figures including Jesus, Moses, David, and Paul. AI-powered conversations for spiritual guidance and biblical wisdom.";
 const defaultImage = "/og_image.png";
+
+const figures = [
+  "Jesus Christ", "Moses", "King David", "Paul", "Mary", "Abraham", "Peter",
+  "Solomon", "Joshua", "Elijah", "Deborah", "Ruth", "Esther", "John the Baptist"
+];
+
+const webAppSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "ChristianAI",
+  "description": "Chat with 14 biblical figures using AI technology for spiritual guidance and biblical wisdom",
+  "url": canonicalUrl,
+  "applicationCategory": "LifestyleApplication",
+  "operatingSystem": "Web Browser",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "audience": {
+    "@type": "Audience",
+    "audienceType": "Christians seeking spiritual guidance and biblical wisdom"
+  },
+  "featureList": figures.map(f => `AI conversations with ${f}`)
+};
+
+const organizationSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "ChristianAI",
+  "url": siteUrl,
+  "logo": `${siteUrl}/images/logo.png`,
+  "description": "AI-powered conversations with biblical figures for spiritual growth and guidance"
+};
+
+const faqPageSchema = faqSchema ? {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqSchema.map(item => ({
+    "@type": "Question",
+    "name": item.question,
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": item.answer
+    }
+  }))
+} : null;
 ---
 
 <html lang="en">
@@ -22,7 +76,7 @@ const defaultImage = "/og_image.png";
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{title}</title>
   <meta name="description" content={description || defaultDescription}>
-  <meta name="keywords" content="Christian AI chat, biblical figures AI, Moses AI conversation, Joshua AI chat, Jesus AI dialogue, spiritual conversations, Christian technology, faith AI, biblical wisdom, AI chatbot Christian, religious AI, Christian guidance, Bible study AI, faith journey, spiritual mentor AI" />
+  <meta name="keywords" content="Christian AI chat, biblical figures AI, Jesus AI, Moses AI, David AI, Paul AI, spiritual conversations, Christian technology, faith AI, biblical wisdom, religious AI, Bible study AI, faith journey" />
   <meta name="author" content="ChristianAI">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href={canonicalUrl} />
@@ -56,33 +110,16 @@ const defaultImage = "/og_image.png";
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
   <link rel="manifest" href="/images/site.webmanifest">
 
-  <!-- Structured Data -->
-  <script type="application/ld+json" is:inline set:html={JSON.stringify({
-    "@context": "https://schema.org",
-    "@type": "WebApplication",
-    "name": "ChristianAI",
-    "description": "Chat with Biblical Figures using advanced AI technology for spiritual guidance and biblical wisdom",
-    "url": canonicalUrl,
-    "applicationCategory": "LifestyleApplication",
-    "operatingSystem": "Web Browser",
-    "offers": {
-      "@type": "Offer",
-      "price": "0",
-      "priceCurrency": "USD"
-    },
-    "audience": {
-      "@type": "Audience",
-      "audienceType": "Christians seeking spiritual guidance and biblical wisdom"
-    },
-    "featureList": [
-      "AI conversations with Moses",
-      "AI conversations with Joshua",
-      "AI conversations with Jesus Christ",
-      "24/7 spiritual guidance",
-      "Biblically grounded responses",
-      "Private and secure conversations"
-    ]
-  })} />
+  <!-- Structured Data: WebApplication -->
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(webAppSchema)} />
+
+  <!-- Structured Data: Organization -->
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(organizationSchema)} />
+
+  <!-- Structured Data: FAQPage -->
+  {faqPageSchema && (
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(faqPageSchema)} />
+  )}
 
   <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-F2FVEHRW7E"></script>
