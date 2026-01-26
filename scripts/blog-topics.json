@@ -1,0 +1,98 @@
+{
+  "topics": [
+    {
+      "id": "ai-prayer-companion",
+      "title": "Can AI Be Your Prayer Companion?",
+      "description": "Exploring how AI can support (not replace) your prayer life",
+      "tags": [
+        "AI",
+        "Prayer",
+        "Spiritual Growth"
+      ],
+      "status": "pr_created"
+    },
+    {
+      "id": "bible-study-with-ai",
+      "title": "How to Use AI for Deeper Bible Study",
+      "description": "Practical guide to enhancing Scripture study with AI tools",
+      "tags": [
+        "AI",
+        "Bible Study",
+        "Scripture"
+      ],
+      "status": "unpublished"
+    },
+    {
+      "id": "ai-and-christian-community",
+      "title": "AI and Christian Community: Finding Balance",
+      "description": "How technology can enhance rather than replace fellowship",
+      "tags": [
+        "AI",
+        "Community",
+        "Fellowship",
+        "Church"
+      ],
+      "status": "unpublished"
+    },
+    {
+      "id": "teaching-kids-faith-with-ai",
+      "title": "Teaching Kids About Faith in the Age of AI",
+      "description": "Helping children develop authentic faith alongside technology",
+      "tags": [
+        "AI",
+        "Parenting",
+        "Children",
+        "Faith"
+      ],
+      "status": "unpublished"
+    },
+    {
+      "id": "ai-for-grief-and-loss",
+      "title": "Finding Comfort in Loss: How AI Can Help Process Grief Biblically",
+      "description": "Using AI to explore Scripture's wisdom on grief and hope",
+      "tags": [
+        "AI",
+        "Grief",
+        "Comfort",
+        "Hope"
+      ],
+      "status": "unpublished"
+    },
+    {
+      "id": "digital-sabbath",
+      "title": "The Digital Sabbath: Rest in a Connected World",
+      "description": "Biblical principles for healthy technology boundaries",
+      "tags": [
+        "Sabbath",
+        "Rest",
+        "Technology",
+        "Balance"
+      ],
+      "status": "unpublished"
+    },
+    {
+      "id": "ai-anxiety-faith",
+      "title": "When Anxiety Strikes: AI-Guided Biblical Meditations",
+      "description": "Using AI to find peace through Scripture during anxious moments",
+      "tags": [
+        "AI",
+        "Anxiety",
+        "Peace",
+        "Mental Health"
+      ],
+      "status": "unpublished"
+    },
+    {
+      "id": "wisdom-of-proverbs-ai",
+      "title": "Ancient Wisdom for Modern Problems: Exploring Proverbs with AI",
+      "description": "How AI can help apply timeless wisdom to today's challenges",
+      "tags": [
+        "AI",
+        "Proverbs",
+        "Wisdom",
+        "Practical"
+      ],
+      "status": "unpublished"
+    }
+  ]
+}
