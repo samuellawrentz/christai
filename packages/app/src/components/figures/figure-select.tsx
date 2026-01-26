@@ -3,6 +3,7 @@ import {
   Avatar,
   AvatarFallback,
   AvatarImage,
+  cn,
   Select,
   SelectContent,
   SelectItem,
@@ -14,14 +15,20 @@ interface FigureSelectDropdownProps {
   figures: Figure[];
   value: string;
   onValueChange: (slug: string) => void;
+  className?: string;
 }
 
-export function FigureSelectDropdown({ figures, value, onValueChange }: FigureSelectDropdownProps) {
+export function FigureSelectDropdown({
+  figures,
+  value,
+  onValueChange,
+  className,
+}: FigureSelectDropdownProps) {
   const selectedFigure = figures.find((f) => f.slug === value);
 
   return (
     <Select value={value} onValueChange={onValueChange}>
-      <SelectTrigger>
+      <SelectTrigger className={cn(className)}>
         {selectedFigure ? (
           <div className="flex items-center gap-2">
             <Avatar className="h-6 w-6">
@@ -34,7 +41,7 @@ export function FigureSelectDropdown({ figures, value, onValueChange }: FigureSe
           <SelectValue placeholder="Select a figure" />
         )}
       </SelectTrigger>
-      <SelectContent>
+      <SelectContent position="popper" sideOffset={4}>
         {figures.map((figure) => (
           <SelectItem key={figure.slug} value={figure.slug}>
             <div className="flex items-center gap-2">
