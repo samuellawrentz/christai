@@ -1,0 +1,217 @@
+{
+  "topics": [
+    {
+      "id": "how-paul-encountered-god",
+      "title": "How Paul Encountered God: From Persecutor to Apostle",
+      "description": "Explore Paul's dramatic encounter with Christ on the Damascus road and how radical transformation begins with divine interruption.",
+      "tags": [
+        "Paul",
+        "Bible",
+        "Transformation",
+        "Faith",
+        "Conversion",
+        "Christian AI"
+      ],
+      "status": "pr_created"
+    },
+    {
+      "id": "can-ai-help-you-pray",
+      "title": "Can AI Help You Pray? A Biblical Perspective",
+      "description": "Discover how AI tools can support your prayer life without replacing the sacred conversation between you and God.",
+      "tags": [
+        "AI",
+        "Prayer",
+        "Technology",
+        "Spiritual Growth",
+        "Faith",
+        "Christian AI"
+      ],
+      "status": "unpublished"
+    },
+    {
+      "id": "how-daniel-trusted-god",
+      "title": "How Daniel Trusted God: Faith in the Lion's Den",
+      "description": "Learn from Daniel's unwavering trust in God during impossible circumstances and how his story applies to modern challenges.",
+      "tags": [
+        "Daniel",
+        "Bible",
+        "Trust",
+        "Faith",
+        "Courage",
+        "Talk to God",
+        "Christian AI"
+      ],
+      "status": "unpublished"
+    },
+    {
+      "id": "digital-sabbath-rest-in-ai-age",
+      "title": "Digital Sabbath: Finding Rest in the AI Age",
+      "description": "How to balance technology use with spiritual rest and create meaningful boundaries for deeper connection with God.",
+      "tags": [
+        "AI",
+        "Sabbath",
+        "Rest",
+        "Technology",
+        "Spiritual Growth",
+        "Balance"
+      ],
+      "status": "unpublished"
+    },
+    {
+      "id": "how-ruth-followed-god",
+      "title": "How Ruth Followed God: Loyalty, Love, and Divine Providence",
+      "description": "Discover how Ruth's faithfulness led her into God's redemptive story and what her journey teaches about trusting God's plan.",
+      "tags": [
+        "Ruth",
+        "Bible",
+        "Faith",
+        "Loyalty",
+        "Providence",
+        "Christian AI"
+      ],
+      "status": "unpublished"
+    },
+    {
+      "id": "how-joseph-forgave-through-god",
+      "title": "How Joseph Forgave Through God: From Pit to Palace",
+      "description": "Learn how Joseph's journey from betrayal to blessing reveals God's power to redeem our darkest moments.",
+      "tags": [
+        "Joseph",
+        "Bible",
+        "Forgiveness",
+        "Faith",
+        "Redemption",
+        "Christian AI"
+      ],
+      "status": "unpublished"
+    },
+    {
+      "id": "using-ai-for-bible-study",
+      "title": "Using AI for Bible Study: Unlocking Scripture's Depths",
+      "description": "Practical ways to use AI tools to deepen your understanding of Scripture while maintaining biblical integrity.",
+      "tags": [
+        "AI",
+        "Bible Study",
+        "Technology",
+        "Spiritual Growth",
+        "Scripture",
+        "Christian AI"
+      ],
+      "status": "unpublished"
+    },
+    {
+      "id": "how-esther-trusted-god",
+      "title": "How Esther Trusted God: Courage for Such a Time as This",
+      "description": "Explore Esther's bold faith and how God positioned her to save His people through courageous obedience.",
+      "tags": [
+        "Esther",
+        "Bible",
+        "Courage",
+        "Faith",
+        "Trust",
+        "Christian AI"
+      ],
+      "status": "unpublished"
+    },
+    {
+      "id": "ai-and-discernment",
+      "title": "AI and Spiritual Discernment: Testing the Spirits in a Digital Age",
+      "description": "How to apply biblical discernment when using AI for spiritual guidance and maintain truth-centered faith.",
+      "tags": [
+        "AI",
+        "Discernment",
+        "Truth",
+        "Spiritual Growth",
+        "Wisdom",
+        "Christian AI"
+      ],
+      "status": "unpublished"
+    },
+    {
+      "id": "how-peter-walked-with-jesus",
+      "title": "How Peter Walked with Jesus: From Doubt to Rock-Solid Faith",
+      "description": "Follow Peter's journey from impulsive fisherman to foundational apostle and learn from his failures and victories.",
+      "tags": [
+        "Peter",
+        "Bible",
+        "Faith",
+        "Doubt",
+        "Transformation",
+        "Christian AI"
+      ],
+      "status": "unpublished"
+    },
+    {
+      "id": "how-job-questioned-god",
+      "title": "How Job Questioned God: Faith Through Suffering",
+      "description": "Discover how Job's honest wrestling with God during suffering reveals that questions can deepen rather than destroy faith.",
+      "tags": [
+        "Job",
+        "Bible",
+        "Suffering",
+        "Faith",
+        "Questions",
+        "Talk to God",
+        "Christian AI"
+      ],
+      "status": "unpublished"
+    },
+    {
+      "id": "ai-companions-for-lonely-believers",
+      "title": "AI Companions for Lonely Believers: Community When You're Isolated",
+      "description": "How AI spiritual tools can provide encouragement and biblical wisdom for believers who lack local Christian community.",
+      "tags": [
+        "AI",
+        "Loneliness",
+        "Community",
+        "Spiritual Growth",
+        "Encouragement",
+        "Christian AI"
+      ],
+      "status": "unpublished"
+    },
+    {
+      "id": "how-solomon-sought-wisdom",
+      "title": "How Solomon Sought Wisdom: Asking God for What Matters Most",
+      "description": "Learn from Solomon's prayer for wisdom and how seeking God's guidance leads to lasting success.",
+      "tags": [
+        "Solomon",
+        "Bible",
+        "Wisdom",
+        "Prayer",
+        "Faith",
+        "Christian AI"
+      ],
+      "status": "unpublished"
+    },
+    {
+      "id": "how-jonah-ran-from-god",
+      "title": "How Jonah Ran from God: Mercy, Reluctance, and Second Chances",
+      "description": "Explore Jonah's story of running from God's call and discovering that divine mercy extends even to reluctant prophets.",
+      "tags": [
+        "Jonah",
+        "Bible",
+        "Mercy",
+        "Obedience",
+        "Second Chances",
+        "Christian AI"
+      ],
+      "status": "unpublished"
+    },
+    {
+      "id": "teaching-kids-faith-with-ai",
+      "title": "Teaching Kids About Faith with AI: A Parent's Guide",
+      "description": "How parents can use AI tools to help children explore biblical stories and develop their own relationship with God.",
+      "tags": [
+        "AI",
+        "Parenting",
+        "Children",
+        "Faith",
+        "Bible Stories",
+        "Family",
+        "Christian AI"
+      ],
+      "status": "unpublished"
+    }
+  ]
+}
