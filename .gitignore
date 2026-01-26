@@ -140,3 +140,6 @@ vite.config.ts.timestamp-*
 
 # Opencode config
 .opencode/
+
+# MCP config
+.mcp.json
