@@ -1,0 +1,35 @@
+---
+Task: Create /figures page with search bar and figures grid
+Status: done
+Learnings:
+- FiguresPage follows ChatsListPage pattern - container layout with padding for mobile bottom nav
+- useSubscription returns subscription object, pro status derived from status === "pro" check
+- Search filtering uses case-insensitive includes: toLowerCase().includes(query.toLowerCase())
+- Skeleton loading matches grid layout (2/3/4 cols) with 8 placeholders for consistent UX
+- Routes inside AppLayout+PreferencesWrapper get full app chrome (sidebar, preferences dialog)
+- Biome auto-formats on commit, typecheck runs via pre-commit hook
+---
+---
+Task: Redesign HomePage with centered prompt, figure dropdown, 2x2 grid, and view more link
+Status: done
+Learnings:
+- PromptInput components (PromptInput, PromptInputHeader, PromptInputBody, PromptInputFooter, PromptInputTextarea, PromptInputSubmit) from @christianai/ui
+- Select components + Avatar from @christianai/ui work well for dropdown with avatars
+- useCreateConversation returns mutation with mutateAsync(figureId), navigate with state.initialMessage
+- subscription.data.status === "active" for pro check (not "pro")
+- Card component from @christianai/ui for figure cards with hover effects
+- Pre-commit hook runs biome + typecheck automatically
+---
+---
+Task: Review all changes, test flows, and ensure consistency
+Status: done
+Learnings:
+- Frontend-engineer agents effective for comprehensive UI/UX reviews with specific line-by-line analysis
+- Subscription status checks must be consistent across all pages - easy to introduce drift
+- Avatar fallbacks critical for missing data - apply pattern consistently across all avatar displays
+- TypeScript compilation passing doesn't guarantee runtime consistency - semantic review needed
+- Git diff review + specialized agent reviews catch issues human reviewers might miss
+- All homepage flows verified: prompt box, dropdown, grid, navigation, card selection
+- /figures page verified: search, grid layout, locked figures, toast errors, navigation
+- Tests passing (37/37), typecheck clean, pre-commit hooks passed
+---

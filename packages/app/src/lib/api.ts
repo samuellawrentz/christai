@@ -43,7 +43,10 @@ async function authenticatedRequest<T = unknown>(
     }
 
     const errorData = await response.json().catch(() => ({ message: response.statusText }));
-    throw new APIError(errorData.message || `API request failed: ${response.statusText}`, response.status);
+    throw new APIError(
+      errorData.message || `API request failed: ${response.statusText}`,
+      response.status,
+    );
   }
 
   const apiResponse = await response.json();

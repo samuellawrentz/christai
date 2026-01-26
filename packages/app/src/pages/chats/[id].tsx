@@ -17,9 +17,9 @@ import {
   SidebarTrigger,
 } from "@christianai/ui";
 import { DefaultChatTransport, type UIMessage } from "ai";
-import { ArrowDownIcon, Loader2, SidebarIcon } from "lucide-react";
-import { useEffect, useState } from "react";
-import { Navigate, useLocation, useParams } from "react-router-dom";
+import { ArrowDownIcon, Loader2 } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { Navigate, useLocation, useNavigate, useParams } from "react-router-dom";
 import { useStickToBottom } from "use-stick-to-bottom";
 import { useConversation, useConversationMessages } from "@/hooks/use-conversations";
 import { api } from "@/lib/api";
@@ -28,15 +28,24 @@ import { supabase } from "@/lib/supabase";
 export const ConversationPage = () => {
   const params = useParams<{ conversationId: string }>();
   const location = useLocation();
+  const navigate = useNavigate();
   const conversationId = params.conversationId;
+
+  // Get initial message from router state (passed from new conversation page)
+  const initialMessage = (location.state as { initialMessage?: string })?.initialMessage;
+  const initialMessageRef = useRef(initialMessage);
+
+  // Clear the router state immediately to prevent re-sending on re-renders
+  useEffect(() => {
+    if (initialMessage) {
+      navigate(location.pathname, { replace: true, state: {} });
+    }
+  }, []);
 
   // Validate conversationId
   if (!conversationId) {
     return <Navigate to="/home" replace />;
   }
-
-  // Get initial message from router state (passed from new conversation page)
-  const initialMessage = (location.state as { initialMessage?: string })?.initialMessage;
 
   // Load message history
   const {
@@ -66,7 +75,7 @@ export const ConversationPage = () => {
     <ConversationCore
       conversationId={conversationId}
       messagesData={messagesData}
-      initialMessage={initialMessage}
+      initialMessage={initialMessageRef.current}
     />
   );
 };
@@ -79,6 +88,7 @@ interface ConversationCoreProps {
 
 function ConversationCore({ conversationId, messagesData, initialMessage }: ConversationCoreProps) {
   const [input, setInput] = useState("");
+  const initialMessageSentRef = useRef(false);
 
   // Create useStickToBottom instance connected to ScrollArea viewport
   const stickToBottomInstance = useStickToBottom();
@@ -114,10 +124,11 @@ function ConversationCore({ conversationId, messagesData, initialMessage }: Conv
   });
 
   useEffect(() => {
-    if (initialMessage) {
+    if (initialMessage && !initialMessageSentRef.current) {
+      initialMessageSentRef.current = true;
       sendMessage({ text: initialMessage });
     }
-  }, [initialMessage]);
+  }, [initialMessage, sendMessage]);
 
   const handleSubmit = async (message: { text: string }) => {
     if (!message.text?.trim()) return;
