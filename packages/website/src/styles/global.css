@@ -1,7 +1,241 @@
 @import "@christianai/ui/styles.css";
 @import "./markdown.css";
 
-/* Additional website-specific styles */
-.gradient-radial {
-  background: radial-gradient(ellipse at center, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.1) 100%);
+/* Sacred Editorial Design System */
+:root {
+  --color-parchment: #f7f3eb;
+  --color-ink: #1a1612;
+  --color-ochre: #c4a35a;
+  --color-ochre-light: #d4b876;
+  --color-terracotta: #b85c38;
+  --color-forest: #2d4a3e;
+  --color-stone: #8b8577;
+  --color-warm-gray: #6b6459;
+  --color-cream: #faf8f3;
+  --gradient-sacred: linear-gradient(135deg, var(--color-ochre) 0%, var(--color-terracotta) 100%);
+}
+
+/* Base typography enhancement */
+body {
+  font-family: 'Esteban', Georgia, serif;
+  background-color: var(--color-parchment);
+  color: var(--color-ink);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Baskervville', Georgia, serif;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+
+/* Noise texture overlay */
+.texture-overlay {
+  position: relative;
+}
+
+.texture-overlay::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%' height='100%' filter='url(%23noise)'/%3E%3C/svg%3E");
+  opacity: 0.03;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Figure card hover glow */
+.figure-card {
+  position: relative;
+  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.figure-card::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: var(--gradient-sacred);
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  z-index: -1;
+}
+
+.figure-card:hover::before {
+  opacity: 1;
+}
+
+.figure-card:hover {
+  transform: translateY(-8px) scale(1.02);
+}
+
+/* Elegant divider */
+.sacred-divider {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: var(--color-stone);
+}
+
+.sacred-divider::before,
+.sacred-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-ochre), transparent);
+}
+
+/* Animated gradient border */
+@keyframes borderGlow {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.glow-border {
+  position: relative;
+  background: var(--color-cream);
+}
+
+.glow-border::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  padding: 2px;
+  background: linear-gradient(45deg, var(--color-ochre), var(--color-terracotta), var(--color-forest), var(--color-ochre));
+  background-size: 300% 300%;
+  animation: borderGlow 4s ease infinite;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  border-radius: inherit;
+}
+
+/* FAQ accordion animation */
+.faq-item {
+  transition: all 0.3s ease;
+}
+
+.faq-item:hover {
+  background: var(--color-cream);
+}
+
+/* Step connector line */
+.step-connector {
+  position: relative;
+}
+
+.step-connector::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 100%;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, var(--color-ochre), transparent);
+}
+
+@media (max-width: 768px) {
+  .step-connector::after {
+    display: none;
+  }
+}
+
+/* Scroll-triggered fade in */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeInUp 0.8s ease forwards;
+}
+
+/* Staggered children animation */
+.stagger-children > * {
+  opacity: 0;
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+.stagger-children > *:nth-child(1) { animation-delay: 0.1s; }
+.stagger-children > *:nth-child(2) { animation-delay: 0.2s; }
+.stagger-children > *:nth-child(3) { animation-delay: 0.3s; }
+.stagger-children > *:nth-child(4) { animation-delay: 0.4s; }
+.stagger-children > *:nth-child(5) { animation-delay: 0.5s; }
+.stagger-children > *:nth-child(6) { animation-delay: 0.6s; }
+.stagger-children > *:nth-child(7) { animation-delay: 0.7s; }
+
+/* Button sacred style */
+.btn-sacred {
+  background: var(--gradient-sacred);
+  color: white;
+  font-family: 'Baskervville', Georgia, serif;
+  font-size: 1.125rem;
+  padding: 1rem 2.5rem;
+  border-radius: 0;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-sacred::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, transparent 50%);
+  transform: translateX(-100%);
+  transition: transform 0.5s ease;
+}
+
+.btn-sacred:hover::before {
+  transform: translateX(100%);
+}
+
+.btn-sacred:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 40px rgba(196, 163, 90, 0.3);
+}
+
+/* Ornamental corners */
+.ornament-corners {
+  position: relative;
+}
+
+.ornament-corners::before,
+.ornament-corners::after {
+  content: '';
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  border-color: var(--color-ochre);
+  border-style: solid;
+}
+
+.ornament-corners::before {
+  top: 0;
+  left: 0;
+  border-width: 2px 0 0 2px;
+}
+
+.ornament-corners::after {
+  bottom: 0;
+  right: 0;
+  border-width: 0 2px 2px 0;
+}
+
+/* Hide scrollbar for horizontal scroll but keep functionality */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
 }

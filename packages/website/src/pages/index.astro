@@ -1,31 +1,44 @@
 ---
-// Import components
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/sections/Hero.astro';
-import Features from '../components/sections/Features.astro';
+import FigureGallery from '../components/sections/FigureGallery.astro';
 import HowItWorks from '../components/sections/HowItWorks.astro';
-import Benefits from '../components/sections/Benefits.astro';
 import FAQ from '../components/sections/FAQ.astro';
-import Technology from '../components/sections/Technology.astro';
 import FinalCTA from '../components/sections/FinalCTA.astro';
 import Footer from '../components/sections/Footer.astro';
+
+const faqData = [
+  {
+    question: "Is this theologically accurate?",
+    answer: "Our AI is trained on biblical texts and Christian teachings. While it provides meaningful insights, we encourage users to verify guidance with Scripture and consult spiritual leaders for important decisions."
+  },
+  {
+    question: "Can this replace my church or pastor?",
+    answer: "No. ChristianAI is a supplementary tool for spiritual reflection and learning. It's designed to enhance your faith journey, not replace fellowship, worship, or pastoral care."
+  },
+  {
+    question: "Which biblical figures are available?",
+    answer: "14 figures are available including Jesus, Moses, David, Paul, Mary, Abraham, Peter, Solomon, Joshua, Elijah, Deborah, Ruth, Esther, and John the Baptist."
+  },
+  {
+    question: "How much does it cost?",
+    answer: "ChristianAI is currently free. We're committed to keeping the platform accessible to believers worldwide."
+  }
+];
 ---
 
 <BaseLayout
-  title="ChristianAI - Talk to God Through Biblical Figures | Christian AI for Ministry"
-  description="Talk to God through AI-powered conversations with Moses, Joshua, and Jesus. ChristianAI brings Christian AI to ministry - experience spiritual guidance and biblical wisdom through meaningful dialogue."
+  title="ChristianAI - Chat with 14 Biblical Figures | AI Spiritual Guidance"
+  description="Chat with 14 biblical figures including Jesus, Moses, David, and Paul. AI-powered conversations for spiritual guidance and biblical wisdom. Free to use."
   image="/og_image.png"
+  faqSchema={faqData}
 >
-  <div class="min-h-screen">
-    <Hero />
-    <main class="container mx-auto px-4 py-16">
-      <Features />
-      <HowItWorks />
-      <Benefits />
-      <FAQ />
-      <Technology />
-      <FinalCTA />
-    </main>
-    <Footer />
-  </div>
+  <Hero />
+  <main>
+    <FigureGallery />
+    <HowItWorks />
+    <FAQ items={faqData} />
+    <FinalCTA />
+  </main>
+  <Footer />
 </BaseLayout>
