@@ -1,5 +1,6 @@
 import type { APIResponse } from "@christianai/shared/types/api/response";
 import { cors } from "@elysiajs/cors";
+import { createClient } from "@supabase/supabase-js";
 import { logger } from "@tqman/nice-logger";
 import { Elysia, ElysiaCustomStatusResponse } from "elysia";
 import { chats } from "./controllers/chats";
@@ -9,6 +10,12 @@ import { root as openRoutes } from "./controllers/root";
 import { users } from "./controllers/users";
 import { authPlugin } from "./libs/auth";
 import { log } from "./libs/logger";
+
+// Public Supabase client (anon key, no auth)
+const publicSupabase = createClient(
+  process.env.SUPABASE_URL || "",
+  process.env.SUPABASE_ANON_KEY || "",
+);
 
 export type AppType = ReturnType<typeof createApp>;
 
@@ -37,6 +44,55 @@ const createApp = () => {
       set.headers["x-request-id"] = crypto.randomUUID();
     })
     .get("/health", () => ({ status: "ok" }))
+    .get("/public/share/:token", async ({ params }) => {
+      // Fetch share with nested conversation, figure, and messages
+      const { data: share, error: shareError } = await publicSupabase
+        .from("conversation_shares")
+        .select(`
+          share_token,
+          is_active,
+          conversations (
+            id,
+            title,
+            created_at,
+            figures (
+              id,
+              display_name,
+              avatar_url,
+              slug
+            )
+          )
+        `)
+        .eq("share_token", params.token)
+        .eq("is_active", true)
+        .single();
+
+      if (shareError || !share) {
+        throw new Error("Share not found or inactive");
+      }
+
+      // Fetch messages for the conversation
+      // conversation_shares.conversation_id -> conversations (single object relation)
+      const conversation = share.conversations as unknown as { id: string } | null;
+      if (!conversation) {
+        throw new Error("Conversation not found");
+      }
+
+      const { data: messages, error: messagesError } = await publicSupabase
+        .from("messages")
+        .select("id, role, content, timestamp")
+        .eq("conversation_id", conversation.id)
+        .order("timestamp", { ascending: true });
+
+      if (messagesError) {
+        throw new Error(`Failed to fetch messages: ${messagesError.message}`);
+      }
+
+      return {
+        ...share,
+        messages,
+      };
+    })
     .use(authPlugin);
 };
 

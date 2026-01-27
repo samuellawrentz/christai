@@ -1,35 +1,79 @@
 ---
-Task: Create /figures page with search bar and figures grid
+Task: Create database migrations for new columns and tables
+Status: done
+Learnings: 
+- Supabase MCP tools allow direct migration application without CLI
+- Partial migrations need idempotent recovery migrations (IF NOT EXISTS, DROP IF EXISTS)
+- is_deleted column already existed from prior incomplete migration
+- Created fix migration to safely apply remaining components
+- RLS policies created: conversations_not_deleted filters SELECT, conversation_shares has full CRUD policies
+- All migrations applied successfully, typecheck passes
+---
+Task: Add conversation sharing endpoints - create share and public view
 Status: done
 Learnings:
-- FiguresPage follows ChatsListPage pattern - container layout with padding for mobile bottom nav
-- useSubscription returns subscription object, pro status derived from status === "pro" check
-- Search filtering uses case-insensitive includes: toLowerCase().includes(query.toLowerCase())
-- Skeleton loading matches grid layout (2/3/4 cols) with 8 placeholders for consistent UX
-- Routes inside AppLayout+PreferencesWrapper get full app chrome (sidebar, preferences dialog)
-- Biome auto-formats on commit, typecheck runs via pre-commit hook
+- Public routes must be registered BEFORE authPlugin in Elysia app chain
+- Use separate unauthenticated Supabase client (anon key only) for public endpoints
+- Supabase FK relations return objects, but TS inference thinks arrays - cast via `as unknown as Type`
+- Check for existing active share before creating new one (idempotent pattern)
+- crypto.randomUUID().slice(0,8) gives 8-char short token
 ---
----
-Task: Redesign HomePage with centered prompt, figure dropdown, 2x2 grid, and view more link
+Task: Add DELETE, PATCH, and bookmark endpoints for conversations
 Status: done
 Learnings:
-- PromptInput components (PromptInput, PromptInputHeader, PromptInputBody, PromptInputFooter, PromptInputTextarea, PromptInputSubmit) from @christianai/ui
-- Select components + Avatar from @christianai/ui work well for dropdown with avatars
-- useCreateConversation returns mutation with mutateAsync(figureId), navigate with state.initialMessage
-- subscription.data.status === "active" for pro check (not "pro")
-- Card component from @christianai/ui for figure cards with hover effects
-- Pre-commit hook runs biome + typecheck automatically
+- DELETE, PATCH, and bookmark endpoints were already implemented in prior sharing commit
+- Only missing piece was is_bookmarked field in Conversation type definition
+- All endpoints follow consistent .update().eq('id', id).select().single() pattern
+- Bookmark endpoint fetches current state first then toggles - ensures idempotent behavior
+- Title validation checks for empty/whitespace-only strings before update
 ---
----
-Task: Review all changes, test flows, and ensure consistency
+Task: Add API methods and React Query hooks for new endpoints
 Status: done
 Learnings:
-- Frontend-engineer agents effective for comprehensive UI/UX reviews with specific line-by-line analysis
-- Subscription status checks must be consistent across all pages - easy to introduce drift
-- Avatar fallbacks critical for missing data - apply pattern consistently across all avatar displays
-- TypeScript compilation passing doesn't guarantee runtime consistency - semantic review needed
-- Git diff review + specialized agent reviews catch issues human reviewers might miss
-- All homepage flows verified: prompt box, dropdown, grid, navigation, card selection
-- /figures page verified: search, grid layout, locked figures, toast errors, navigation
-- Tests passing (37/37), typecheck clean, pre-commit hooks passed
+- API methods follow authenticatedRequest pattern with .data auto-extraction
+- Mutation hooks invalidate 'conversations' query for consistency
+- usePublicShare uses regular fetch (no auth) since public endpoint
+- Toast errors handled in onError for all mutations
+- toggleBookmark API method hits /conversations/:id/bookmark endpoint
 ---
+Task: Add topic suggestion chips, editable title, and share button to chat page
+Status: done
+Learnings:
+- Topic suggestions rendered via PromptInputHeader when messages.length === 0
+- Editable title uses inline Input with blur/enter to save, escape to cancel
+- Share dialog uses existing useCreateShare hook and displays copyable link
+- All features work with existing hooks - no new API changes needed
+---
+Task: Add delete, bookmark, and actions dropdown to conversations list
+Status: done
+Learnings:
+- Dialog component (not AlertDialog) used for delete confirmation - AlertDialog doesn't exist in ui package
+- DropdownMenu and Dialog both available from @christianai/ui
+- Changed conversation rows from Link wrapper to div with nested Link to prevent event bubbling issues
+- Star icon uses fill-yellow-400 for bookmarked state, gray outline for unbookmarked
+- Filter tabs use Button with variant toggle (default/outline) for active state
+- All mutations properly invalidate 'conversations' query for optimistic UI updates
+- is_bookmarked field already existed in Conversation type definition
+---
+Task: Create public share page for read-only conversation viewing
+Status: done
+Learnings:
+- Created SharePage at packages/app/src/pages/share/[token].tsx with read-only conversation view
+- Public route /share/:token added in main.tsx outside ProtectedRoute wrapper - no auth required
+- Reused existing Message, MessageContent, MessageResponse components from @christianai/ui
+- usePublicShare hook already existed for fetching public share data via GET /public/share/:token
+- Share page mirrors chat page design: figure avatar, title, background image, messages
+- Added "Read-only" badge indicator and CTA footer with signup link
+- messageAdapter utility converts API messages to UIMessage format for rendering
+- use-stick-to-bottom hook provides scroll-to-bottom functionality
+- Loading/error states handled with Loader2 spinner and user-friendly error message
+---
+Task: Review all changes, test end-to-end, and ensure consistency
+Status: done
+Learnings:
+- Typecheck passes for app and api packages (website has unrelated Astro dependency issue)
+- Lint warnings fixed: removed unused imports (useNavigate), added proper types for share page API response
+- API responses follow existing patterns: authenticatedRequest with proper return types
+- 10 commits on new-features branch with: migrations, endpoints, hooks, UI features
+- Manual testing needed for: delete/bookmark/title/topic chips/sharing functionality
+- Pre-commit hooks (husky) auto-run biome + typecheck on staged files

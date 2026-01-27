@@ -1,4 +1,4 @@
-import type { User, UserPreferences } from "@christianai/shared/types/api/models";
+import type { UserPreferences } from "@christianai/shared/types/api/models";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { usersApi } from "../lib/api";
 import { useAuth } from "../shared/hooks/use-auth";

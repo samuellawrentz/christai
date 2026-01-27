@@ -92,7 +92,9 @@ export function PreferencesDialog({
             <p className="text-xs text-gray-500 mb-1">How we'll address you in conversations</p>
             <Select
               value={preferences.pronouns || ""}
-              onValueChange={(value) => updatePreference("pronouns", value as any)}
+              onValueChange={(value) =>
+                updatePreference("pronouns", value as UserPreferences["pronouns"])
+              }
             >
               <SelectTrigger>
                 <SelectValue placeholder="Select pronouns" />
@@ -114,7 +116,9 @@ export function PreferencesDialog({
             <p className="text-xs text-gray-500 mb-1">Adjusts vocabulary and concepts used</p>
             <Select
               value={preferences.age_group || ""}
-              onValueChange={(value) => updatePreference("age_group", value as any)}
+              onValueChange={(value) =>
+                updatePreference("age_group", value as UserPreferences["age_group"])
+              }
             >
               <SelectTrigger>
                 <SelectValue placeholder="Select age group" />
@@ -136,7 +140,7 @@ export function PreferencesDialog({
             <p className="text-xs text-gray-500 mb-1">The style of conversation and responses</p>
             <Select
               value={preferences.tone || ""}
-              onValueChange={(value) => updatePreference("tone", value as any)}
+              onValueChange={(value) => updatePreference("tone", value as UserPreferences["tone"])}
             >
               <SelectTrigger>
                 <SelectValue placeholder="Select conversation tone" />
@@ -156,7 +160,9 @@ export function PreferencesDialog({
             <p className="text-xs text-gray-500 mb-1">When referencing Scripture passages</p>
             <Select
               value={preferences.bible_translation || ""}
-              onValueChange={(value) => updatePreference("bible_translation", value as any)}
+              onValueChange={(value) =>
+                updatePreference("bible_translation", value as UserPreferences["bible_translation"])
+              }
             >
               <SelectTrigger>
                 <SelectValue placeholder="Select Bible translation (optional)" />
@@ -176,7 +182,9 @@ export function PreferencesDialog({
             <p className="text-xs text-gray-500 mb-1">Choose your preferred theme</p>
             <Select
               value={preferences.theme || "system"}
-              onValueChange={(value) => updatePreference("theme", value as any)}
+              onValueChange={(value) =>
+                updatePreference("theme", value as UserPreferences["theme"])
+              }
             >
               <SelectTrigger>
                 <SelectValue placeholder="Select theme" />

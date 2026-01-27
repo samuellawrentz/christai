@@ -46,3 +46,77 @@ export function useConversationMessages(conversationId: string) {
     select: (data) => convertToUIMessages(data),
   });
 }
+
+export function useDeleteConversation() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (conversationId: string) => conversationsApi.delete(conversationId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["conversations"] });
+    },
+    onError: (error) => {
+      toast.error("Failed to delete conversation. Please try again.");
+      console.error("Delete conversation error:", error);
+    },
+  });
+}
+
+export function useUpdateTitle() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ id, title }: { id: string; title: string }) =>
+      conversationsApi.updateTitle(id, title),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["conversations"] });
+    },
+    onError: (error) => {
+      toast.error("Failed to update title. Please try again.");
+      console.error("Update title error:", error);
+    },
+  });
+}
+
+export function useToggleBookmark() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (conversationId: string) => conversationsApi.toggleBookmark(conversationId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["conversations"] });
+    },
+    onError: (error) => {
+      toast.error("Failed to toggle bookmark. Please try again.");
+      console.error("Toggle bookmark error:", error);
+    },
+  });
+}
+
+export function useCreateShare() {
+  return useMutation({
+    mutationFn: (conversationId: string) => conversationsApi.createShare(conversationId),
+    onError: (error) => {
+      toast.error("Failed to create share link. Please try again.");
+      console.error("Create share error:", error);
+    },
+  });
+}
+
+export function usePublicShare(shareId: string) {
+  return useQuery({
+    queryKey: ["public-share", shareId],
+    queryFn: async () => {
+      const baseUrl = import.meta.env.VITE_API_URL || "https://api.christianai.world";
+      const response = await fetch(`${baseUrl}/public/share/${shareId}`);
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch shared conversation");
+      }
+
+      const apiResponse = await response.json();
+      return apiResponse.data;
+    },
+    enabled: !!shareId,
+  });
+}
