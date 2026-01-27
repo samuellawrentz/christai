@@ -17,6 +17,7 @@ import { NewConversationPage } from "./pages/chats/new";
 import { FiguresPage } from "./pages/figures";
 import { HomePage } from "./pages/home";
 import { ProfilePage } from "./pages/profile";
+import { SharePage } from "./pages/share/[token]";
 import { useAuth, useInitAuth } from "./shared/hooks/use-auth";
 import "./index.css";
 
@@ -69,6 +70,7 @@ function App() {
             path="/signup"
             element={userAuthenticated ? <Navigate replace to="/home" /> : <SignupPage />}
           />
+          <Route path="/share/:token" element={<SharePage />} />
           <Route element={<ProtectedRoute />}>
             <Route element={<AppLayout />}>
               <Route element={<PreferencesWrapper />}>
