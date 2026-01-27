@@ -26,3 +26,44 @@ Learnings:
 - All endpoints follow consistent .update().eq('id', id).select().single() pattern
 - Bookmark endpoint fetches current state first then toggles - ensures idempotent behavior
 - Title validation checks for empty/whitespace-only strings before update
+---
+Task: Add API methods and React Query hooks for new endpoints
+Status: done
+Learnings:
+- API methods follow authenticatedRequest pattern with .data auto-extraction
+- Mutation hooks invalidate 'conversations' query for consistency
+- usePublicShare uses regular fetch (no auth) since public endpoint
+- Toast errors handled in onError for all mutations
+- toggleBookmark API method hits /conversations/:id/bookmark endpoint
+---
+Task: Add topic suggestion chips, editable title, and share button to chat page
+Status: done
+Learnings:
+- Topic suggestions rendered via PromptInputHeader when messages.length === 0
+- Editable title uses inline Input with blur/enter to save, escape to cancel
+- Share dialog uses existing useCreateShare hook and displays copyable link
+- All features work with existing hooks - no new API changes needed
+---
+Task: Add delete, bookmark, and actions dropdown to conversations list
+Status: done
+Learnings:
+- Dialog component (not AlertDialog) used for delete confirmation - AlertDialog doesn't exist in ui package
+- DropdownMenu and Dialog both available from @christianai/ui
+- Changed conversation rows from Link wrapper to div with nested Link to prevent event bubbling issues
+- Star icon uses fill-yellow-400 for bookmarked state, gray outline for unbookmarked
+- Filter tabs use Button with variant toggle (default/outline) for active state
+- All mutations properly invalidate 'conversations' query for optimistic UI updates
+- is_bookmarked field already existed in Conversation type definition
+---
+Task: Create public share page for read-only conversation viewing
+Status: done
+Learnings:
+- Created SharePage at packages/app/src/pages/share/[token].tsx with read-only conversation view
+- Public route /share/:token added in main.tsx outside ProtectedRoute wrapper - no auth required
+- Reused existing Message, MessageContent, MessageResponse components from @christianai/ui
+- usePublicShare hook already existed for fetching public share data via GET /public/share/:token
+- Share page mirrors chat page design: figure avatar, title, background image, messages
+- Added "Read-only" badge indicator and CTA footer with signup link
+- messageAdapter utility converts API messages to UIMessage format for rendering
+- use-stick-to-bottom hook provides scroll-to-bottom functionality
+- Loading/error states handled with Loader2 spinner and user-friendly error message
