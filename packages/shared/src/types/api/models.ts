@@ -63,6 +63,7 @@ export type Conversation = {
   last_message_at?: string;
   message_count: number;
   is_deleted: boolean;
+  is_bookmarked: boolean;
   figures?: {
     id: number;
     display_name: string;
