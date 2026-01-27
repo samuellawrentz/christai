@@ -1,35 +1,28 @@
 ---
-Task: Create /figures page with search bar and figures grid
+Task: Create database migrations for new columns and tables
+Status: done
+Learnings: 
+- Supabase MCP tools allow direct migration application without CLI
+- Partial migrations need idempotent recovery migrations (IF NOT EXISTS, DROP IF EXISTS)
+- is_deleted column already existed from prior incomplete migration
+- Created fix migration to safely apply remaining components
+- RLS policies created: conversations_not_deleted filters SELECT, conversation_shares has full CRUD policies
+- All migrations applied successfully, typecheck passes
+---
+Task: Add conversation sharing endpoints - create share and public view
 Status: done
 Learnings:
-- FiguresPage follows ChatsListPage pattern - container layout with padding for mobile bottom nav
-- useSubscription returns subscription object, pro status derived from status === "pro" check
-- Search filtering uses case-insensitive includes: toLowerCase().includes(query.toLowerCase())
-- Skeleton loading matches grid layout (2/3/4 cols) with 8 placeholders for consistent UX
-- Routes inside AppLayout+PreferencesWrapper get full app chrome (sidebar, preferences dialog)
-- Biome auto-formats on commit, typecheck runs via pre-commit hook
+- Public routes must be registered BEFORE authPlugin in Elysia app chain
+- Use separate unauthenticated Supabase client (anon key only) for public endpoints
+- Supabase FK relations return objects, but TS inference thinks arrays - cast via `as unknown as Type`
+- Check for existing active share before creating new one (idempotent pattern)
+- crypto.randomUUID().slice(0,8) gives 8-char short token
 ---
----
-Task: Redesign HomePage with centered prompt, figure dropdown, 2x2 grid, and view more link
+Task: Add DELETE, PATCH, and bookmark endpoints for conversations
 Status: done
 Learnings:
-- PromptInput components (PromptInput, PromptInputHeader, PromptInputBody, PromptInputFooter, PromptInputTextarea, PromptInputSubmit) from @christianai/ui
-- Select components + Avatar from @christianai/ui work well for dropdown with avatars
-- useCreateConversation returns mutation with mutateAsync(figureId), navigate with state.initialMessage
-- subscription.data.status === "active" for pro check (not "pro")
-- Card component from @christianai/ui for figure cards with hover effects
-- Pre-commit hook runs biome + typecheck automatically
----
----
-Task: Review all changes, test flows, and ensure consistency
-Status: done
-Learnings:
-- Frontend-engineer agents effective for comprehensive UI/UX reviews with specific line-by-line analysis
-- Subscription status checks must be consistent across all pages - easy to introduce drift
-- Avatar fallbacks critical for missing data - apply pattern consistently across all avatar displays
-- TypeScript compilation passing doesn't guarantee runtime consistency - semantic review needed
-- Git diff review + specialized agent reviews catch issues human reviewers might miss
-- All homepage flows verified: prompt box, dropdown, grid, navigation, card selection
-- /figures page verified: search, grid layout, locked figures, toast errors, navigation
-- Tests passing (37/37), typecheck clean, pre-commit hooks passed
----
+- DELETE, PATCH, and bookmark endpoints were already implemented in prior sharing commit
+- Only missing piece was is_bookmarked field in Conversation type definition
+- All endpoints follow consistent .update().eq('id', id).select().single() pattern
+- Bookmark endpoint fetches current state first then toggles - ensures idempotent behavior
+- Title validation checks for empty/whitespace-only strings before update
