@@ -16,6 +16,24 @@ import { useParams } from "react-router-dom";
 import { useStickToBottom } from "use-stick-to-bottom";
 import { usePublicShare } from "@/hooks/use-conversations";
 
+type ShareConversation = {
+  id: string;
+  title?: string;
+  figures?: {
+    id: number;
+    display_name: string;
+    avatar_url?: string;
+    slug?: string;
+  };
+};
+
+type ShareMessage = {
+  id: string;
+  role: string;
+  content: string;
+  timestamp: string;
+};
+
 export const SharePage = () => {
   const params = useParams<{ token: string }>();
   const token = params.token;
@@ -48,9 +66,9 @@ export const SharePage = () => {
     );
   }
 
-  const conversation = shareData.conversations as any;
+  const conversation = shareData.conversations as ShareConversation;
   const figure = conversation?.figures;
-  const messages: UIMessage[] = (shareData.messages || []).map((msg: any) => ({
+  const messages: UIMessage[] = (shareData.messages || []).map((msg: ShareMessage) => ({
     id: msg.id,
     role: msg.role as "user" | "assistant" | "system",
     parts: [

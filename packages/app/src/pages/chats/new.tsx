@@ -41,7 +41,7 @@ export function NewConversationPage() {
         replace: true,
         state: { initialMessage: message.text },
       });
-    } catch (error) {
+    } catch {
       toast.error("Failed to start conversation. Please try again.");
     }
 

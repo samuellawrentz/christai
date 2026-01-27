@@ -15,7 +15,7 @@ import {
 } from "@christianai/ui";
 import { MoreVertical, Star } from "lucide-react";
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
   useConversations,
   useDeleteConversation,
@@ -29,7 +29,6 @@ export function ChatsListPage() {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [conversationToDelete, setConversationToDelete] = useState<string | null>(null);
 
-  const navigate = useNavigate();
   const { data: conversationsResponse, isLoading, error } = useConversations();
   const deleteMutation = useDeleteConversation();
   const toggleBookmarkMutation = useToggleBookmark();
