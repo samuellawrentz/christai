@@ -93,6 +93,23 @@ export const conversationsApi = {
     }),
   getMessages: (conversationId: string) =>
     authenticatedRequest<Message[]>(`/conversations/${conversationId}/messages`),
+  delete: (id: string) =>
+    authenticatedRequest<void>(`/conversations/${id}`, {
+      method: "DELETE",
+    }),
+  updateTitle: (id: string, title: string) =>
+    authenticatedRequest<Conversation>(`/conversations/${id}`, {
+      method: "PATCH",
+      body: JSON.stringify({ title }),
+    }),
+  toggleBookmark: (id: string) =>
+    authenticatedRequest<Conversation>(`/conversations/${id}/bookmark`, {
+      method: "PATCH",
+    }),
+  createShare: (id: string) =>
+    authenticatedRequest<{ share_token: string; share_url: string }>(`/conversations/${id}/share`, {
+      method: "POST",
+    }),
 };
 
 export const usersApi = {
