@@ -84,7 +84,7 @@ export const conversations = (app: AppType) => {
 
       return data;
     })
-    .post("/conversations/:id/share", async ({ supabase, params }) => {
+    .post("/conversations/:id/share", async ({ supabase, userId, params }) => {
       const conversationId = params.id;
       const shareToken = crypto.randomUUID().slice(0, 8);
 
@@ -103,11 +103,12 @@ export const conversations = (app: AppType) => {
         };
       }
 
-      // Create new share
+      // Create new share (user_id required by RLS policy)
       const { data, error } = await supabase
         .from("conversation_shares")
         .insert({
           conversation_id: conversationId,
+          user_id: userId,
           share_token: shareToken,
           is_active: true,
         })

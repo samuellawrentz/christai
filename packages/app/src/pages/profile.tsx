@@ -1,6 +1,10 @@
 "use client";
 
-import { PREFERENCE_OPTIONS, type PreferenceOptionItem } from "@christianai/shared";
+import {
+  PREFERENCE_OPTIONS,
+  type PreferenceOptionItem,
+  type UserPreferences,
+} from "@christianai/shared";
 import { Button, Card, CardContent, CardDescription, CardHeader, CardTitle } from "@christianai/ui";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -11,7 +15,7 @@ export function ProfilePage() {
   const { user, savePreferences } = usePreferences();
   const [dialogOpen, setDialogOpen] = useState(false);
 
-  const handleSave = async (preferences: any) => {
+  const handleSave = async (preferences: UserPreferences) => {
     try {
       await savePreferences(preferences);
       setDialogOpen(false);

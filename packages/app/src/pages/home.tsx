@@ -31,7 +31,7 @@ export function HomePage() {
         replace: true,
         state: { initialMessage: input },
       });
-    } catch (error) {
+    } catch {
       // error handling is in hook
     }
     setInput("");

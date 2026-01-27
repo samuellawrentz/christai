@@ -1,7 +1,7 @@
 import { QueryClientProvider } from "@tanstack/react-query";
 import React, { useEffect } from "react";
 import ReactDOM from "react-dom/client";
-import { BrowserRouter, Navigate, Outlet, Route, Routes, useLocation } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { Toaster } from "sonner";
 import { PreferencesWrapper } from "./components/preferences-wrapper";
 import { useTheme } from "./hooks/use-theme";

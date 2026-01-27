@@ -241,7 +241,7 @@ function ConversationCore({ conversationId, messagesData, initialMessage }: Conv
               onChange={(e) => setEditedTitle(e.target.value)}
               onBlur={saveTitle}
               onKeyDown={handleTitleKeyDown}
-              className="h-7 text-lg font-semibold px-1"
+              className="h-7 text-lg font-semibold px-1 border-none bg-transparent shadow-none focus-visible:ring-0 focus-visible:ring-offset-0"
             />
           ) : (
             <button
