@@ -24,17 +24,18 @@ export function HomePage() {
   const selectedFigure = figures.find((f) => f.slug === selectedFigureSlug) ?? figures[0];
 
   const handleSubmit = async () => {
-    if (!input.trim() || !selectedFigure) return;
+    if (!input.trim() || !selectedFigure || createConversation.isPending) return;
     try {
+      const message = input;
+      setInput(""); // Clear immediately for better UX
       const newConversation = await createConversation.mutateAsync(selectedFigure.id);
       navigate(`/chats/${newConversation.id}`, {
         replace: true,
-        state: { initialMessage: input },
+        state: { initialMessage: message },
       });
     } catch {
       // error handling is in hook
     }
-    setInput("");
   };
 
   if (isLoading) {
@@ -74,7 +75,7 @@ export function HomePage() {
               value={selectedFigureSlug}
               onValueChange={setSelectedFigureSlug}
             />
-            <PromptInputSubmit disabled={!input.trim()} />
+            <PromptInputSubmit disabled={!input.trim() || createConversation.isPending} />
           </PromptInputFooter>
         </PromptInput>
       </div>

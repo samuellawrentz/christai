@@ -54,8 +54,9 @@ export function useDeleteConversation() {
 
   return useMutation({
     mutationFn: (conversationId: string) => conversationsApi.delete(conversationId),
-    onSuccess: () => {
+    onSuccess: (_, conversationId) => {
       queryClient.invalidateQueries({ queryKey: ["conversations"] });
+      queryClient.removeQueries({ queryKey: ["conversations", conversationId] });
     },
     onError: (error) => {
       toast.error("Failed to delete conversation. Please try again.");
@@ -70,8 +71,9 @@ export function useUpdateTitle() {
   return useMutation({
     mutationFn: ({ id, title }: { id: string; title: string }) =>
       conversationsApi.updateTitle(id, title),
-    onSuccess: () => {
+    onSuccess: (_, { id }) => {
       queryClient.invalidateQueries({ queryKey: ["conversations"] });
+      queryClient.invalidateQueries({ queryKey: ["conversations", id] });
     },
     onError: (error) => {
       toast.error("Failed to update title. Please try again.");
@@ -85,8 +87,9 @@ export function useToggleBookmark() {
 
   return useMutation({
     mutationFn: (conversationId: string) => conversationsApi.toggleBookmark(conversationId),
-    onSuccess: () => {
+    onSuccess: (_, conversationId) => {
       queryClient.invalidateQueries({ queryKey: ["conversations"] });
+      queryClient.invalidateQueries({ queryKey: ["conversations", conversationId] });
     },
     onError: (error) => {
       toast.error("Failed to toggle bookmark. Please try again.");

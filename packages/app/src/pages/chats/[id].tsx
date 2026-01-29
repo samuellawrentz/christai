@@ -26,7 +26,7 @@ import {
 } from "@christianai/ui";
 import { DefaultChatTransport, type UIMessage } from "ai";
 import { ArrowDownIcon, CheckIcon, CopyIcon, Loader2, PencilIcon, ShareIcon } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Navigate, useLocation, useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
 import { useStickToBottom } from "use-stick-to-bottom";
@@ -52,23 +52,42 @@ export const ConversationPage = () => {
   const navigate = useNavigate();
   const conversationId = params.conversationId;
 
-  // Get initial message from router state (passed from new conversation page)
-  const initialMessage = (location.state as { initialMessage?: string })?.initialMessage;
-  const initialMessageRef = useRef(initialMessage);
+  // Capture initial message once per conversationId - survives state clearing
+  const initialMessageRef = useRef<{ [key: string]: string | undefined }>({});
+  const stateMessage = (location.state as { initialMessage?: string })?.initialMessage;
 
-  // Clear the router state immediately to prevent re-sending on re-renders
+  if (conversationId && stateMessage && !initialMessageRef.current[conversationId]) {
+    initialMessageRef.current[conversationId] = stateMessage;
+  }
+
+  // Clear router state to prevent back-button issues
   useEffect(() => {
-    if (initialMessage) {
+    if (stateMessage) {
       navigate(location.pathname, { replace: true, state: {} });
     }
-  }, []);
+  }, [stateMessage, navigate, location.pathname]);
 
-  // Validate conversationId
   if (!conversationId) {
     return <Navigate to="/home" replace />;
   }
 
-  // Load message history
+  // Key by conversationId to force full remount on navigation
+  return (
+    <ConversationLoader
+      key={conversationId}
+      conversationId={conversationId}
+      initialMessage={initialMessageRef.current[conversationId]}
+    />
+  );
+};
+
+function ConversationLoader({
+  conversationId,
+  initialMessage,
+}: {
+  conversationId: string;
+  initialMessage?: string;
+}) {
   const {
     data: messagesData,
     isLoading: msgsLoading,
@@ -96,10 +115,10 @@ export const ConversationPage = () => {
     <ConversationCore
       conversationId={conversationId}
       messagesData={messagesData}
-      initialMessage={initialMessageRef.current}
+      initialMessage={initialMessage}
     />
   );
-};
+}
 
 interface ConversationCoreProps {
   conversationId: string;
@@ -109,57 +128,49 @@ interface ConversationCoreProps {
 
 function ConversationCore({ conversationId, messagesData, initialMessage }: ConversationCoreProps) {
   const [input, setInput] = useState("");
-  const initialMessageSentRef = useRef(false);
   const [isEditingTitle, setIsEditingTitle] = useState(false);
   const [editedTitle, setEditedTitle] = useState("");
   const [shareDialogOpen, setShareDialogOpen] = useState(false);
   const [shareLink, setShareLink] = useState("");
   const [copied, setCopied] = useState(false);
   const titleInputRef = useRef<HTMLInputElement>(null);
+  const initialMessageSentRef = useRef(false);
 
-  // Create useStickToBottom instance connected to ScrollArea viewport
   const stickToBottomInstance = useStickToBottom();
-
-  // Load conversation details
   const { data: conversation, isLoading: convLoading } = useConversation(conversationId);
 
-  // Mutations
   const updateTitle = useUpdateTitle();
   const createShare = useCreateShare();
 
-  // Memoize transport to prevent recreation on each render
-  const transport = useRef(
-    new DefaultChatTransport({
-      api: `${api.baseUrl}/chats/converse`,
-      headers: async () => {
-        const {
-          data: { session },
-        } = await supabase.auth.getSession();
-        return {
-          Authorization: `Bearer ${session?.access_token}`,
-        };
-      },
-      prepareSendMessagesRequest: ({ messages: uiMessages, id, body }) => {
-        const lastMessage = uiMessages[uiMessages.length - 1];
-        const messageText = lastMessage?.parts?.find((part) => part.type === "text")?.text || "";
-        return {
-          body: {
-            conversationId: id,
-            message: messageText,
-            ...(body || {}),
-          },
-        };
-      },
-    }),
-  ).current;
+  // Memoize transport - stable reference
+  const transport = useMemo(
+    () =>
+      new DefaultChatTransport({
+        api: `${api.baseUrl}/chats/converse`,
+        headers: async () => {
+          const {
+            data: { session },
+          } = await supabase.auth.getSession();
+          return { Authorization: `Bearer ${session?.access_token}` };
+        },
+        prepareSendMessagesRequest: ({ messages: uiMessages, id, body }) => {
+          const lastMessage = uiMessages[uiMessages.length - 1];
+          const messageText = lastMessage?.parts?.find((part) => part.type === "text")?.text || "";
+          return {
+            body: { conversationId: id, message: messageText, ...(body || {}) },
+          };
+        },
+      }),
+    [],
+  );
 
-  // Setup useChat
   const { messages, sendMessage, status } = useChat({
     id: conversationId,
     messages: messagesData,
     transport,
   });
 
+  // Send initial message once
   useEffect(() => {
     if (initialMessage && !initialMessageSentRef.current) {
       initialMessageSentRef.current = true;
