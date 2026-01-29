@@ -42,8 +42,10 @@ export function useConversationMessages(conversationId: string) {
   return useQuery<Message[], Error, UIMessage[]>({
     queryKey: ["conversations", conversationId, "messages"],
     queryFn: () => conversationsApi.getMessages(conversationId),
-    enabled: !!conversationId, // Only fetch if conversationId exists
+    enabled: !!conversationId,
     select: (data) => convertToUIMessages(data),
+    staleTime: 5000, // 5 seconds - short enough to get recent messages
+    refetchOnMount: true, // Always check for updates on mount
   });
 }
 

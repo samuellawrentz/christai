@@ -126,11 +126,10 @@ function ConversationCore({ conversationId, messagesData, initialMessage }: Conv
   // Mutations
   const updateTitle = useUpdateTitle();
   const createShare = useCreateShare();
-  // Setup useChat
-  const { messages, sendMessage, status } = useChat({
-    id: conversationId,
-    messages: messagesData,
-    transport: new DefaultChatTransport({
+
+  // Memoize transport to prevent recreation on each render
+  const transport = useRef(
+    new DefaultChatTransport({
       api: `${api.baseUrl}/chats/converse`,
       headers: async () => {
         const {
@@ -152,6 +151,13 @@ function ConversationCore({ conversationId, messagesData, initialMessage }: Conv
         };
       },
     }),
+  ).current;
+
+  // Setup useChat
+  const { messages, sendMessage, status } = useChat({
+    id: conversationId,
+    messages: messagesData,
+    transport,
   });
 
   useEffect(() => {

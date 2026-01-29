@@ -79,13 +79,21 @@ export const chats = (app: AppType) => {
         .limit(MESSAGE_HISTORY_LIMIT);
 
       // Save user message to database (trigger auto-updates conversation metadata)
-      await supabase.from("messages").insert({
+      const { error: userMsgError } = await supabase.from("messages").insert({
         conversation_id: conversationId,
         user_id: userId,
         role: "user",
         content: message,
         timestamp: new Date().toISOString(),
       });
+
+      if (userMsgError) {
+        log.chat.error("Failed to save user message", {
+          conversationId,
+          error: userMsgError.message,
+        });
+        throw new Error("Failed to save message");
+      }
 
       // Build messages array for AI
       const messages = [
@@ -139,15 +147,37 @@ export const chats = (app: AppType) => {
             responseLength: text.length,
           });
 
-          // Save assistant message (trigger auto-updates conversation metadata)
-          await supabase.from("messages").insert({
-            conversation_id: conversationId,
-            user_id: userId,
-            role: "assistant",
-            content: text,
-            timestamp: new Date().toISOString(),
-            token_count: usage?.totalTokens,
-          });
+          // Save assistant message with retry and exponential backoff
+          const saveAssistantMessage = async (attempt = 1, maxAttempts = 3): Promise<void> => {
+            const { error } = await supabase.from("messages").insert({
+              conversation_id: conversationId,
+              user_id: userId,
+              role: "assistant",
+              content: text,
+              timestamp: new Date().toISOString(),
+              token_count: usage?.totalTokens,
+            });
+
+            if (error) {
+              log.chat.error("Failed to save assistant message", {
+                conversationId,
+                error: error.message,
+                attempt,
+                maxAttempts,
+              });
+              if (attempt < maxAttempts) {
+                await new Promise((r) => setTimeout(r, 500 * attempt)); // Exponential backoff
+                return saveAssistantMessage(attempt + 1, maxAttempts);
+              }
+              // All retries exhausted - log critical error
+              log.chat.error("CRITICAL: Assistant message lost after all retries", {
+                conversationId,
+                content: text.slice(0, 100),
+              });
+            }
+          };
+
+          await saveAssistantMessage();
 
           // Generate title only for first exchange (no history exists)
           if (!conversation.title && (!history || history.length === 0)) {
