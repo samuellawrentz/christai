@@ -2,6 +2,7 @@ import type { Message } from "@christianai/shared/types/api/models";
 import type { UIMessage } from "ai";
 
 export function convertToUIMessages(dbMessages: Message[]): UIMessage[] {
+  if (!dbMessages) return [];
   return dbMessages.map((msg) => ({
     id: msg.id,
     role: msg.role as "user" | "assistant" | "system",

@@ -114,7 +114,7 @@ export const app = createApp()
 
     return response;
   })
-  .onError(({ error, path, request }) => {
+  .onError(({ error, path, request, set }) => {
     const errorMessage = error instanceof Error ? error.message : error.toString();
     log.api.error("Request failed", {
       path,
@@ -122,6 +122,10 @@ export const app = createApp()
       error: errorMessage,
       stack: error instanceof Error ? error.stack?.split("\n").slice(0, 3).join(" ") : undefined,
     });
+
+    if (!set.status || set.status === 200) {
+      set.status = 500;
+    }
 
     const response: APIResponse = {
       success: false,

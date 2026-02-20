@@ -79,13 +79,18 @@ export const chats = (app: AppType) => {
         .limit(MESSAGE_HISTORY_LIMIT);
 
       // Save user message to database (trigger auto-updates conversation metadata)
-      const { error: userMsgError } = await supabase.from("messages").insert({
-        conversation_id: conversationId,
-        user_id: userId,
-        role: "user",
-        content: message,
-        timestamp: new Date().toISOString(),
-      });
+      // .select().single() ensures RLS-blocked inserts surface as errors
+      const { error: userMsgError } = await supabase
+        .from("messages")
+        .insert({
+          conversation_id: conversationId,
+          user_id: userId,
+          role: "user",
+          content: message,
+          timestamp: new Date().toISOString(),
+        })
+        .select()
+        .single();
 
       if (userMsgError) {
         log.chat.error("Failed to save user message", {
@@ -148,15 +153,20 @@ export const chats = (app: AppType) => {
           });
 
           // Save assistant message with retry and exponential backoff
+          // .select().single() ensures RLS-blocked inserts surface as errors
           const saveAssistantMessage = async (attempt = 1, maxAttempts = 3): Promise<void> => {
-            const { error } = await supabase.from("messages").insert({
-              conversation_id: conversationId,
-              user_id: userId,
-              role: "assistant",
-              content: text,
-              timestamp: new Date().toISOString(),
-              token_count: usage?.totalTokens,
-            });
+            const { error } = await supabase
+              .from("messages")
+              .insert({
+                conversation_id: conversationId,
+                user_id: userId,
+                role: "assistant",
+                content: text,
+                timestamp: new Date().toISOString(),
+                token_count: usage?.totalTokens,
+              })
+              .select()
+              .single();
 
             if (error) {
               log.chat.error("Failed to save assistant message", {

@@ -94,13 +94,6 @@ function ConversationLoader({
     error,
   } = useConversationMessages(conversationId);
 
-  if (msgsLoading || !messagesData)
-    return (
-      <div className="absolute inset-0 grid place-items-center">
-        <Loader2 className="animate-spin size-6" />
-      </div>
-    );
-
   if (error) {
     return (
       <div className="absolute inset-0 grid place-items-center">
@@ -110,6 +103,13 @@ function ConversationLoader({
       </div>
     );
   }
+
+  if (msgsLoading || !messagesData)
+    return (
+      <div className="absolute inset-0 grid place-items-center">
+        <Loader2 className="animate-spin size-6" />
+      </div>
+    );
 
   return (
     <ConversationCore
