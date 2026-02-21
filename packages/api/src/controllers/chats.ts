@@ -202,7 +202,7 @@ export const chats = (app: AppType) => {
         },
       });
 
-      return result.toUIMessageStreamResponse();
+      return result.toUIMessageStreamResponse({ sendReasoning: false });
     },
     {
       body: t.Object({
