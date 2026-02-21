@@ -18,11 +18,9 @@ import {
   PromptInput,
   PromptInputBody,
   PromptInputFooter,
-  PromptInputHeader,
   PromptInputSubmit,
   PromptInputTextarea,
   ScrollArea,
-  SidebarTrigger,
 } from "@christianai/ui";
 import { DefaultChatTransport, type UIMessage } from "ai";
 import { ArrowDownIcon, CheckIcon, CopyIcon, Loader2, PencilIcon, ShareIcon } from "lucide-react";
@@ -249,11 +247,10 @@ function ConversationCore({ conversationId, messagesData, initialMessage }: Conv
   const figure = conversation?.figures;
 
   return (
-    <main className="max-w-4xl w-full mx-auto px-4 py-4 h-[calc(100vh)] flex flex-col">
+    <main className="max-w-3xl w-full mx-auto px-4 py-4 h-[calc(100vh)] flex flex-col">
       {/* Header */}
-      <header className="hidden md:flex items-center gap-3 pb-4 border-b border-border">
-        <SidebarTrigger className="md:hidden" />
-        <Avatar className="h-10 w-10">
+      <header className="hidden md:flex items-center gap-3 pb-3">
+        <Avatar className="h-8 w-8">
           <AvatarImage src={figure?.avatar_url} alt={figure?.display_name} />
           <AvatarFallback>{figure?.display_name?.[0]}</AvatarFallback>
         </Avatar>
@@ -265,7 +262,7 @@ function ConversationCore({ conversationId, messagesData, initialMessage }: Conv
               onChange={(e) => setEditedTitle(e.target.value)}
               onBlur={saveTitle}
               onKeyDown={handleTitleKeyDown}
-              className="h-7 text-lg font-semibold px-1 border-none bg-transparent shadow-none focus-visible:ring-0 focus-visible:ring-offset-0"
+              className="h-6 text-sm px-1 border-none bg-transparent shadow-none focus-visible:ring-0 focus-visible:ring-offset-0"
             />
           ) : (
             <button
@@ -273,17 +270,22 @@ function ConversationCore({ conversationId, messagesData, initialMessage }: Conv
               onClick={startEditingTitle}
               className="group flex items-center gap-1.5 text-left"
             >
-              <h1 className="font-semibold text-lg truncate">{conversation?.title}</h1>
-              <PencilIcon className="size-3.5 opacity-0 group-hover:opacity-60 transition-opacity" />
+              <span className="text-sm truncate">{conversation?.title}</span>
+              <PencilIcon className="size-3 opacity-0 group-hover:opacity-40 transition-opacity" />
             </button>
           )}
-          <span className="text-xs text-gray-600 dark:text-gray-400">{figure?.display_name}</span>
         </div>
-        <Button variant="ghost" size="icon" onClick={handleShare} disabled={createShare.isPending}>
+        <Button
+          variant="ghost"
+          size="icon"
+          className="size-8"
+          onClick={handleShare}
+          disabled={createShare.isPending}
+        >
           {createShare.isPending ? (
-            <Loader2 className="size-4 animate-spin" />
+            <Loader2 className="size-3.5 animate-spin" />
           ) : (
-            <ShareIcon className="size-4" />
+            <ShareIcon className="size-3.5 text-muted-foreground" />
           )}
         </Button>
       </header>
@@ -304,19 +306,9 @@ function ConversationCore({ conversationId, messagesData, initialMessage }: Conv
         </DialogContent>
       </Dialog>
 
-      <div className="fixed -right-[470px] top-[50%] object-contain opacity-60 dark:opacity-40">
-        <img
-          src={figure?.avatar_url}
-          alt={`${figure?.display_name} avatar`}
-          className="object-top [mask-image:linear-gradient(to_left,black_0%,black_30%,black_70%,transparent_100%),linear-gradient(to_top,black_0%,black_30%,black_90%,transparent_100%)] [mask-composite:intersect]"
-        />
-      </div>
       {/* Chat container */}
-      <ScrollArea
-        ref={stickToBottomInstance.scrollRef}
-        className="md:h-[calc(100%-200px)] h-[calc(100%-120px)]"
-      >
-        <div ref={stickToBottomInstance.contentRef} className="flex flex-col gap-8 p-4 min-h-full">
+      <ScrollArea ref={stickToBottomInstance.scrollRef} className="flex-1">
+        <div ref={stickToBottomInstance.contentRef} className="flex flex-col gap-6 py-6 min-h-full">
           {messages.map((message) => {
             const textContent = message.parts.find((part) => part.type === "text")?.text || "";
             return (
@@ -342,32 +334,37 @@ function ConversationCore({ conversationId, messagesData, initialMessage }: Conv
       </ScrollArea>
 
       {/* Input */}
-      <PromptInput onSubmit={handleSubmit} className="mt-auto backdrop-brightness-90 rounded-md">
+      <div className="pt-2 pb-2">
         {messages.length === 0 && (
-          <PromptInputHeader>
+          <div className="flex flex-wrap gap-2 mb-3">
             {TOPIC_SUGGESTIONS.map((suggestion) => (
               <button
                 key={suggestion.label}
                 type="button"
                 onClick={() => setInput(suggestion.prompt)}
-                className="px-3 py-1.5 text-xs rounded-full border border-border hover:bg-accent transition-colors"
+                className="px-3 py-1.5 text-xs text-muted-foreground rounded-full border border-border/40 hover:border-border hover:text-foreground transition-colors"
               >
                 {suggestion.label}
               </button>
             ))}
-          </PromptInputHeader>
+          </div>
         )}
-        <PromptInputBody>
-          <PromptInputTextarea
-            value={input}
-            onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setInput(e.target.value)}
-            placeholder={`Ask ${figure?.display_name || ""}...`}
-          />
-        </PromptInputBody>
-        <PromptInputFooter>
-          <PromptInputSubmit status={status} disabled={!input.trim()} />
-        </PromptInputFooter>
-      </PromptInput>
+        <PromptInput
+          onSubmit={handleSubmit}
+          className="rounded-xl border border-border/50 shadow-sm"
+        >
+          <PromptInputBody>
+            <PromptInputTextarea
+              value={input}
+              onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setInput(e.target.value)}
+              placeholder={`Ask ${figure?.display_name || ""}...`}
+            />
+          </PromptInputBody>
+          <PromptInputFooter>
+            <PromptInputSubmit status={status} disabled={!input.trim()} />
+          </PromptInputFooter>
+        </PromptInput>
+      </div>
     </main>
   );
 }
