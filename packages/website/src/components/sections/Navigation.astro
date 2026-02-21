@@ -1,8 +1,5 @@
 ---
-// Enhanced Navigation with lucide-style icons
-import { buttonVariants } from "@christianai/ui";
-
-const buttonClass = buttonVariants({ variant: "default", size: "sm" });
+// Navigation
 ---
 
 <!-- SVG Icon Definitions -->
@@ -20,7 +17,7 @@ const buttonClass = buttonVariants({ variant: "default", size: "sm" });
   </defs>
 </svg>
 
-<header class="!bg-transparent sm:backdrop-blur-md border-b border-gray-900 sticky top-0 z-50 shadow-sm transition-all duration-300 sm:mix-blend-difference" id="navbar">
+<header class="sticky top-0 z-50 transition-all duration-300" id="navbar">
   <nav class="container mx-auto px-4 py-4">
     <div class="flex items-center justify-between">
       <!-- Logo -->
@@ -30,32 +27,33 @@ const buttonClass = buttonVariants({ variant: "default", size: "sm" });
             src="/images/logo.svg"
             alt="ChristianAI Logo - AI-Powered Biblical Conversations"
             class="h-[150px] absolute w-auto transition-all duration-300 group-hover:scale-105 group-hover:drop-shadow-md invert"
+          id="nav-logo"
             loading="eager"
           />
         </a>
       </div>
 
-       <!-- Navigation Links -->
-       <div class="hidden md:flex items-center space-x-8 invert">
-         <a
-           href="/features"
-           class="text-slate-700 hover:text-blue-600 font-medium transition-all duration-200 relative group px-2 py-1"
-         >
-           Features
-           <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-600 to-purple-600 group-hover:w-full transition-all duration-300 ease-out"></span>
-         </a>
-         <a
-           href="/blog/"
-           class="text-slate-700 hover:text-blue-600 font-medium transition-all duration-200 relative group px-2 py-1"
-         >
-           Blog
-           <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-600 to-purple-600 group-hover:w-full transition-all duration-300 ease-out"></span>
-         </a>
+      <!-- Navigation Links -->
+      <div class="hidden md:flex items-center space-x-8">
+        <a
+          href="/features"
+          class="nav-link text-[var(--color-ink)] hover:text-[var(--color-ochre-dark)] font-medium transition-colors duration-200 relative group px-2 py-1 !text-white"
+        >
+          Features
+          <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-[var(--color-ochre-dark)] group-hover:w-full transition-all duration-300 ease-out"></span>
+        </a>
+        <a
+          href="/blog/"
+          class="nav-link text-[var(--color-ink)] hover:text-[var(--color-ochre-dark)] font-medium transition-colors duration-200 relative group px-2 py-1 !text-white"
+        >
+          Blog
+          <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-[var(--color-ochre-dark)] group-hover:w-full transition-all duration-300 ease-out"></span>
+        </a>
         <a
           href="https://app.christianai.world"
           target="_blank"
           rel="noopener noreferrer"
-          class={`${buttonClass} group bg-gradient-to-r from-blue-600 to-blue-700`}
+          class="btn-sacred inline-flex items-center gap-2 !text-sm !py-2 !px-5"
         >
           Launch App
           <svg class="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1">
@@ -67,38 +65,38 @@ const buttonClass = buttonVariants({ variant: "default", size: "sm" });
       <!-- Mobile Menu Button -->
       <button
         id="mobile-menu-button"
-        class="invert md:hidden p-2 text-slate-700 hover:text-blue-600 rounded-lg hover:bg-blue-50 transition-all duration-200"
+        class="md:hidden p-2 text-[var(--color-ink)] hover:text-[var(--color-ochre-dark)] rounded-lg transition-colors duration-200 !text-white"
         aria-label="Toggle mobile menu"
       >
-        <svg class="w-6 h-6 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" id="menu-icon">
+        <svg class="w-6 h-6 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" id="menu-icon-svg">
           <use href="#menu-icon"/>
         </svg>
       </button>
     </div>
 
-     <!-- Mobile Menu -->
-     <div
-       id="mobile-menu"
-       class="hidden md:hidden mt-4 pt-4 border-t border-slate-200/50 overflow-hidden transition-all duration-300"
-     >
-       <div class="flex flex-col space-y-4 animate-fadeIn">
-         <a
-           href="/features"
-           class="text-slate-700 hover:text-blue-600 font-medium transition-colors duration-200 py-2 px-2 hover:bg-blue-50 rounded-lg"
-         >
-           Features
-         </a>
-         <a
-           href="/blog/"
-           class="text-slate-700 hover:text-blue-600 font-medium transition-colors duration-200 py-2 px-2 hover:bg-blue-50 rounded-lg"
-         >
-           Blog
-         </a>
+    <!-- Mobile Menu -->
+    <div
+      id="mobile-menu"
+      class="hidden md:hidden mt-4 pt-4 border-t border-[var(--color-ochre)]/20 overflow-hidden transition-all duration-300"
+    >
+      <div class="flex flex-col space-y-4 animate-fadeIn">
+        <a
+          href="/features"
+          class="text-[var(--color-ink)] hover:text-[var(--color-ochre-dark)] font-medium transition-colors duration-200 py-2 px-2 hover:bg-[var(--color-ochre)]/5 rounded"
+        >
+          Features
+        </a>
+        <a
+          href="/blog/"
+          class="text-[var(--color-ink)] hover:text-[var(--color-ochre-dark)] font-medium transition-colors duration-200 py-2 px-2 hover:bg-[var(--color-ochre)]/5 rounded"
+        >
+          Blog
+        </a>
         <a
           href="https://app.christianai.world"
           target="_blank"
           rel="noopener noreferrer"
-          class={buttonClass}
+          class="btn-sacred inline-flex items-center gap-2 !text-sm !py-2 !px-5 self-start"
         >
           Launch App
           <svg class="w-4 h-4">
@@ -111,44 +109,53 @@ const buttonClass = buttonVariants({ variant: "default", size: "sm" });
 </header>
 
 <script>
-  // Mobile menu toggle with icon animation
+  // Mobile menu toggle
   const mobileMenuButton = document.getElementById('mobile-menu-button');
   const mobileMenu = document.getElementById('mobile-menu');
-  const menuIcon = document.getElementById('menu-icon');
-  
-  if (mobileMenuButton && mobileMenu && menuIcon) {
+  const menuIconSvg = document.getElementById('menu-icon-svg');
+
+  if (mobileMenuButton && mobileMenu && menuIconSvg) {
     let isOpen = false;
-    
+
     mobileMenuButton.addEventListener('click', () => {
       isOpen = !isOpen;
       mobileMenu.classList.toggle('hidden');
-      
-      // Animate menu icon
+
       if (isOpen) {
-        menuIcon.innerHTML = '<use href="#close-icon"/>';
-        menuIcon.classList.add('rotate-90');
+        menuIconSvg.innerHTML = '<use href="#close-icon"/>';
+        menuIconSvg.classList.add('rotate-90');
       } else {
-        menuIcon.innerHTML = '<use href="#menu-icon"/>';
-        menuIcon.classList.remove('rotate-90');
+        menuIconSvg.innerHTML = '<use href="#menu-icon"/>';
+        menuIconSvg.classList.remove('rotate-90');
       }
     });
   }
 
-  // Add scroll-based background opacity
+  // Scroll-based background
   const navbar = document.getElementById('navbar');
-  
+  const navLogo = document.getElementById('nav-logo');
+  const navLinks = navbar?.querySelectorAll('.nav-link');
+  const menuBtn = document.getElementById('mobile-menu-button');
+
   if (navbar) {
-    window.addEventListener('scroll', () => {
-      const currentScroll = window.pageYOffset;
-      
-      if (currentScroll > 50) {
-        navbar.classList.add('bg-white/98', 'shadow-md');
-        navbar.classList.remove('bg-white/95');
+    const updateNav = () => {
+      const scrolled = window.pageYOffset > 50;
+      if (scrolled) {
+        navbar.classList.add('bg-[#f5f0e6]/95', 'backdrop-blur-md', 'shadow-sm', 'border-b', 'border-[#c4a35a]/10');
+        navbar.classList.remove('bg-transparent');
+        navLogo?.classList.remove('invert');
+        navLinks?.forEach(l => l.classList.remove('!text-white'));
+        menuBtn?.classList.remove('!text-white');
       } else {
-        navbar.classList.add('bg-white/95');
-        navbar.classList.remove('bg-white/98', 'shadow-md');
+        navbar.classList.remove('bg-[#f5f0e6]/95', 'backdrop-blur-md', 'shadow-sm', 'border-b', 'border-[#c4a35a]/10');
+        navbar.classList.add('bg-transparent');
+        navLogo?.classList.add('invert');
+        navLinks?.forEach(l => l.classList.add('!text-white'));
+        menuBtn?.classList.add('!text-white');
       }
-    });
+    };
+    window.addEventListener('scroll', updateNav);
+    updateNav();
   }
 </script>
 
@@ -163,7 +170,7 @@ const buttonClass = buttonVariants({ variant: "default", size: "sm" });
       transform: translateY(0);
     }
   }
-  
+
   .animate-fadeIn {
     animation: fadeIn 0.3s ease-out;
   }

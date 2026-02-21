@@ -1,42 +1,38 @@
 ---
 import { ArrowRight } from '@lucide/astro';
+import { Image } from 'astro:assets';
+import heroImage from '@/assets/hero-landing.png';
 ---
 
 <section class="relative min-h-[90vh] flex items-center overflow-hidden texture-overlay">
-  <!-- Background with dramatic gradient overlay -->
-  <img
-    src="/images/background.webp"
-    alt=""
+  <!-- Background hero image -->
+  <Image
+    src={heroImage}
+    alt="Biblical figures walking along an ancient sunlit pathway toward a distant city"
     class="absolute inset-0 w-full h-full object-cover"
+    widths={[768, 1280, 1536]}
+    sizes="100vw"
+    loading="eager"
+    quality={85}
   />
-  <!-- Decorative blurs -->
-  <div class="absolute top-20 left-10 w-64 h-64 bg-[var(--color-ochre)]/10 rounded-full blur-3xl" />
-  <div class="absolute bottom-40 right-20 w-96 h-96 bg-[var(--color-terracotta)]/10 rounded-full blur-3xl" />
-
-  <!-- Faded figure image on right -->
-  <div class="absolute right-[10%] lg:right-[15%] top-1/2 -translate-y-1/2 w-[500px] h-[500px] lg:w-[600px] lg:h-[600px] hidden md:block pointer-events-none">
-    <img
-      src="/images/moses.webp"
-      alt=""
-      class="w-full h-full object-cover scale-150 opacity-60 [mask-image:radial-gradient(circle,black_40%,transparent_70%)]"
-    />
-  </div>
+  <!-- Dark overlay for text readability -->
+  <div class="absolute inset-0 bg-gradient-to-r from-[var(--color-ink)]/80 via-[var(--color-ink)]/50 to-transparent" />
 
   <div class="container mx-auto px-6 lg:px-8 relative z-10 pt-20 pb-32">
     <div class="max-w-4xl lg:max-w-2xl">
       <!-- Eyebrow -->
-      <p class="text-[var(--color-ochre)] text-sm tracking-[0.3em] uppercase mb-6 animate-fade-in">
+      <p class="text-[var(--color-ochre-light)] text-sm tracking-[0.3em] uppercase mb-6 animate-fade-in">
         Wisdom from the Ages
       </p>
 
       <!-- Main headline - large editorial style -->
-      <h1 class="text-5xl md:text-6xl lg:text-7xl text-[var(--color-ink)] leading-[0.95] mb-8 animate-fade-in" style="animation-delay: 0.1s">
+      <h1 class="text-5xl md:text-6xl lg:text-7xl text-white leading-[0.95] mb-8 animate-fade-in" style="animation-delay: 0.1s">
         Converse with<br/>
-        <span class="italic text-[var(--color-ochre)]">Biblical Figures</span>
+        <span class="italic text-[var(--color-ochre-light)]">Biblical Figures</span>
       </h1>
 
       <!-- Subheadline -->
-      <p class="text-xl md:text-2xl text-[var(--color-warm-gray)] max-w-xl mb-12 leading-relaxed animate-fade-in" style="animation-delay: 0.2s">
+      <p class="text-xl md:text-2xl text-white/80 max-w-xl mb-12 leading-relaxed animate-fade-in" style="animation-delay: 0.2s">
         14 voices from Scripture. Timeless wisdom for your journey of faith.
       </p>
 
@@ -52,7 +48,7 @@ import { ArrowRight } from '@lucide/astro';
           Begin Your Journey
           <ArrowRight class="w-5 h-5" />
         </a>
-        <span class="text-[var(--color-stone)] text-sm self-center">
+        <span class="text-white/60 text-sm self-center">
           Free to use
         </span>
       </div>
@@ -60,8 +56,8 @@ import { ArrowRight } from '@lucide/astro';
   </div>
 
   <!-- Scroll indicator -->
-  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-[var(--color-stone)]">
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/50">
     <span class="text-xs tracking-widest uppercase">Scroll</span>
-    <div class="w-px h-12 bg-gradient-to-b from-[var(--color-stone)] to-transparent" />
+    <div class="w-px h-12 bg-gradient-to-b from-white/50 to-transparent" />
   </div>
 </section>

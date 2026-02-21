@@ -3,14 +3,15 @@
 
 /* Sacred Editorial Design System */
 :root {
-  --color-parchment: #f7f3eb;
+  --color-parchment: #f5f0e6;
   --color-ink: #1a1612;
   --color-ochre: #c4a35a;
+  --color-ochre-dark: #9a7d3a;
   --color-ochre-light: #d4b876;
   --color-terracotta: #b85c38;
   --color-forest: #2d4a3e;
-  --color-stone: #8b8577;
-  --color-warm-gray: #6b6459;
+  --color-stone: #5c574e;
+  --color-warm-gray: #4a453d;
   --color-cream: #faf8f3;
   --gradient-sacred: linear-gradient(135deg, var(--color-ochre) 0%, var(--color-terracotta) 100%);
 }
