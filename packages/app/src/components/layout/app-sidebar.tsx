@@ -48,7 +48,7 @@ export function AppSidebar() {
   return (
     <Sidebar className="backdrop-blur-md sticky top-0 z-50 shadow-sm transition-all duration-300">
       <SidebarHeader>
-        <Link to="/" className="flex w-full h-14 items-center gap-3 px-4 py-4">
+        <Link to="/home" className="flex w-full h-14 items-center gap-3 px-4 py-4">
           <img
             src="/images/logo.svg"
             alt="ChristianAI Logo"
