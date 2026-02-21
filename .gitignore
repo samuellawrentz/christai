@@ -143,3 +143,6 @@ vite.config.ts.timestamp-*
 
 # MCP config
 .mcp.json
+
+# OMC state
+.omc/

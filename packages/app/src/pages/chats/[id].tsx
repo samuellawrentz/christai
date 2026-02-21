@@ -164,11 +164,18 @@ function ConversationCore({ conversationId, messagesData, initialMessage }: Conv
     [],
   );
 
-  const { messages, sendMessage, status } = useChat({
+  const { messages, sendMessage, status, setMessages } = useChat({
     id: conversationId,
     messages: messagesData,
     transport,
   });
+
+  // Sync messages imperatively when data changes — useChat's messages prop is initialization-only
+  useEffect(() => {
+    if (messagesData && messagesData.length > 0) {
+      setMessages(messagesData);
+    }
+  }, [messagesData, setMessages]);
 
   // Send initial message once
   useEffect(() => {
