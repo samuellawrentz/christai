@@ -20,7 +20,6 @@ import {
   PromptInputFooter,
   PromptInputSubmit,
   PromptInputTextarea,
-  ScrollArea,
 } from "@christianai/ui";
 import { DefaultChatTransport, type UIMessage } from "ai";
 import { ArrowDownIcon, CheckIcon, CopyIcon, Loader2, PencilIcon, ShareIcon } from "lucide-react";
@@ -247,7 +246,7 @@ function ConversationCore({ conversationId, messagesData, initialMessage }: Conv
   const figure = conversation?.figures;
 
   return (
-    <main className="max-w-3xl w-full mx-auto px-4 py-4 h-[calc(100vh)] flex flex-col">
+    <main className="max-w-3xl w-full mx-auto px-4 py-4 h-full min-h-0 flex flex-col">
       {/* Header */}
       <header className="hidden md:flex items-center gap-3 pb-3">
         <Avatar className="h-8 w-8">
@@ -307,7 +306,10 @@ function ConversationCore({ conversationId, messagesData, initialMessage }: Conv
       </Dialog>
 
       {/* Chat container */}
-      <ScrollArea ref={stickToBottomInstance.scrollRef} className="flex-1">
+      <div
+        ref={stickToBottomInstance.scrollRef}
+        className="relative flex-1 min-h-0 overflow-y-auto pr-4 -mr-4"
+      >
         <div ref={stickToBottomInstance.contentRef} className="flex flex-col gap-6 py-6 min-h-full">
           {messages.map((message) => {
             const textContent = message.parts.find((part) => part.type === "text")?.text || "";
@@ -323,7 +325,7 @@ function ConversationCore({ conversationId, messagesData, initialMessage }: Conv
         </div>
         {!stickToBottomInstance.isAtBottom && (
           <button
-            className="absolute bottom-4 left-[50%] translate-x-[-50%] rounded-full bg-background border border-border hover:bg-accent hover:text-accent-foreground h-10 w-10 flex items-center justify-center"
+            className="sticky bottom-4 left-[50%] translate-x-[-50%] rounded-full bg-background border border-border hover:bg-accent hover:text-accent-foreground h-10 w-10 flex items-center justify-center"
             onClick={() => stickToBottomInstance.scrollToBottom()}
             type="button"
             aria-label="Scroll to bottom"
@@ -331,7 +333,7 @@ function ConversationCore({ conversationId, messagesData, initialMessage }: Conv
             <ArrowDownIcon className="size-4" />
           </button>
         )}
-      </ScrollArea>
+      </div>
 
       {/* Input */}
       <div className="pt-2 pb-2">
