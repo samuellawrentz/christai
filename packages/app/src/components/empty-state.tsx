@@ -25,9 +25,9 @@ export function EmptyState({ figureName, onStarterClick }: EmptyStateProps) {
       </div>
 
       <div className="flex flex-wrap gap-3 justify-center max-w-2xl">
-        {STARTER_PROMPTS.map((prompt, index) => (
+        {STARTER_PROMPTS.map((prompt) => (
           <button
-            key={index}
+            key={prompt}
             type="button"
             onClick={() => onStarterClick({ text: prompt })}
             className="transition-colors"

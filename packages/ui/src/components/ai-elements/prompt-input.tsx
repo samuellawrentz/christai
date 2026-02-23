@@ -1317,6 +1317,7 @@ export const PromptInputTabLabel = ({
   ...props
 }: PromptInputTabLabelProps) => (
   <h3
+    aria-label="Tab label"
     className={cn(
       "mb-2 px-3 font-medium text-muted-foreground text-xs",
       className

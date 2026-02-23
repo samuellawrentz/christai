@@ -22,6 +22,8 @@ import {
 } from "@christianai/ui";
 import { useEffect, useState } from "react";
 
+const EMPTY_PREFERENCES: UserPreferences = {};
+
 interface PreferencesDialogProps {
   open: boolean;
   initialPreferences?: UserPreferences;
@@ -32,7 +34,7 @@ interface PreferencesDialogProps {
 
 export function PreferencesDialog({
   open,
-  initialPreferences = {},
+  initialPreferences = EMPTY_PREFERENCES,
   onSave,
   onCancel,
   allowCancel = false,
