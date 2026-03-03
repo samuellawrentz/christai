@@ -1,8 +1,11 @@
-/* Markdown Styles using Tailwind @apply */
+/* Markdown Styles — Sacred Editorial */
 
-/* Base prose styling */
 .prose {
-  @apply text-slate-700 leading-relaxed max-w-none;
+  @apply max-w-none leading-relaxed;
+  color: var(--color-warm-gray);
+  font-family: 'Esteban', Georgia, serif;
+  font-size: 1.1rem;
+  line-height: 1.8;
 }
 
 /* Headings */
@@ -12,164 +15,194 @@
 .prose h4,
 .prose h5,
 .prose h6 {
-  @apply text-slate-900 font-semibold;
+  font-family: 'Baskervville', Georgia, serif;
+  font-weight: 400;
+  letter-spacing: -0.02em;
   line-height: 1.25;
-  @apply mt-8 mb-4;
+  color: var(--color-ink);
+  @apply mt-10 mb-4;
 }
 
-.prose h1 {
-  @apply text-4xl font-bold mt-0;
-}
-
-.prose h2 {
-  @apply text-3xl;
-}
-
-.prose h3 {
-  @apply text-2xl;
-}
-
-.prose h4 {
-  @apply text-xl;
-}
-
-.prose h5 {
-  @apply text-lg;
-}
-
-.prose h6 {
-  @apply text-base;
-}
+.prose h1 { @apply text-4xl mt-0; }
+.prose h2 { @apply text-3xl; }
+.prose h3 { @apply text-2xl; }
+.prose h4 { @apply text-xl; }
+.prose h5 { @apply text-lg; }
+.prose h6 { @apply text-base; }
 
 /* Paragraphs */
 .prose p {
-  @apply mb-5 text-slate-600;
+  @apply mb-6;
+  color: var(--color-warm-gray);
 }
 
 /* Lists */
 .prose ul,
 .prose ol {
-  @apply mt-5 mb-5 pl-6 text-slate-600;
+  @apply mt-5 mb-5 pl-6;
+  color: var(--color-warm-gray);
 }
 
 .prose li {
   @apply mb-2 mt-2;
 }
 
-.prose li > :first-child {
-  @apply mt-0;
-}
-
-.prose li > :last-child {
-  @apply mb-0;
-}
-
-.prose ul > li {
-  @apply list-disc;
-}
-
-.prose ol > li {
-  @apply list-decimal;
-}
+.prose li > :first-child { @apply mt-0; }
+.prose li > :last-child { @apply mb-0; }
+.prose ul > li { @apply list-disc; }
+.prose ol > li { @apply list-decimal; }
 
 .prose ul > li::marker {
-  @apply text-blue-500;
+  color: var(--color-ochre);
 }
 
 .prose ol > li::marker {
-  @apply text-blue-500 font-semibold;
+  color: var(--color-ochre);
+  font-family: 'Baskervville', Georgia, serif;
+  font-weight: 400;
 }
 
 /* Blockquotes */
 .prose blockquote {
-  @apply font-medium italic text-slate-500 border-l-4 border-blue-500 py-2 px-4 my-6 bg-slate-50 rounded-r-lg;
+  font-family: 'Baskervville', Georgia, serif;
+  font-size: 1.15rem;
+  font-style: italic;
+  color: var(--color-ink);
+  border-left: 3px solid var(--color-ochre);
+  padding: 1rem 1.5rem;
+  margin: 2rem 0;
+  background: rgba(196, 163, 90, 0.06);
+  position: relative;
+}
+
+.prose blockquote::before {
+  content: '\201C';
+  position: absolute;
+  top: -0.2rem;
+  left: 0.75rem;
+  font-size: 3rem;
+  line-height: 1;
+  color: var(--color-ochre);
+  opacity: 0.2;
+  font-family: 'Baskervville', Georgia, serif;
 }
 
 .prose blockquote p {
   @apply mb-0;
+  color: var(--color-ink);
 }
 
 /* Horizontal Rule */
 .prose hr {
-  @apply border-slate-200 border-t my-12;
+  border: none;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-ochre), transparent);
+  @apply my-12;
 }
 
 /* Inline Code */
 .prose code {
-  @apply text-slate-900 font-semibold text-sm bg-slate-100 py-0.5 px-1.5 rounded;
+  font-size: 0.9em;
+  background: rgba(196, 163, 90, 0.1);
+  color: var(--color-ink);
+  padding: 0.15rem 0.4rem;
+  border-radius: 2px;
+  font-weight: normal;
 }
 
 /* Code Blocks */
 .prose pre {
-  @apply bg-slate-900 text-slate-100 font-mono text-sm leading-relaxed my-6 p-4 rounded-lg overflow-x-auto;
+  background: var(--color-ink);
+  color: var(--color-parchment);
+  @apply font-mono text-sm leading-relaxed my-6 p-5 overflow-x-auto;
+  border-radius: 0;
+  border-left: 3px solid var(--color-ochre);
 }
 
 .prose pre code {
-  @apply bg-transparent text-inherit font-normal p-0;
+  background: transparent;
+  color: inherit;
+  font-weight: normal;
+  padding: 0;
 }
 
 /* Tables */
 .prose table {
-  @apply w-full border-collapse my-6;
+  @apply w-full my-6;
+  border-collapse: collapse;
 }
 
 .prose th {
-  @apply bg-slate-50 border border-slate-200 py-2 px-3 text-left font-semibold text-slate-900;
+  background: rgba(196, 163, 90, 0.08);
+  border-bottom: 2px solid var(--color-ochre);
+  padding: 0.6rem 1rem;
+  text-align: left;
+  font-family: 'Baskervville', Georgia, serif;
+  font-weight: 400;
+  color: var(--color-ink);
+  font-size: 0.95rem;
 }
 
 .prose td {
-  @apply border border-slate-200 py-2 px-3 text-slate-600;
+  border-bottom: 1px solid rgba(92, 87, 78, 0.12);
+  padding: 0.6rem 1rem;
+  color: var(--color-warm-gray);
 }
 
 /* Links */
 .prose a {
-  @apply text-blue-500 no-underline font-medium border-b border-transparent transition-all duration-200;
+  color: var(--color-terracotta);
+  text-decoration: none;
+  font-weight: normal;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s ease, color 0.2s ease;
 }
 
 .prose a:hover {
-  @apply text-blue-700 border-b-blue-500;
+  color: var(--color-ochre-dark);
+  border-bottom-color: var(--color-ochre);
 }
 
 .prose a:focus {
-  @apply outline-none ring-2 ring-blue-500 ring-offset-2 rounded;
+  @apply outline-none;
+  box-shadow: 0 0 0 2px rgba(196, 163, 90, 0.4);
+  border-radius: 2px;
 }
 
 /* Text formatting */
 .prose strong {
-  @apply text-slate-900 font-semibold;
+  color: var(--color-ink);
+  font-weight: 600;
 }
 
 .prose em {
-  @apply italic text-slate-600;
+  font-style: italic;
+  color: var(--color-warm-gray);
 }
 
 /* Images */
 .prose img {
-  @apply rounded-lg shadow-md my-6 max-w-full h-auto;
+  @apply my-8 max-w-full h-auto;
+  box-shadow: 0 4px 20px rgba(26, 22, 18, 0.1);
 }
 
-/* Responsive adjustments */
+/* Responsive */
 @media (max-width: 768px) {
-  .prose h1 {
-    @apply text-3xl;
-  }
-  
-  .prose h2 {
-    @apply text-2xl;
-  }
-  
-  .prose h3 {
-    @apply text-xl;
-  }
+  .prose { font-size: 1rem; }
+  .prose h1 { @apply text-3xl; }
+  .prose h2 { @apply text-2xl; }
+  .prose h3 { @apply text-xl; }
 }
 
 /* Figures and captions */
-.prose figure {
-  @apply my-6;
-}
+.prose figure { @apply my-8; }
 
 .prose figcaption {
-  @apply text-slate-500 text-sm text-center mt-2 italic;
+  font-size: 0.85rem;
+  text-align: center;
+  color: var(--color-stone);
+  font-style: italic;
+  margin-top: 0.75rem;
 }
 
 /* Nested lists */
@@ -182,9 +215,14 @@
 
 /* Footnotes */
 .prose .footnote-ref {
-  @apply text-xs align-super text-blue-500 no-underline font-semibold;
+  font-size: 0.75rem;
+  vertical-align: super;
+  color: var(--color-terracotta);
+  text-decoration: none;
+  font-weight: 600;
 }
 
 .prose .footnote-ref:hover {
-  @apply text-blue-700 underline;
+  color: var(--color-ochre-dark);
+  text-decoration: underline;
 }
