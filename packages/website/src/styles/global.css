@@ -1,35 +1,152 @@
 @import "@christianai/ui/styles.css";
 @import "./markdown.css";
 
-/* Sacred Editorial Design System */
+/* ============================================================
+   ChristianAI — Sacred Editorial Design System
+   A warm, reverent, gold-leaf aesthetic. Parchment & ink,
+   illuminated-manuscript motifs, generous typographic rhythm.
+   ============================================================ */
+
 :root {
-  --color-parchment: #f5f0e6;
-  --color-ink: #1a1612;
+  /* Surfaces */
+  --color-parchment: #f4ede0;
+  --color-parchment-deep: #ece2d1;
+  --color-cream: #faf6ee;
+  --color-ink: #17120c;
+  --color-ink-soft: #2a221a;
+
+  /* Gold leaf spectrum */
   --color-ochre: #c4a35a;
   --color-ochre-dark: #9a7d3a;
-  --color-ochre-light: #d4b876;
-  --color-terracotta: #b85c38;
+  --color-ochre-light: #d9bd7e;
+  --color-gold: #e7cd86;
+  --color-gold-bright: #f2dda0;
+
+  /* Accents */
+  --color-terracotta: #b65a36;
   --color-forest: #2d4a3e;
-  --color-stone: #5c574e;
-  --color-warm-gray: #4a453d;
-  --color-cream: #faf8f3;
-  --gradient-sacred: linear-gradient(135deg, var(--color-ochre) 0%, var(--color-terracotta) 100%);
+  --color-stone: #6b6356;
+  --color-warm-gray: #4a443b;
+
+  /* Signature gradients */
+  --gradient-sacred: linear-gradient(135deg, var(--color-gold) 0%, var(--color-ochre-dark) 55%, var(--color-terracotta) 120%);
+  --gradient-gold: linear-gradient(115deg, var(--color-gold-bright), var(--color-ochre-light) 45%, var(--color-ochre-dark));
+  --gradient-leaf: linear-gradient(135deg, #f2dda0 0%, #c4a35a 40%, #9a7d3a 100%);
+
+  /* Elevation — warm-tinted */
+  --shadow-soft: 0 4px 30px rgba(40, 30, 18, 0.10);
+  --shadow-lifted: 0 24px 70px rgba(30, 22, 12, 0.22);
+  --shadow-gold: 0 18px 50px rgba(154, 125, 58, 0.30);
+
+  /* Rhythm */
+  --ease-sacred: cubic-bezier(0.19, 1, 0.22, 1);
+
+  /* Fluid type scale */
+  --step--1: clamp(0.83rem, 0.79rem + 0.18vw, 0.95rem);
+  --step-0: clamp(1rem, 0.95rem + 0.25vw, 1.15rem);
+  --step-1: clamp(1.2rem, 1.1rem + 0.5vw, 1.5rem);
+  --step-2: clamp(1.6rem, 1.4rem + 1vw, 2.2rem);
+  --step-3: clamp(2.1rem, 1.7rem + 2vw, 3.2rem);
+  --step-4: clamp(2.6rem, 1.9rem + 3.5vw, 4.6rem);
+  --step-5: clamp(3rem, 2rem + 5vw, 5.8rem);
 }
 
-/* Base typography enhancement */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Atmospheric base — parchment is never flat. Layered warm light wells
+   + a faint paper grain give the whole site tactile depth. */
 body {
   font-family: 'Esteban', Georgia, serif;
-  background-color: var(--color-parchment);
   color: var(--color-ink);
+  background-color: var(--color-parchment);
+  background-image:
+    radial-gradient(120% 80% at 12% -10%, rgba(231, 205, 134, 0.30) 0%, transparent 55%),
+    radial-gradient(90% 70% at 100% 0%, rgba(182, 90, 54, 0.10) 0%, transparent 50%),
+    radial-gradient(120% 120% at 50% 120%, rgba(45, 74, 62, 0.07) 0%, transparent 60%);
+  background-attachment: fixed;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-size: var(--step-0);
+  line-height: 1.65;
+}
+
+/* Site-wide paper grain — sits above background, below content */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 240 240' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Baskervville', Georgia, serif;
   font-weight: 400;
   letter-spacing: -0.02em;
+  line-height: 1.08;
 }
 
-/* Noise texture overlay */
+/* Selection + focus polish */
+::selection {
+  background: var(--color-ochre);
+  color: var(--color-ink);
+}
+
+a:focus-visible,
+button:focus-visible,
+summary:focus-visible {
+  outline: 2px solid var(--color-ochre);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* ---- Shared eyebrow label ------------------------------------ */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  font-family: 'Esteban', Georgia, serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: var(--color-ochre-dark);
+}
+
+.eyebrow::before {
+  content: '';
+  width: 2rem;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-ochre));
+}
+
+.eyebrow--center::after {
+  content: '';
+  width: 2rem;
+  height: 1px;
+  background: linear-gradient(90deg, var(--color-ochre), transparent);
+}
+
+.eyebrow--light {
+  color: var(--color-gold);
+}
+
+.eyebrow--light::before { background: linear-gradient(90deg, transparent, var(--color-gold)); }
+.eyebrow--light.eyebrow--center::after { background: linear-gradient(90deg, var(--color-gold), transparent); }
+
+/* ---- Gold text ------------------------------------------------ */
+.text-gradient-gold {
+  background: var(--gradient-gold);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ---- Noise texture overlay (legacy hook, kept for sections) --- */
 .texture-overlay {
   position: relative;
 }
@@ -39,22 +156,24 @@ h1, h2, h3, h4, h5, h6 {
   position: absolute;
   inset: 0;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%' height='100%' filter='url(%23noise)'/%3E%3C/svg%3E");
-  opacity: 0.03;
+  opacity: 0.04;
   pointer-events: none;
   z-index: 1;
 }
 
-/* Figure card hover glow */
+/* ---- Figure card hover glow ----------------------------------- */
 .figure-card {
   position: relative;
-  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+  border-radius: 4px;
+  box-shadow: var(--shadow-soft);
+  transition: transform 0.55s var(--ease-sacred), box-shadow 0.55s var(--ease-sacred);
 }
 
 .figure-card::before {
   content: '';
   position: absolute;
   inset: -2px;
-  background: var(--gradient-sacred);
+  background: var(--gradient-leaf);
   border-radius: inherit;
   opacity: 0;
   transition: opacity 0.4s ease;
@@ -66,15 +185,16 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .figure-card:hover {
-  transform: translateY(-8px) scale(1.02);
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: var(--shadow-lifted);
 }
 
-/* Elegant divider */
+/* ---- Elegant divider ------------------------------------------ */
 .sacred-divider {
   display: flex;
   align-items: center;
   gap: 1rem;
-  color: var(--color-stone);
+  color: var(--color-ochre);
 }
 
 .sacred-divider::before,
@@ -85,7 +205,7 @@ h1, h2, h3, h4, h5, h6 {
   background: linear-gradient(90deg, transparent, var(--color-ochre), transparent);
 }
 
-/* Animated gradient border */
+/* ---- Animated gradient border --------------------------------- */
 @keyframes borderGlow {
   0%, 100% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
@@ -111,16 +231,19 @@ h1, h2, h3, h4, h5, h6 {
   border-radius: inherit;
 }
 
-/* FAQ accordion animation */
+/* ---- FAQ accordion -------------------------------------------- */
 .faq-item {
-  transition: all 0.3s ease;
+  transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.4s ease;
 }
 
-.faq-item:hover {
+.faq-item:hover,
+.faq-item[open] {
   background: var(--color-cream);
+  border-color: rgba(196, 163, 90, 0.45) !important;
+  box-shadow: var(--shadow-soft);
 }
 
-/* Step connector line */
+/* ---- Step connector line -------------------------------------- */
 .step-connector {
   position: relative;
 }
@@ -128,10 +251,10 @@ h1, h2, h3, h4, h5, h6 {
 .step-connector::after {
   content: '';
   position: absolute;
-  top: 50%;
+  top: 2.2rem;
   left: 100%;
   width: 100%;
-  height: 2px;
+  height: 1px;
   background: linear-gradient(90deg, var(--color-ochre), transparent);
 }
 
@@ -141,70 +264,112 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
-/* Scroll-triggered fade in */
+/* ---- Reveal animations ---------------------------------------- */
 @keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .animate-fade-in {
-  animation: fadeInUp 0.8s ease forwards;
+  opacity: 0;
+  animation: fadeInUp 0.9s var(--ease-sacred) forwards;
 }
 
-/* Staggered children animation */
 .stagger-children > * {
   opacity: 0;
-  animation: fadeInUp 0.6s ease forwards;
+  animation: fadeInUp 0.7s var(--ease-sacred) forwards;
 }
 
-.stagger-children > *:nth-child(1) { animation-delay: 0.1s; }
-.stagger-children > *:nth-child(2) { animation-delay: 0.2s; }
-.stagger-children > *:nth-child(3) { animation-delay: 0.3s; }
-.stagger-children > *:nth-child(4) { animation-delay: 0.4s; }
-.stagger-children > *:nth-child(5) { animation-delay: 0.5s; }
-.stagger-children > *:nth-child(6) { animation-delay: 0.6s; }
-.stagger-children > *:nth-child(7) { animation-delay: 0.7s; }
+.stagger-children > *:nth-child(1) { animation-delay: 0.06s; }
+.stagger-children > *:nth-child(2) { animation-delay: 0.12s; }
+.stagger-children > *:nth-child(3) { animation-delay: 0.18s; }
+.stagger-children > *:nth-child(4) { animation-delay: 0.24s; }
+.stagger-children > *:nth-child(5) { animation-delay: 0.30s; }
+.stagger-children > *:nth-child(6) { animation-delay: 0.36s; }
+.stagger-children > *:nth-child(7) { animation-delay: 0.42s; }
+.stagger-children > *:nth-child(8) { animation-delay: 0.48s; }
+.stagger-children > *:nth-child(9) { animation-delay: 0.54s; }
+.stagger-children > *:nth-child(10) { animation-delay: 0.60s; }
+.stagger-children > *:nth-child(11) { animation-delay: 0.66s; }
+.stagger-children > *:nth-child(12) { animation-delay: 0.72s; }
+.stagger-children > *:nth-child(13) { animation-delay: 0.78s; }
+.stagger-children > *:nth-child(14) { animation-delay: 0.84s; }
 
-/* Button sacred style */
+/* ---- Buttons -------------------------------------------------- */
 .btn-sacred {
-  background: var(--gradient-sacred);
-  color: white;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--gradient-leaf);
+  color: var(--color-ink);
   font-family: 'Baskervville', Georgia, serif;
-  font-size: 1.125rem;
-  padding: 1rem 2.5rem;
-  border-radius: 0;
+  font-size: 1.075rem;
+  letter-spacing: 0.01em;
+  padding: 0.95rem 2.4rem;
+  border-radius: 2px;
   position: relative;
   overflow: hidden;
-  transition: all 0.3s ease;
+  isolation: isolate;
   border: none;
   cursor: pointer;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.4) inset, var(--shadow-gold);
+  transition: transform 0.35s var(--ease-sacred), box-shadow 0.35s var(--ease-sacred);
 }
 
 .btn-sacred::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, transparent 50%);
-  transform: translateX(-100%);
-  transition: transform 0.5s ease;
+  z-index: -1;
+  background: linear-gradient(120deg, rgba(255, 255, 255, 0.55) 0%, transparent 45%);
+  transform: translateX(-120%);
+  transition: transform 0.6s var(--ease-sacred);
 }
 
 .btn-sacred:hover::before {
-  transform: translateX(100%);
+  transform: translateX(120%);
 }
 
 .btn-sacred:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 40px rgba(196, 163, 90, 0.3);
+  transform: translateY(-3px);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5) inset, 0 22px 60px rgba(154, 125, 58, 0.42);
 }
 
-/* Ornamental corners */
+/* Ghost / secondary button */
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: 'Baskervville', Georgia, serif;
+  font-size: 1.075rem;
+  padding: 0.95rem 2rem;
+  border: 1px solid var(--color-ochre);
+  border-radius: 2px;
+  background: transparent;
+  color: var(--color-ink);
+  cursor: pointer;
+  transition: background 0.4s var(--ease-sacred), color 0.4s var(--ease-sacred), border-color 0.4s var(--ease-sacred), transform 0.4s var(--ease-sacred);
+}
+
+.btn-ghost:hover {
+  background: var(--color-ink);
+  border-color: var(--color-ink);
+  color: var(--color-cream);
+  transform: translateY(-3px);
+}
+
+.btn-ghost--light {
+  color: #fff;
+  border-color: rgba(231, 205, 134, 0.5);
+}
+
+.btn-ghost--light:hover {
+  background: var(--color-gold);
+  border-color: var(--color-gold);
+  color: var(--color-ink);
+}
+
+/* ---- Ornamental corners --------------------------------------- */
 .ornament-corners {
   position: relative;
 }
@@ -213,25 +378,212 @@ h1, h2, h3, h4, h5, h6 {
 .ornament-corners::after {
   content: '';
   position: absolute;
-  width: 30px;
-  height: 30px;
+  width: 28px;
+  height: 28px;
   border-color: var(--color-ochre);
   border-style: solid;
+  opacity: 0.6;
+  transition: opacity 0.4s ease, width 0.4s ease, height 0.4s ease;
 }
 
 .ornament-corners::before {
-  top: 0;
-  left: 0;
-  border-width: 2px 0 0 2px;
+  top: 10px;
+  left: 10px;
+  border-width: 1px 0 0 1px;
 }
 
 .ornament-corners::after {
-  bottom: 0;
-  right: 0;
-  border-width: 0 2px 2px 0;
+  bottom: 10px;
+  right: 10px;
+  border-width: 0 1px 1px 0;
 }
 
-/* Hide scrollbar for horizontal scroll but keep functionality */
+.ornament-corners:hover::before,
+.ornament-corners:hover::after {
+  opacity: 1;
+  width: 34px;
+  height: 34px;
+}
+
+/* ---- Editorial document (privacy / terms) --------------------- */
+.editorial-doc {
+  position: relative;
+  z-index: 1;
+  padding: 9rem 1.5rem 6rem;
+}
+
+.editorial-shell {
+  max-width: 60rem;
+  margin: 0 auto;
+}
+
+.editorial-eyebrow {
+  font-family: 'Esteban', Georgia, serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: var(--color-ochre-dark);
+}
+
+.editorial-title {
+  font-family: 'Baskervville', Georgia, serif;
+  font-size: var(--step-4);
+  color: var(--color-ink);
+  margin: 1rem 0 1rem;
+  line-height: 1;
+}
+
+.editorial-dateline {
+  font-family: 'Esteban', Georgia, serif;
+  font-size: var(--step--1);
+  color: var(--color-stone);
+  letter-spacing: 0.02em;
+}
+
+.editorial-rule {
+  height: 1px;
+  background: linear-gradient(90deg, var(--color-ochre), transparent);
+  margin: 2.5rem 0 3rem;
+}
+
+/* Inset card for ToC and contact blocks */
+.editorial-card {
+  background: rgba(250, 246, 238, 0.7);
+  border: 1px solid rgba(196, 163, 90, 0.28);
+  border-radius: 4px;
+  padding: 1.75rem 2rem;
+  box-shadow: var(--shadow-soft);
+}
+
+.editorial-card--accent {
+  background: var(--color-ink);
+  border-color: rgba(196, 163, 90, 0.3);
+}
+
+.editorial-card--accent,
+.editorial-card--accent * {
+  color: var(--color-cream);
+}
+
+/* Long-form prose styling for legal pages */
+.editorial-prose section {
+  scroll-margin-top: 6rem;
+  margin-bottom: 2.75rem;
+}
+
+.editorial-prose h2 {
+  font-family: 'Baskervville', Georgia, serif;
+  font-size: var(--step-2);
+  color: var(--color-ink);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+}
+
+.editorial-prose h3 {
+  font-family: 'Baskervville', Georgia, serif;
+  font-size: var(--step-1);
+  color: var(--color-ink-soft);
+  margin: 1.5rem 0 0.75rem;
+}
+
+.editorial-prose p {
+  color: var(--color-warm-gray);
+  margin-bottom: 1rem;
+  line-height: 1.75;
+}
+
+.editorial-prose ul {
+  list-style: none;
+  padding-left: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.editorial-prose ul li {
+  position: relative;
+  color: var(--color-warm-gray);
+  margin-bottom: 0.6rem;
+  line-height: 1.7;
+}
+
+.editorial-prose ul li::before {
+  content: '✣';
+  position: absolute;
+  left: -1.5rem;
+  color: var(--color-ochre);
+  font-size: 0.8em;
+  top: 0.15em;
+}
+
+.editorial-prose ul ul {
+  margin-top: 0.6rem;
+  margin-bottom: 0;
+}
+
+.editorial-prose ul ul li::before {
+  content: '·';
+  font-size: 1.4em;
+  top: -0.15em;
+}
+
+.editorial-prose a {
+  color: var(--color-ochre-dark);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(154, 125, 58, 0.4);
+  transition: color 0.25s ease, border-color 0.25s ease;
+}
+
+.editorial-prose a:hover {
+  color: var(--color-terracotta);
+  border-color: var(--color-terracotta);
+}
+
+.editorial-prose strong {
+  color: var(--color-ink);
+  font-weight: 600;
+}
+
+.editorial-toc ol {
+  list-style: none;
+  counter-reset: toc;
+  padding: 0;
+  margin: 0;
+  columns: 2;
+  column-gap: 2rem;
+}
+
+.editorial-toc li {
+  counter-increment: toc;
+  margin-bottom: 0.55rem;
+  break-inside: avoid;
+}
+
+.editorial-toc a {
+  font-family: 'Esteban', Georgia, serif;
+  font-size: 0.92rem;
+  color: var(--color-warm-gray);
+  text-decoration: none;
+  transition: color 0.25s ease;
+}
+
+.editorial-toc a::before {
+  content: counter(toc, decimal-leading-zero);
+  color: var(--color-ochre);
+  margin-right: 0.6rem;
+  font-size: 0.78em;
+  letter-spacing: 0.05em;
+}
+
+.editorial-toc a:hover {
+  color: var(--color-terracotta);
+}
+
+@media (max-width: 640px) {
+  .editorial-toc ol { columns: 1; }
+}
+
+/* ---- Hide scrollbar for horizontal scroll --------------------- */
 .scrollbar-hide {
   -ms-overflow-style: none;
   scrollbar-width: none;
@@ -239,4 +591,32 @@ h1, h2, h3, h4, h5, h6 {
 
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
+}
+
+/* Keep section content above the fixed grain layer */
+body > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ---- Reduced motion ------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .animate-fade-in,
+  .stagger-children > * {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
