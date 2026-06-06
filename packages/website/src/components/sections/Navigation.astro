@@ -1,5 +1,5 @@
 ---
-// Navigation
+// Navigation — sacred dark bar, transparent at top, solidifies on scroll
 ---
 
 <!-- SVG Icon Definitions -->
@@ -17,46 +17,47 @@
   </defs>
 </svg>
 
-<header class="!bg-transparent sm:backdrop-blur-md sticky top-0 z-50 transition-all duration-300 sm:mix-blend-difference" id="navbar">
-  <nav class="container mx-auto px-4 py-4">
-    <div class="flex items-center justify-between">
+<header
+  class="fixed top-0 inset-x-0 z-50 transition-all duration-300 border-b border-transparent"
+  id="navbar"
+>
+  <nav class="container mx-auto px-5 lg:px-8">
+    <div class="flex items-center justify-between h-[72px]">
       <!-- Logo -->
-      <div>
-        <a href="/" class="flex items-center group">
-          <img
-            src="/images/logo.svg"
-            alt="ChristianAI Logo - AI-Powered Biblical Conversations"
-            class="h-[150px] absolute w-auto transition-all duration-300 group-hover:scale-105 group-hover:drop-shadow-md invert"
+      <a href="/" class="flex items-center group" aria-label="ChristianAI home">
+        <img
+          src="/images/logo.svg"
+          alt="ChristianAI Logo - AI-Powered Biblical Conversations"
+          class="h-11 w-auto invert transition-transform duration-300 group-hover:scale-105"
           id="nav-logo"
-            loading="eager"
-          />
-        </a>
-      </div>
+          loading="eager"
+        />
+      </a>
 
       <!-- Navigation Links -->
-      <div class="hidden md:flex items-center space-x-8 invert">
+      <div class="hidden md:flex items-center gap-8">
         <a
           href="/features"
-          class="text-[var(--color-ink)] hover:text-[var(--color-ochre-dark)] font-medium transition-colors duration-200 relative group px-2 py-1"
+          class="nav-link text-sm tracking-wide text-white/80 hover:text-[var(--color-ochre-light)] transition-colors duration-200 relative group py-1"
         >
           Features
-          <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-[var(--color-ochre-dark)] group-hover:w-full transition-all duration-300 ease-out"></span>
+          <span class="absolute -bottom-0.5 left-0 w-0 h-px bg-[var(--color-ochre)] group-hover:w-full transition-all duration-300 ease-out"></span>
         </a>
         <a
           href="/blog/"
-          class="text-[var(--color-ink)] hover:text-[var(--color-ochre-dark)] font-medium transition-colors duration-200 relative group px-2 py-1"
+          class="nav-link text-sm tracking-wide text-white/80 hover:text-[var(--color-ochre-light)] transition-colors duration-200 relative group py-1"
         >
           Blog
-          <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-[var(--color-ochre-dark)] group-hover:w-full transition-all duration-300 ease-out"></span>
+          <span class="absolute -bottom-0.5 left-0 w-0 h-px bg-[var(--color-ochre)] group-hover:w-full transition-all duration-300 ease-out"></span>
         </a>
         <a
           href="https://app.christianai.world"
           target="_blank"
           rel="noopener noreferrer"
-          class="btn-sacred inline-flex items-center gap-2 !text-sm !py-2 !px-5"
+          class="btn-sacred inline-flex items-center gap-2 !text-sm !py-2.5 !px-6"
         >
           Launch App
-          <svg class="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1">
+          <svg class="w-4 h-4">
             <use href="#external-link-icon"/>
           </svg>
         </a>
@@ -65,8 +66,9 @@
       <!-- Mobile Menu Button -->
       <button
         id="mobile-menu-button"
-        class="invert md:hidden p-2 text-[var(--color-ink)] hover:text-[var(--color-ochre-dark)] rounded-lg transition-colors duration-200"
+        class="md:hidden p-2 text-white hover:text-[var(--color-ochre-light)] transition-colors duration-200"
         aria-label="Toggle mobile menu"
+        aria-expanded="false"
       >
         <svg class="w-6 h-6 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" id="menu-icon-svg">
           <use href="#menu-icon"/>
@@ -77,18 +79,18 @@
     <!-- Mobile Menu -->
     <div
       id="mobile-menu"
-      class="hidden md:hidden mt-4 pt-4 border-t border-[var(--color-ochre)]/20 overflow-hidden transition-all duration-300"
+      class="hidden md:hidden pb-5 overflow-hidden"
     >
-      <div class="flex flex-col space-y-4 animate-fadeIn">
+      <div class="flex flex-col gap-2 animate-fadeIn border-t border-[var(--color-ochre)]/20 pt-4">
         <a
           href="/features"
-          class="text-[var(--color-ink)] hover:text-[var(--color-ochre-dark)] font-medium transition-colors duration-200 py-2 px-2 hover:bg-[var(--color-ochre)]/5 rounded"
+          class="text-white/85 hover:text-[var(--color-ochre-light)] font-medium transition-colors duration-200 py-2.5 px-2 rounded"
         >
           Features
         </a>
         <a
           href="/blog/"
-          class="text-[var(--color-ink)] hover:text-[var(--color-ochre-dark)] font-medium transition-colors duration-200 py-2 px-2 hover:bg-[var(--color-ochre)]/5 rounded"
+          class="text-white/85 hover:text-[var(--color-ochre-light)] font-medium transition-colors duration-200 py-2.5 px-2 rounded"
         >
           Blog
         </a>
@@ -96,7 +98,7 @@
           href="https://app.christianai.world"
           target="_blank"
           rel="noopener noreferrer"
-          class="btn-sacred inline-flex items-center gap-2 !text-sm !py-2 !px-5 self-start"
+          class="btn-sacred inline-flex items-center gap-2 !text-sm !py-2.5 !px-6 self-start mt-2"
         >
           Launch App
           <svg class="w-4 h-4">
@@ -107,6 +109,8 @@
     </div>
   </nav>
 </header>
+
+<!-- Spacer so fixed nav never overlaps page content lacking its own hero offset -->
 
 <script>
   // Mobile menu toggle
@@ -120,43 +124,49 @@
     mobileMenuButton.addEventListener('click', () => {
       isOpen = !isOpen;
       mobileMenu.classList.toggle('hidden');
+      mobileMenuButton.setAttribute('aria-expanded', String(isOpen));
 
-      if (isOpen) {
-        menuIconSvg.innerHTML = '<use href="#close-icon"/>';
-        menuIconSvg.classList.add('rotate-90');
-      } else {
-        menuIconSvg.innerHTML = '<use href="#menu-icon"/>';
-        menuIconSvg.classList.remove('rotate-90');
-      }
+      menuIconSvg.innerHTML = isOpen ? '<use href="#close-icon"/>' : '<use href="#menu-icon"/>';
+      menuIconSvg.classList.toggle('rotate-90', isOpen);
     });
   }
 
-  // Scroll-based background
+  // Scroll-based background: transparent at top, sacred glass on scroll
   const navbar = document.getElementById('navbar');
 
   if (navbar) {
-    window.addEventListener('scroll', () => {
-      if (window.pageYOffset > 50) {
-        navbar.classList.add('bg-white/98', 'shadow-md');
-        navbar.classList.remove('bg-white/95');
+    const onScroll = () => {
+      if (window.scrollY > 40) {
+        navbar.classList.add('nav-scrolled');
       } else {
-        navbar.classList.add('bg-white/95');
-        navbar.classList.remove('bg-white/98', 'shadow-md');
+        navbar.classList.remove('nav-scrolled');
       }
-    });
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
   }
 </script>
 
 <style>
+  /* Always-on sacred glass — legible over light and dark heroes alike */
+  #navbar {
+    background: rgba(20, 17, 13, 0.55);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+
+  /* Deepen once scrolled */
+  #navbar.nav-scrolled {
+    background: rgba(20, 17, 13, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom-color: rgba(196, 163, 90, 0.18);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+  }
+
   @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(-10px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
   }
 
   .animate-fadeIn {

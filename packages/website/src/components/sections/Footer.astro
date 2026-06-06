@@ -2,21 +2,43 @@
 // Footer Component
 ---
 
-<footer class="bg-[var(--color-ink)]">
-  <div class="container mx-auto px-6 py-10">
-    <div class="flex flex-col md:flex-row justify-between items-center gap-6">
-      <div class="flex items-center gap-4">
-        <img src="/images/logo.svg" alt="ChristianAI" class="h-8 w-auto opacity-80 invert" loading="lazy" />
-        <p class="text-[var(--color-ochre-light)]/70 text-sm">
-          &copy; 2026 ChristianAI. Bringing faith and technology together.
+<footer class="bg-[var(--color-ink)] relative overflow-hidden">
+  <div class="absolute -top-20 left-1/3 w-96 h-96 bg-[var(--color-ochre)]/5 rounded-full blur-3xl pointer-events-none" />
+
+  <div class="container mx-auto px-6 py-16 relative">
+    <div class="grid gap-10 md:grid-cols-[1.5fr_1fr_1fr]">
+      <!-- Brand -->
+      <div>
+        <img src="/images/logo.svg" alt="ChristianAI" class="h-9 w-auto opacity-90 invert mb-5" loading="lazy" />
+        <p class="text-white/60 text-sm leading-relaxed max-w-xs mb-5">
+          AI-powered conversations with biblical figures — bringing faith and technology together for your spiritual journey.
+        </p>
+        <p class="text-[var(--color-ochre-light)]/70 italic text-sm">
+          &ldquo;Faith comes from hearing.&rdquo; &mdash; Romans 10:17
         </p>
       </div>
-      <nav class="flex gap-6 text-sm">
-        <a href="/" class="text-white/70 hover:text-[var(--color-ochre-light)] transition-colors duration-200">Home</a>
-        <a href="/blog/" class="text-white/70 hover:text-[var(--color-ochre-light)] transition-colors duration-200">Blog</a>
-        <a href="/privacy" class="text-white/70 hover:text-[var(--color-ochre-light)] transition-colors duration-200">Privacy Policy</a>
-        <a href="https://app.christianai.world" class="text-white/70 hover:text-[var(--color-ochre-light)] transition-colors duration-200">Launch App</a>
+
+      <!-- Explore -->
+      <nav class="flex flex-col gap-3" aria-label="Footer">
+        <span class="text-[var(--color-ochre)] text-xs tracking-[0.25em] uppercase mb-1">Explore</span>
+        <a href="/" class="text-white/70 hover:text-[var(--color-ochre-light)] transition-colors duration-200 text-sm">Home</a>
+        <a href="/features" class="text-white/70 hover:text-[var(--color-ochre-light)] transition-colors duration-200 text-sm">Features</a>
+        <a href="/blog/" class="text-white/70 hover:text-[var(--color-ochre-light)] transition-colors duration-200 text-sm">Blog</a>
+        <a href="https://app.christianai.world" target="_blank" rel="noopener noreferrer" class="text-white/70 hover:text-[var(--color-ochre-light)] transition-colors duration-200 text-sm">Launch App</a>
+      </nav>
+
+      <!-- Legal -->
+      <nav class="flex flex-col gap-3" aria-label="Legal">
+        <span class="text-[var(--color-ochre)] text-xs tracking-[0.25em] uppercase mb-1">Legal</span>
+        <a href="/privacy" class="text-white/70 hover:text-[var(--color-ochre-light)] transition-colors duration-200 text-sm">Privacy Policy</a>
+        <a href="/terms" class="text-white/70 hover:text-[var(--color-ochre-light)] transition-colors duration-200 text-sm">Terms of Service</a>
       </nav>
     </div>
+
+    <div class="sacred-divider mt-12 mb-6 opacity-50"><span class="text-[var(--color-ochre)]">&#10041;</span></div>
+
+    <p class="text-[var(--color-ochre-light)]/60 text-sm text-center">
+      &copy; 2026 ChristianAI. All rights reserved.
+    </p>
   </div>
 </footer>

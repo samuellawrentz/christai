@@ -2,26 +2,40 @@
 import { ArrowRight } from '@lucide/astro';
 ---
 
-<section class="py-24 lg:py-32 relative overflow-hidden">
+<section class="py-28 lg:py-40 relative overflow-hidden">
   <!-- Background decorations -->
   <div class="absolute inset-0 bg-[var(--color-ink)]" />
-  <div class="absolute top-0 left-1/4 w-96 h-96 bg-[var(--color-ochre)]/10 rounded-full blur-3xl" />
-  <div class="absolute bottom-0 right-1/4 w-64 h-64 bg-[var(--color-terracotta)]/10 rounded-full blur-3xl" />
+  <div
+    class="absolute inset-0 opacity-90"
+    style="background-image: radial-gradient(60% 80% at 50% -10%, rgba(231,205,134,0.20) 0%, transparent 60%), radial-gradient(50% 60% at 18% 100%, rgba(182,90,54,0.14) 0%, transparent 55%);"
+  />
+  <!-- Faint grain over the dark field -->
+  <div class="absolute inset-0 opacity-[0.05] pointer-events-none" style="background-image: url(&quot;data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E&quot;);" />
 
   <div class="container mx-auto px-6 lg:px-8 relative">
-    <div class="max-w-3xl mx-auto text-center">
-      <!-- Ornamental element -->
-      <div class="flex justify-center mb-8">
+    <div class="max-w-2xl mx-auto text-center relative">
+      <!-- Illuminated frame -->
+      <div class="absolute -inset-x-6 -inset-y-10 sm:-inset-x-12 border border-[var(--color-ochre)]/20 pointer-events-none hidden sm:block" />
+      <div class="absolute -top-10 sm:-top-10 left-1/2 -translate-x-1/2 px-4 bg-[var(--color-ink)] hidden sm:block">
+        <span class="text-[var(--color-ochre)] text-2xl">&#10041;</span>
+      </div>
+
+      <!-- Ornamental element (mobile) -->
+      <div class="flex justify-center mb-8 sm:hidden">
         <span class="text-[var(--color-ochre)] text-4xl">&#10041;</span>
       </div>
 
-      <h2 class="text-4xl md:text-5xl lg:text-6xl text-white mb-6 leading-tight">
-        Begin Your Journey<br/>
-        <span class="italic text-[var(--color-ochre-light)]">Today</span>
+      <p class="eyebrow eyebrow--light eyebrow--center justify-center mb-7">
+        The Invitation
+      </p>
+
+      <h2 class="text-4xl md:text-5xl lg:text-6xl text-white mb-6 leading-[1.05]">
+        Your next conversation<br/>
+        <span class="italic text-gradient-gold">could change everything</span>
       </h2>
 
-      <p class="text-xl text-white/80 mb-12 max-w-xl mx-auto">
-        Join thousands seeking wisdom through conversations with Scripture's greatest figures.
+      <p class="text-xl text-white/80 mb-10 max-w-xl mx-auto leading-relaxed">
+        Bring your questions, your doubts, your hopes. Scripture&rsquo;s greatest figures are ready to walk with you.
       </p>
 
       <a
@@ -35,8 +49,13 @@ import { ArrowRight } from '@lucide/astro';
         <ArrowRight class="w-5 h-5" />
       </a>
 
-      <p class="text-white/60 text-sm mt-6">
-        No credit card required
+      <p class="text-white/55 text-sm mt-6">
+        Always free &middot; No credit card required &middot; Private &amp; secure
+      </p>
+
+      <p class="text-[var(--color-ochre-light)]/70 italic text-base mt-10">
+        &ldquo;Ask, and it will be given to you; seek, and you will find.&rdquo;
+        <span class="block not-italic text-xs tracking-[0.25em] uppercase text-white/40 mt-2">Matthew 7:7</span>
       </p>
     </div>
   </div>

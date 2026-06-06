@@ -30,12 +30,15 @@ const steps = [
   <div class="container mx-auto px-6 lg:px-8 relative">
     <!-- Section header -->
     <div class="text-center mb-20">
-      <p class="text-[var(--color-ochre-dark)] text-sm tracking-[0.3em] uppercase mb-4">
-        Simple & Meaningful
+      <p class="eyebrow eyebrow--center justify-center mb-4">
+        Simple &amp; Meaningful
       </p>
-      <h2 class="text-4xl lg:text-5xl text-[var(--color-ink)]">
-        How It <span class="italic">Works</span>
+      <h2 class="text-4xl lg:text-5xl text-[var(--color-ink)] mb-6">
+        Three steps to <span class="italic">wisdom</span>
       </h2>
+      <p class="text-[var(--color-warm-gray)] text-lg max-w-xl mx-auto leading-relaxed">
+        No setup, no cost. Just open a conversation and listen.
+      </p>
     </div>
 
     <!-- Steps -->
@@ -43,12 +46,12 @@ const steps = [
       {steps.map((step, index) => (
         <article class={`relative ${index < steps.length - 1 ? 'step-connector' : ''}`}>
           <!-- Number -->
-          <span class="block text-6xl lg:text-7xl font-['Baskervville'] text-[var(--color-ochre)]/20 mb-4 leading-none">
+          <span class="block text-6xl lg:text-7xl font-['Baskervville'] text-gradient-gold opacity-50 mb-4 leading-none">
             {step.number}
           </span>
 
           <!-- Icon -->
-          <div class="w-14 h-14 rounded-full bg-[var(--color-ink)] flex items-center justify-center mb-6">
+          <div class="w-14 h-14 rounded-full bg-[var(--color-ink)] flex items-center justify-center mb-6 ring-1 ring-[var(--color-ochre)]/30">
             <step.icon class="w-6 h-6 text-[var(--color-ochre-light)]" />
           </div>
 

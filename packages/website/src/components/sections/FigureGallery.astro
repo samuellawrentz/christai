@@ -1,4 +1,6 @@
 ---
+import { ArrowUpRight } from '@lucide/astro';
+
 const figures = [
   { slug: 'jesus', name: 'Jesus Christ', title: 'Son of God' },
   { slug: 'moses', name: 'Moses', title: 'Lawgiver of Israel' },
@@ -17,19 +19,19 @@ const figures = [
 ];
 ---
 
-<section class="py-24 lg:py-32">
+<section id="figures" class="py-24 lg:py-32 scroll-mt-20">
   <div class="container mx-auto px-6 lg:px-8">
-    <!-- Section header with ornamental divider -->
+    <!-- Section header -->
     <div class="max-w-2xl mx-auto text-center mb-16">
-      <p class="text-[var(--color-ochre-dark)] text-sm tracking-[0.3em] uppercase mb-4">
+      <p class="eyebrow eyebrow--center mb-5 justify-center">
         Your Guides Await
       </p>
       <h2 class="text-4xl lg:text-5xl text-[var(--color-ink)] mb-6">
-        Meet the <span class="italic">Figures</span>
+        Fourteen lives.<br/>One source of <span class="italic">wisdom</span>.
       </h2>
-      <div class="sacred-divider max-w-xs mx-auto">
-        <span class="text-2xl">&#10041;</span>
-      </div>
+      <p class="text-[var(--color-warm-gray)] text-lg leading-relaxed">
+        Choose a figure and begin a conversation grounded in their story and the Scriptures that shaped it.
+      </p>
     </div>
 
     <!-- Figure grid - 7 columns on desktop, horizontal scroll on mobile -->
@@ -40,6 +42,8 @@ const figures = [
             href={`https://app.christianai.world/chats/new/${figure.slug}`}
             target="_blank"
             rel="noopener noreferrer"
+            onclick="if(window.gtag){gtag('event', 'select_figure', {figure: this.dataset.figure});}"
+            data-figure={figure.slug}
             class="figure-card group relative flex-shrink-0 w-40 lg:w-auto aspect-[3/4] overflow-hidden"
             style={`animation-delay: ${0.05 * index}s`}
           >
@@ -52,7 +56,12 @@ const figures = [
             />
 
             <!-- Gradient overlay -->
-            <div class="absolute inset-0 bg-gradient-to-t from-[var(--color-ink)] via-[var(--color-ink)]/30 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-300" />
+            <div class="absolute inset-0 bg-gradient-to-t from-[var(--color-ink)] via-[var(--color-ink)]/30 to-transparent opacity-80 group-hover:opacity-95 transition-opacity duration-300" />
+
+            <!-- Start-chat cue -->
+            <div class="absolute top-3 right-3 w-9 h-9 rounded-full bg-white/10 backdrop-blur-sm flex items-center justify-center text-white opacity-0 -translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
+              <ArrowUpRight class="w-4 h-4" />
+            </div>
 
             <!-- Content -->
             <div class="absolute bottom-0 left-0 right-0 p-4 text-white">
